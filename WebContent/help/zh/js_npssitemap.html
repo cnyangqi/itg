@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsSitemap</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsSitemap class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsSitemap用于生成符合Google Sitemap规范的系列Sitemap文件。Sitemaps协议使您能够告知搜索引擎您网站中可供抓取的网址。<br><br>
+        Sitemap协议规定，Sitemaps 索引文件只能列出不超过 1,000 个 Sitemaps。
+        生成的索引文件是以sitemapindex+序号+.xml格式命名的，序号从1开始编号，如sitemapindex1.xml、sitemapindex2.xml。<br><br>
+
+        <font color=red>
+        你需要在Google中提交Sitemaps索引文件，这称为”验证您的 Sitemaps“，可以一次性提交多个索引文件。<br>
+        一旦提交后，以后NPS将自动更新该索引文件，包括自动向Google提交更新请求。
+        </font>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsSitemap()<br>
+                    构造函数。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Generate(NpsSite site) throws Exception<br>
+                    生成指定站点的Sitemap系列文件。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit2Google() throws Exception<br>
+                    自动通知Google更新Sitemap。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit2Yahoo() throws Exception<br>
+                    自动通知Yahoo更新Sitemap。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit2Live() throws Exception<br>
+                    自动通知Live更新Sitemap。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit2Ask() throws Exception<br>
+                    自动通知Ask.com更新Sitemap。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

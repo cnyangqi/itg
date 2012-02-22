@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NPS installation guide</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble">
+    <h1><a id="#page-header">NPS Installation Guide</a></h1>
+        <div class="toplang"></div>
+        <p>This guide is for initial installation only.</p>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="#prepare">Before you start</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="#install"> Downloading and installing NPS</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="#oraclesetup">ORACLE configuration</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="#tomcatsetup">Tomcat configuration</a></li>	
+    <li><img alt="" src="/images/help/down.gif" /> <a href="#npssetup">NPS configuration</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="prepare" id="prepare">Before you start</a></h2>
+        <p>
+		NPS is a WEB application, which is operated on the central server. 
+		NPS is a complete set of JAVA based enterprise CMS. 
+		It can help users to manage their own website through browser. 
+		Its client-side supports IE6+ and FireFox2+.
+		</p>
+        
+    <dl>
+      <dt>Hardwares</dt>
+      <dd> 
+		  For trial, developing and debugging template, 
+		  NPS could run on a relatively low-equipped PC (for example 1.5+Ghz, 512 MB memory). 
+		  Allocating 128MB memory to the NPS’s virtual machine is advised. 
+		  If you need to install ORACLE database server I n the meantime, 
+		  we advised to equip your PC with a minimum of 1G memory. 
+		  <br><br>
+          The hardware needed for production environment depends on data scale and number of concurrent users using NPS. 
+		  Production environment generally contains WEB server, application server, NPS server and ORACLE database server.
+		  We advise to run Aapche or light http on WEB server to serve static web page. Cluster solution is recommended for large scale application such as DNS round-robin. 
+		  <br><br>
+		  With regard to application server, we propose to run open source servers such as TOMCAT or business servers such as IBM WAS. 
+		  Application server should at least follow SERVLET 2.4 standard. 
+		  In case of using TOMCAT, mod_jk or mod_webapp could be employed to enable communications between WEB server and application server. 
+		  For server with memory over 2G, we advise to run minimum 2 application server. 
+		  To attain optimal performance, we suggest that the maximum memory of every application’s JAVA virtual machine should be set as 768M.
+		  <br><br>
+		  In times of small-scale application, application server could be combined with WEB server. 
+		  For example, Tomcat server can be run in mod_jserv mode or running TOMCAT and APACHE simultaneously.
+		  <br><br>
+		  Cluster solution should be employed for large-scale application. 
+	      According to official direction, the maximum concurrent users are generally 200/CPU. 
+		  For business server, please refers to manufacturer’s cluster guide. 		
+		  <br><br>
+		  NPS is internal-users oriented and mainly applied for managing and publishing information. 
+		  Therefore, the concurrency value is small. 
+		  If the number of websites that NPS manage is within 10, then it can be run on a 1G memory server. 
+		  For configuring NPS server for large scale application, please refers to the configuration solution of application server.
+		  <br><br>  
+		  To simplify the NPS configuration, we advise to allocate independent domain name for NPS server, such as nps.yourdomain.com.
+		  <br><br>
+		  Regarding to ORACLE database server, it is better to store users’ data and NPS data separately, which means establishing tablespace and owner respectively.
+		  <br>
+      </dd>
+      <dt>Oprating system</dt>
+      <dd>NPS can be run on every operating system which supports JAVA. All of Jwebstar’s server should run LINUX.</dd>
+      <dt>JAVA</dt>
+      <dd>NPS requires a minimum of JDK 1.5. SUN provides 32-bit and 64-bit JDK which is under platforms such as Windows, Solaris and Linux.</dd>
+      <dt>Application server</dt>
+      <dd>NPS is a WEB application, which is supported by application server. Application server must support SERVLET 2.4.<br>
+        Jwebstar’s NPS server run on Apache Tomcat5.5.26.
+	  </dd>
+      
+      <dt>Database server</dt>
+      <dd>The minimum version should be Oracle 9i. We recommend using Oracle 10g (over 10.2 version)</dd>
+    </dl>
+    </div>
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+      <h2><a name="install" id="install">Downloading and installing NPS</a></h2>
+      <p>Decompressing NPS to designated directory, for example: /opt/nps/. Such directory is NPS installation directory and expressed as {$NPS_HOME}.</p>
+      <p>Windows can be decompressed by winzip.</p>
+      <p>Linux:<br>
+           &nbsp;&nbsp;&nbsp;&nbsp;1.mkdir /opt/nps/ <br>
+           &nbsp;&nbsp;&nbsp;&nbsp;2.mv nps_1.0.zip /opt/nps/ <br>
+           &nbsp;&nbsp;&nbsp;&nbsp;3.unzip nps_1.0.zip  <br>
+      </p>
+    </div>
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+      <h2><a name="oraclesetup" id="oraclesetup">ORACLE configuration</a></h2>
+      <p>ORACLE 10g is recommended. NPS have passed test on Oracle 9.2 and Oracle 10.2.</p>
+      <p>
+            1.Creating an independent tablespace, such as T_NPS for storing data, and I_NPS for storing index. <br>
+            2.Creating a database user, for example: NPS. Such user employs the tablespace above. <br>
+            3.Grant the user authority of connect and resources.<br>
+            4.Using tools such as SqLPlus or PL/SQL Developer to implement NPS_oracle.sql which is contained in db directory. The system will automatically generate a super administrator. The account name is system and password is manager.<br>
+            5. If you didn’t use the version of 10.2, please replace the NPS defaulted driver 10.2 with oracle’s own driver of jdbc. Below is the replacing procedure:<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               1)Delete {$NPS_HOME}/web/WEB-INF/lib/ojdbc14.jar.<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               2)Copy {$ORACLE_HOME}/jdbc/lib/ojdbc14.jar to {$NPS_HOME}/web/WEB-INF/lib/.<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               3){$ORACLE_HOME} is the installation directory of oracle database server, such as /u01/app/ora9i/<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               4){$NPS_HOME} is the NPS installation directory of NPS server, such as /opt/nps/.<br>
+             </font>
+      </p>
+     </div>
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+      <h2><a name="tomcatsetup" id="tomcatsetup">TOMCAT configuration</a></h2>
+         <dl>
+          <dt>1.Verify web.xml</dt>        
+          <p>The system defaulted web.xml is generated according to Tomcat5.5.x. For other version, the format of web.xml is different. You can copy a web.xml which is in Tomcat’s own sample, and add the content of the table below to web-app. </p>
+          <dd>
+            <table border="1">
+                <tr>
+                    <td>
+                    &lt;servlet>   <br>
+                        &lt;servlet-name>Config&lt;/servlet-name> <br>
+                        &lt;servlet-class>nps.core.Config&lt;/servlet-class> <br>
+                        &lt;load-on-startup>5&lt;/load-on-startup> <br>
+                    &lt;/servlet>  <br>
+                    &lt;servlet-mapping> <br>
+                        &lt;servlet-name>Config&lt;/servlet-name>  <br>
+                        &lt;url-pattern>/servlet/Config&lt;/url-pattern>  <br>
+                    &lt;/servlet-mapping>  <br>
+                    &lt;filter>  <br>
+                        &lt;filter-name>Set Character Encoding&lt;/filter-name>  <br>
+                        &lt;filter-class>nps.util.SetCharacterEncodingFilter&lt;/filter-class>  <br>
+                        &lt;init-param>  <br>
+                            &lt;param-name>encoding&lt;/param-name>  <br>
+                            &lt;param-value>UTF-8&lt;/param-value>  <br>
+                        &lt;/init-param>  <br>
+                    &lt;/filter>  <br>
+                    &lt;filter-mapping> <br>
+                        &lt;filter-name>Set Character Encoding&lt;/filter-name> <br>
+                        &lt;url-pattern>/*&lt;/url-pattern> <br>
+                    &lt;/filter-mapping> <br>
+                    </td>
+                </tr>
+            </table>
+          </dd>
+         <dt>2.Modify Tomcat’s server.xml files.</dt>
+         <p>Opening the files of {$TOMCAT_HOME}/conf/server.xml, then add the content below to the Host part that you need. <br>
+        Attention:<font color=red>please modify {$NPS_HOME} as the path above, 
+        for example: /opt/nps.</font> <br>
+         </p>
+         <dd>
+            <table border="1">
+                <tr>
+                    <td>
+                        &lt;Context path="" docBase="{$NPS_HOME}/web" debug="0"/>
+                    </td>
+                </tr>
+            </table>
+         </dd>             
+        </dl>             
+     </div>
+     <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+     <div class="section">
+      <h2><a name="npssetup" id="npssetup">NPS Configuration</a></h2>
+         
+    <dl>
+      <dt>1.Configuring database’s connection parameter</dt>
+      <p>Open {$NPS_HOME}/web/WEB-INF/db.xml, then configure database’s connection. 
+        There are three configuration methods while the second one is recommended 
+        to adopt, namely ORACLE’s connection pool.</p>
+      <dd>(1)Configuration without onnection pool<br>
+        <table>
+          <tr> 
+            <td> &lt;?xml version="1.0" encoding="UTF-8"?><br> &lt;root><br> &lt;DataSource 
+              name="nps"><br> &lt;driver>oracle.jdbc.driver.OracleDriver&lt;/driver><br> 
+              &lt;url>jdbc:oracle:thin:@<font color=red><a title="ORACLE IP">192.168.1.1</a></font>:1521:<font color=red><a title="ORACLE SID or service name">pubdb</a></font>&lt;/url><br> 
+              &lt;user><font color=red><a title="oracle owner">nps</a></font>&lt;/user><br> 
+              &lt;password><font color=red><a title="oracle password">your password</a></font>&lt;/password><br> 
+              &lt;/DataSource> <br> &lt;/root> </td>
+          </tr>
+        </table>
+      </dd>
+      <dd> (2)Configuration with Oracle’s connection pool<br>
+        <table>
+          <tr> 
+            <td> &lt;?xml version="1.0" encoding="UTF-8"?><br> &lt;root><br> &lt;DataSource 
+              name="nps"><br> &lt;driver>oracle.jdbc.driver.OracleDriver&lt;/driver><br> 
+              &lt;url>jdbc:oracle:thin:@<font color=red><a title="ORACLE IP">192.168.1.1</a></font>:1521:<font color=red><a title="ORACLE SID or service name">pubdb</a></font>&lt;/url><br> 
+              &lt;user><font color=red><a title="oracle owner">nps</a></font>&lt;/user><br> 
+              &lt;password><font color=red><a title="oracle password">your password</a></font>&lt;/password><br> 
+              &lt;pool><br> &nbsp;&nbsp;&nbsp;&nbsp; &lt;min><font color=red><a title="minimum connect">5</a></font>&lt;/min> 
+              <br> &nbsp;&nbsp;&nbsp;&nbsp; &lt;max><font color=red><a title="maximum connect">100</a></font>&lt;/max> 
+              <br> &lt;/pool> <br> &lt;/DataSource> <br> &lt;/root> </td>
+          </tr>
+        </table>
+      </dd>
+      <dd> (3)Configuration with external data source.<font color=red>This method 
+        requires adding database connection pool named nps to the application 
+        server’s connection pool management. JNDI address is java: comp/env/jdbc/nps.</font><br>
+        <table>
+          <tr> 
+            <td> &lt;?xml version="1.0" encoding="UTF-8"?><br> &lt;root><br> &lt;DataSource 
+              name="nps"><br> &lt;/DataSource> <br> &lt;/root> </td>
+          </tr>
+        </table>
+      </dd>
+      <dt>2.Core configuration</dt>
+      <p>Opening {$NPS_HOME}/web/WEB-INF/nps.conf for configuration.</p>
+      <dd> 
+        <table>
+          <tr> 
+            <td> #For storing uploaded files, temporary files and log files that 
+              generated during operation, you must fill directory name for every 
+              temporary file’s root directory. Setting up independent partition 
+              is usually advised. Remember adding “ / ” in the end. <br>
+              TEMP_ROOTPATH=<font color=red>/NPSTEMP/</font> <br> <br>
+              #Compiling classpath, automatically contains /WEB-INF/classes;/WEB-INF/lib;${TEMP_ROOTPATH}/classes 
+              <br>
+              #COMPILE_CLASSPATH= <br> <br>
+              #Caching data. For cluster mode, we do not advise to cache. It can 
+              be defaulted as “true”, which means cache.<br>
+              #CACHE=true <br> <br>
+              #Locale，defaulted as CHINA <br> <font color=red> You can set country 
+              or region: US、UK、TAIWAN、KOREA、JAPAN、ITALY、GERMANY、FRANCE、CHINA、CANADA、CANADA_FRENCH 
+              You can also set language：ENGLISH、FRENCH、GERMAN、ITALIAN、JAPANESE、KOREAN、CHINESE 
+              、TRADITIONAL_CHINESE。 In the defaulted condition (CHINA)，all the 
+              prompt language is Chinese <br>
+              </font> #LOCALE= <br> <br>
+              #The interval time (second) for re-operating FTP、index, etc. DEFAULT=600<br>
+              #SCHEDULE_INTERVAL= <br> <br>
+              #SOLR’s URL address is defaulted as http://localhost/solr<br> <font color=red> 
+              The URL root path of SOLR index server. Generally, http://localhost/solr/update 
+              is for updating index. While http://localhost/solr/select is for 
+              inquiring index. <br>
+              If there is no parameter set for SOLR, the full-text index service 
+              will be closed, including updating and inquiring service.<br>
+              </font> SOLR=http://localhost/solr <br> <br>
+              #MAIL server address，default: localhost<br>
+              MAIL_SERVER=<font color=red>localhost</font> <br> <br>
+              #MAIL server SMTP port，default: 25<br>
+              MAIL_SMTPPORT=<font color=red>25</font> <br> <br>
+              ＃MAIL server POP3 port，default: 110 <br>
+              MAIL_POP3PORT＝<font color=red>110</font> <br> <br>
+              #MAIL certified user name，defaulted as NULL <br>
+              MAIL_USER=<font color=red>your email account</font> <br> <br>
+              #MAIL certified password，defaulted as NULL <br>
+              MAIL_PASSWORD=<font color=red>the password of your mailbox</font> 
+            </td>
+          </tr>
+        </table>
+      </dd>
+      <dt>3.Configuring system log</dt>
+      <p>NPS use LOG4J to record log. Opening {$NPS_HOME}/web/WEB-INF/log4j.properties 
+        for configuration. </p>
+      <dd> 
+        <table>
+          <tr> 
+            <td> log4j.rootLogger=nps <br>
+              log4j.addivity.org.apache=true <br>
+              log4j.appender.nps=org.apache.log4j.RollingFileAppender <br>
+              log4j.appender.nps.Threshold=ERROR <br> <font color=red> #The log 
+              files’ name will be stored in /NPSLOG/nps.log file as defaulted. 
+              All files will be automatically divided by 100M. <br>
+              #Given logs are big; it is advised to separate /NPSLOG into independent 
+              partition. <br>
+              </font> log4j.appender.nps.File=<font color=red>/NPSLOG/nps.log</font> 
+              <br>
+              log4j.appender.nps.Append=true <br>
+              log4j.appender.nps.MaxFileSize=100MB <br>
+              log4j.appender.nps.MaxBackupIndex=1 <br>
+              log4j.appender.nps.layout=org.apache.log4j.PatternLayout <br>
+              log4j.appender.nps.layout.ConversionPattern=[framework] %d - %c 
+              -%-4r [%t] %-5p %c %x - %m%n <br> </td>
+          </tr>
+        </table>
+      </dd>
+      <dt>4.Configuring USERDIR</dt>
+      <p>The function of USERDIR is to store the uploaded picture and attachment 
+        that generated during compilation (for preview use in the compilation 
+        period). Its directory is {$NPS_HOME}/web/userdir/. <br>
+        This directory will be automatically created once system starting. For 
+        such massive-data users, it is better that manually create directory when 
+        configuring system and mount this directory into independent partition. 
+      </p>
+      <dd> 
+      <dt>5.Configuring Quartz</dt>
+      <p>The function of Quartz is to execute back-stage timing tasks. The NPS’s 
+        own defaulted Quartz configuration is based on Oracle and can realize 
+        cluster dispatching function.<br>
+        Opening {$NPS_HOME}/web/WEB-INF/quartz.properties to configure Quartz. 
+      </p>
+      <dd> 
+        <table>
+          <tr> 
+            <td> #============================================================================<br>
+              # Configure Main Scheduler Properties <br>
+              #============================================================================ 
+              <br>
+              org.quartz.scheduler.instanceName = MyClusteredScheduler <br>
+              org.quartz.scheduler.instanceId = AUTO <br>
+              #============================================================================ 
+              <br>
+              # Configure ThreadPool <br>
+              #============================================================================ 
+              <br>
+              org.quartz.threadPool.class = org.quartz.simpl.SimpleThreadPool 
+              <br> <font color=red> The NPS defaulted configuration is 25 dispatching 
+              threads.<br>
+              </font> org.quartz.threadPool.threadCount = <font color=red><a title="dispatching threads">25</a></font> 
+              <br>
+              org.quartz.threadPool.threadPriority = 5 <br>
+              #============================================================================ 
+              <br>
+              # Configure JobStore <br>
+              #============================================================================ 
+              <br>
+              org.quartz.jobStore.misfireThreshold = 60000 <br>
+              org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX 
+              <br>
+              org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.oracle.OracleDelegate 
+              <br>
+              org.quartz.jobStore.useProperties = false <br>
+              org.quartz.jobStore.dataSource = myDS <br>
+              org.quartz.jobStore.tablePrefix = QRTZ_ <br>
+              org.quartz.jobStore.isClustered = true <br>
+              org.quartz.jobStore.clusterCheckinInterval = 20000 <br>
+              #============================================================================<br>
+              # Configure Datasources <br>
+              #============================================================================<br> 
+              <font color=red> Setting the connection parameters and maximum connection 
+              number for database.<br>
+              </font> org.quartz.dataSource.myDS.driver = oracle.jdbc.driver.OracleDriver 
+              <br>
+              org.quartz.dataSource.myDS.URL = jdbc:oracle:thin:@<font color=red><a title="ORACLE IP">192.168.1.1</a></font>:1521:<font color=red><a title="ORACLE SID or service name">pubdb</a></font> 
+              <br>
+              org.quartz.dataSource.myDS.user = <font color=red><a title="oracle owner">nps</a></font> 
+              <br>
+              org.quartz.dataSource.myDS.password = <font color=red><a title="oracle password">your 
+              password</a></font> <br>
+              org.quartz.dataSource.myDS.maxConnections = <font color=red><a title="max connection">5</a></font> 
+              <br>
+              org.quartz.dataSource.myDS.validationQuery=select 0 from dual <br> 
+            </td>
+          </tr>
+        </table>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      </dd>
+    </dl>      
+    </div>
+</div>
+</body>
+</html>

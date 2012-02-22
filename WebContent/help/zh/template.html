@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>模板编写指南 - NPS Version 1.x Documentation </title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="index-page">
+<div id="path"></div>
+<div id="page-content">
+  <h1>模板编写指南 - NPS Version 1.x Documentation</h1>
+    <p></p>
+  <p>NPS支持RS、RESOURCE、ATTACH、MAP和JAVA五种语句。<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    1.RS语句用于读取栏目数据和SQL数据，可以嵌套RS、RESOURCE、ATTACH、MAP和JAVA语句。<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    2.RESOURCE语句用于读取栏目相关的各类附件，可以嵌套RS、RESOURCE、MAP和JAVA语句。<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	3.ATTACH语句用于读取当前上下文中文章的附件，不能嵌套其他语句。<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	4.MAP语句用于读取栏目列表，可以嵌套除ATTACH外的所有语句。<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+    5.JAVA语句提供直接JAVA语法支持，只能使用标签而不能嵌套语句。建议对标签进行类型强制转换，例如(String)<$art_title$>。<br>  
+  </p>
+  <p>
+	  NPS同时支持正文标签、附件标签、全局标签、RS标签四种标签。<br>
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  1.正文标签只能出现在文章模板、带TOPIC标记的RS语句、RESOURCE语句和ATTACH语句中。注意，在RS语句、RESOURCE语句和ATTACH语句中引用标签时必须加上ID号作为前缀。<br>
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  2.附件标签只能出现在RESOURCE或ATTACH语句中。<br>
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  3.RS标签只能出现在带SQL标记的RS语句中。<br>
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  4.全局标签可以出现在任何地方。
+  </p>
+  <p>以上各种语句和标签的使用范围：<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    1.文章模板和页面模板可以应用以上所有语句和标签。<br>
+	&nbsp;&nbsp;&nbsp;&nbsp; 
+    2.页面模板输出路径名中可以引用全局标签。</p>
+
+   <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th width="42%">标签名称</th>
+              <th width="58%">地址</th>
+          </tr>
+          <tr class="module">
+              <td><a href="template_article.html">正文标签</a></td>
+              <td><a href="template_article.html">template_article.html</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="template_resource.html">附件标签</a></td>
+              <td><a href="template_resource.html">template_resource.html</a></td>
+          </tr>
+
+          <tr class="module">
+              <td><a href="template_env.html">全局标签</a></td>
+              <td><a href="template_env.html">template_env.html</a></td>
+          </tr>
+
+          <tr class="module">
+              <td><a href="template_map.html">MAP语句</a></td>
+              <td><a href="template_map.html">template_map.html</a></td>
+          </tr>
+
+          <tr class="module">
+             <td><a href="template_rs.html">RS语句及标签</a></td>
+              <td><a href="template_rs.html">template_rs.html</a></td>
+          </tr>
+
+          <tr class="module">
+              <td><a href="template_attach.html">ATTACH语句</a></td>
+              <td><a href="template_attach.html">template_attach.html</a></td>
+          </tr>
+
+          <tr class="module">
+              <td><a href="template_java.html">JAVA语句</a></td>
+              <td><a href="template_java.html">template_java.html</a></td>
+          </tr>
+
+          <tr class="module">
+              <td><a href="template_res.html">RESOURCE语句</a></td>
+              <td><a href="template_res.html">template_res.html</a></td>
+          </tr>
+       </tbody>
+     </table>
+
+</div>
+</body>
+</html>

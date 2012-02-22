@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsSite</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsSite class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsSite indicates website object. </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    id<br>
+            website’s unique identification</td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    name<br>
+                    website’s name
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    unitid<br>
+                    unit’s unique identification
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    unitname<br>
+                    unit’s name
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    keywordlinks<br>
+                    Keyword links. One line represents a group of keyword links. Multiple keywords must be seperated by comma(,) in a group, and a URL link must be ends with all keywords.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsTopic</td>
+                <td>
+                    GetTopic(String id)<br>
+                    return to the id-designated topic
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic</td>
+                <td>
+                    GetTopicByCode(String code)<br>
+                    return to the code-designated topic. According to relationship between superior and subordinate, the topic’s code should be separate by the mark of “.” <br>
+					For example: the topic of “international news” which belongs to “news” can be coded as “news.international”.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    GetArticle(String id)<br>
+                    return to article which have designated ID. Self-defined datasource topic can not attain articles through this method.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    GetCustomArticle(String id,NpsTopic top)<br>
+                    return to article which have designated ID. It is available for self-defined datasource topic. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticleCollection</td>
+                <td>
+                    GetAllArticles(int state)<br>
+                    return to article list designated “state” within website.<br>
+                    “state” could apply values below:  0: draft. 1: submitted while verifying. 2: verified while publishing. 3: successfully published. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticleCollection</td>
+                <td>
+                    GetArticles(NpsTopic topic,int state,boolean included)<br>
+                    return to the overall “state” article list which belongs to topics designated by “topic”.<br>
+                    “state” could apply values below:  0: draft. 1: submitted while verifying. 2: verified while publishing. 3: successfully published.<br>
+                    “incluced=true”: indicates it will return to all articles of lower-level topics.<br>
+                    “incluced=false”: indicates it will return to articles of current topic.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticleCollection</td>
+                <td>
+                    FTSearch(String query,int max)<br>
+                    fulltext retrieval. Return to the search result set which can meet specific “query” requirement.<br>
+                    For the grammar of “query”, please refer to “SOLR” grammar guide.<br>
+                    “max” indicates the maximum number which will be return. “max<=0” indicates it will return to result sets which can meet all requirements. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResource</td>
+                <td>
+                    GetResource(String id)<br>
+                    return the resource identified by parameter id
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResourceCollection</td>
+                <td>
+                    GetResourcesByType(int type,String suffixes)<br>
+                    return all resources by type and suffix<br>
+                    type=-1 means all types<br>
+                    type=0 means pictures only <br>
+                    type=1 means documentations only <br>
+                    type=2 means videos only<br>
+                    type=3 means sounds only<br>
+                    type=4 means flashes only and type=5 means all others<br>
+                    <br>
+                    Mutiple suffixes can be seperated by '|' or ',' or ';'.<br>
+                    e.g.,".jpg|.bmp|.gif" means all resources which ends with .jpg or .bmp or .gif<br>
+                    ".*" means all resources will be matched.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResourceCollection</td>
+                <td>
+                    GetResourcesByTopic(NpsTopic topic)<br>
+                    return all resources which quoted by topic
+                </td>
+            </tr>            
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    BuildArticles(NpsArticleCollection arts)<br>
+                    rebuild all articles which belongs to result set.<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    IndexArticles(NpsArticleCollection arts)<br>
+                    Index all articles which belongs to result set<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Build(boolean rebuildall)<br>
+                    rebuild/publish website.<br>
+                    "rebuildall=true": rebuild all existing articles.<br>
+                    ”rebuildall=false”: publish the pending articles.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Index()<br>
+                    Index all published articles.<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Archive()<br>
+                    Archive all topics with archive schema.<br>
+                </td>
+            </tr>
+            
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddKeywordLink(String keyword,String url)<br>
+                    Add a keyword link<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddKeywordLinks(String line)<br>
+                    Add a group of keyword links. Multiple keywords must be seperated by comma(,) in a group, and a URL link must be ends with all keywords.<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveKeywordLink(String keyword,String url)<br>
+                    Remove a keyword link<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveKeywordLinks(String url)<br>
+                    Remove a group of keyword links<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+  <!DOCTYPE form-validation PUBLIC
+   "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+            "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+  <form-validation>
+      <formset>
+          <form name="confirmorderForm">
+              <field property="or_invoicetitle" depends="cnminlength,cnmaxlength">
+                  <msg name="cnminlength" key="confirmorder.or_invoicetitle.cnminlength" />
+                  <msg name="cnmaxlength" key="confirmorder.or_invoicetitle.cnmaxlength" />
+                  
+                  <arg name="cnminlength" key="${var:cnminlength}" position="0" resource="false" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnminlength</var-name>
+                      <var-value>5</var-value>
+                  </var>
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>50</var-value>
+                  </var>
+              </field>
+              <field property="or_memo" depends="cnmaxlength">
+                  <msg name="cnmaxlength" key="confirmorder.or_memo.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>200</var-value>
+                  </var>
+              </field>
+          </form>
+      </formset>
+  </form-validation>

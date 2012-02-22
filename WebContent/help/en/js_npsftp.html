@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsFtp</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsFtp class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsFtp used to run ftp command.<br>
+        The sample code indicate how to download log file from www.jwebstar.com
+        <table border="1" width="100%">
+            <tr><td>
+                var ftp = new NpsFtp();<br>
+                ftp.Connect('www.jwebstar.com',21);<br>
+                ftp.Login('nps','nps');<br>
+                ftp.ChangeWorkingDirectory('/pub');<br>
+                ftp.SetBinary();<br>
+                ftp.MGet(new NpsFile('/jwebstarlog/'),'jwebstar*.log');<br>
+                ftp.Disconnect();<br>
+            </td></tr>
+        </table>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsFtp()<br>
+                    Construction
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Connect(String server,int port) throws Exception<br>
+                    Connect to ftp server
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Login(String uname,String upass) throws IOException<br>
+                    Login to the FTP server using the provided username and password.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ChangeWorkingDirectory(String path) throws IOException<br>
+                    Change the current working directory of the FTP session.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    PrintWorkingDirectory() throws IOException<br>
+                    Returns the pathname of the current working directory.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    MkDir(String path) throws IOException<br>
+                    Creates a new subdirectory on the FTP server in the current directory(if a relative pathname is given) or where specified (if an absolute pathname is given).
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    MkDirs(String path) throws IOException<br>
+                    Creates the directory named by this abstract path, including any necessary but nonexistent parent directories.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    RemoveDir(String path) throws IOException<br>
+                    Removes a directory on the FTP server (if empty).
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetAscii() throws IOException<br>
+                    Sets the file type to ASCII.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetBinary() throws IOException<br>
+                    Sets the file type to BINARY.The default file type is ASCII if this method is never called.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Get(String filename,NpsFile local) throws Exception<br>
+                    Retrieves a file named filename from the server,and writes it to local.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    MGet(NpsFile local_dir,String filter) throws Exception<br>
+                    Retrieves files or directories from the server,and writes it to local dir.<br>
+                    filter is the conditions, you can use the DOS format of the wildcard,
+                    * can replace the file name in the number of characters,
+                    and ? can only replace the file name of a character.<br>
+                    for example:"*.doc" mean get all files ends with ".doc" from ftp server.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Put(NpsFile local) throws Exception<br>
+                    Stores a file to the server.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    MPut(NpsFile local_dir,String filter) throws Exception<br>
+                    Stores all files or directories in local_dir to the server.
+                    filter is the conditions, you can use the DOS format of the wildcard,
+                    * can replace the file name in the number of characters,
+                    and ? can only replace the file name of a character.<br>
+                    for example:"*.doc" mean put all files ends with ".doc" in local_dir to the ftp server
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Delete(String filename)  throws IOException<br>
+                    Deletes a file on the FTP server.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Rename(String from,String to)  throws IOException<br>
+                     Renames a remote file.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Logout() throws IOException<br>
+                    Logout of the FTP server by sending the QUIT command. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Disconnect() throws IOException<br>
+                    Closes the connection to the FTP server and restores connection parameters to the default values.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Abort() throws IOException<br>
+                     Abort a transfer in progress.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

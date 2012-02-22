@@ -1,0 +1,55 @@
+.pagebreak_onebyone {
+	FLOAT: left; font-size:12px; MARGIN: 0 auto;margin-top:15px;margin-bottom:30px;
+}
+.pagebreak_modern {
+	FLOAT: right; font-size:12px; margin-top:15px;margin-bottom:30px;
+}
+.prevpage {
+	FLOAT: left; MARGIN: 0px 3px 0px 0px; VERTICAL-ALIGN: middle; LINE-HEIGHT: 18px; FONT-FAMILY: Tahoma,SimSun,Arial; WHITE-SPACE: nowrap; HEIGHT: 18px; TEXT-ALIGN: center
+}
+.prevpage {
+	BORDER-RIGHT: #ccc 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; BORDER-LEFT: #ccc 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #ccc 1px solid
+}
+
+.currentpage {
+	MARGIN: 0px 3px 0px 0px; VERTICAL-ALIGN: middle; LINE-HEIGHT: 18px; FONT-FAMILY: Tahoma,SimSun,Arial; WHITE-SPACE: nowrap; HEIGHT: 18px; TEXT-ALIGN: center
+}
+.currentpage {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+.currentpage {
+	BORDER-RIGHT: #fd6d01 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #fd6d01 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: 700; PADDING-BOTTOM: 0px; BORDER-LEFT: #fd6d01 1px solid; COLOR: #fd6d01; PADDING-TOP: 0px; BORDER-BOTTOM: #fd6d01 1px solid; BACKGROUND-COLOR: #ffede1
+}
+
+.page {
+	MARGIN: 0px 3px 0px 0px; VERTICAL-ALIGN: middle; LINE-HEIGHT: 18px; FONT-FAMILY: Tahoma,SimSun,Arial; WHITE-SPACE: nowrap; HEIGHT: 18px; TEXT-ALIGN: center
+}
+.page {
+	BORDER-RIGHT: #ccc 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; BORDER-LEFT: #ccc 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #ccc 1px solid
+}
+
+.page_skip {
+	MARGIN: 0px 3px 0px 0px; VERTICAL-ALIGN: middle; LINE-HEIGHT: 18px; FONT-FAMILY: Tahoma,SimSun,Arial; WHITE-SPACE: nowrap; HEIGHT: 18px; TEXT-ALIGN: center
+}
+.page_skip {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+
+.nextpage {
+	 MARGIN: 0px 3px 0px 3px; VERTICAL-ALIGN: middle; LINE-HEIGHT: 18px; FONT-FAMILY: Tahoma,SimSun,Arial; WHITE-SPACE: nowrap; HEIGHT: 18px; TEXT-ALIGN: center
+}
+.nextpage {
+	BORDER-RIGHT: #ccc 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; BORDER-LEFT: #ccc 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #ccc 1px solid
+}
+
+.total {
+	MARGIN: 0px 3px 0px 0px; VERTICAL-ALIGN: middle; LINE-HEIGHT: 18px; FONT-FAMILY: Tahoma,SimSun,Arial; WHITE-SPACE: nowrap; HEIGHT: 18px; TEXT-ALIGN: center
+}
+
+.total {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 0px; COLOR: #666; PADDING-TOP: 0px
+}
+
+.page_select {
+	MARGIN: 0px 3px 0px 0px; VERTICAL-ALIGN: middle; LINE-HEIGHT: 18px; FONT-FAMILY: Tahoma,SimSun,Arial; WHITE-SPACE: nowrap; HEIGHT: 20px; TEXT-ALIGN: center; border:1px solid #999;
+}

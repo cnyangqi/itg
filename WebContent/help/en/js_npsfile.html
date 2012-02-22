@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsFile</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsFile class</a></h1>
+    <div class="toplang"></div>
+    <p>File object, which can be applied to read&write local files.<br>
+        <br>
+        <font color=red>Note: it can only read&write files which are under the root path of current website.</font>
+    </p>
+</div>
+
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    name<br>
+                    Returns the name of the file or directory denoted by this abstract pathname. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    path<br>
+                    Return this abstract pathname.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    absolutepath<br>
+                    Returns the absolute pathname string of this abstract pathname.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsFile</td>
+                <td>
+                    new(String filename)<br>
+                    Return to NpsFile object whose filename is designated <br>
+                    filename will be automatically mapped to the root path of currently in-use website. 
+                    For example: the root path of current website is “c:\web”, then in case of the following situation: <br>
+                    1.filename=c:\web\logs\mylog.txt<br>
+                    2.filename=c:\logs\mylog.txt<br>
+                    3.filename=/logs/mylog.txt<br>
+                    the final result will point to “c:\web\logs\mylog.txt” files. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsFile()<br>
+                    Whether it is file or not. If it is file, it will return to True, otherwise, it will return to false. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsDirectory()<br>
+                    Whether it is directory or not. If it is directory, it will return to True, otherwise, it will return to false.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Exists()<br>
+                    Tests whether the file or directory denoted by this abstract pathname exists.
+                </td>
+            </tr>            
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    Length()<br>
+                    The file’s size. If file doesn’t exist, it will return to 0.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Mkdir()<br>
+                    Creates the directory named by this abstract pathname.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Mkdirs()<br>
+                    Creates the directory named by this abstract pathname, including any necessary but nonexistent parent directories.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Rename(String fname)<br>
+                    Renames the file denoted by this abstract pathname.<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    CopyTo(NpsFile new_file)<br>
+                    If new_file is directory, copy this file to it; else rewrite the new_file.<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Delete() throws Exception<br>
+                     Deletes the file or directory denoted by this abstract pathname.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    OpenReader() throws Exception<br>
+                    Open file then enter read mode.You must call CloseReader() or Close() to close reader.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    Read() throws Exception<br>
+                    Read a char. If it reach the stream tail, it will return to -1.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    ReadLine() throws Exception<br>
+                    Read one text line. Certain line is terminated if following characters appear: change line “('\n')”, enter “('\r')”, or change line right after enter. If it reach the stream tail, it will return to “null”. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    CloseReader()<br>
+                    Close Reader。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Reset() throws Exception<br>
+                    Reset Reader and Writer.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    OpenWriter(boolean append) throws Exception<br>
+                    Open file then enter read-in mode. set true for append mode.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Write(int c) throws Exception<br>
+                    Write a char.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    WriteString(String s) throws Exception<br>
+                    Write a string. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    CloseWriter()<br>
+                    Close Writer.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Close()<br>
+                    Close Reader and Writer simultaneously.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

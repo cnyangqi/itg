@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Guide for Template Functions - NPS Version 1.x Documentation</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">Guide for Template Functions</a></h1>
+    <div class="toplang"></div>
+    <p>
+        Template Functions are a group of functions offered by NpsObject class, they are supported since V1.9. All template functions must be called in JAVA statement.
+    </p>
+</div>
+
+<div id="quickview">
+    <ul id="toc">
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#printa">print</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#printb">print</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#printarray">print_array</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#println">println</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#printin">printin</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#nvl">NVL</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#isnull">ISNULL</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#if">IF</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#equals">EQUALS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#autolink">AUTOLINK</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#htmlescape">HTMLESCAPE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#xmlescape">XMLESCAPE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#decode">DECODE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#split">SPLIT</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#instr">INSTR</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#substr">SUBSTR</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#replace">REPLACE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#contact">CONTACT</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#length">LENGTH</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#initcap">INITCAP</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#lower">LOWER</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#upper">UPPER</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#lpad">LPAD</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#rpad">RPAD</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#ltrim">LTRIM</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#rtrim">RTRIM</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#trim">TRIM</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#tonumber">TO_NUMBER</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#todate">TO_DATE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#tochar">TO_CHAR</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#sysdate">SYSDATE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#addyears">ADD_YEARS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#addmonths">ADD_MONTHS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#adddays">ADD_DAYS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#nextday">NEXT_DAY</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#lastday">LAST_DAY</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#abs">ABS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#round">ROUND</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#max">MAX</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#min">MIN</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#greatest">GREATEST</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#least">LEAST</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#uid">UID</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#user">USER</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#userenv">USERENV</a></li>
+    </ul>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#printa">print(Object obj[,String format])</a></h2>
+    <p>Format the object and print it to output file(s)</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#printb">print(Object obj[,int wordcount, String padding])</a></h2>
+    <p>Format the object and return characters less than wordcount and then print them to output file(s).
+        <br>
+       If the length of formatted object more than wordcount, then the String specified by padding will be added.
+        If the parameter padding is omitted, then nothing will be added.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#printarray">print_array(String format, Object[] args)</a></h2>
+    <p>Print formatted string using the specified format string and arguments for each elements in args to output file(s).
+       Null element will be omitted.
+    </p>
+
+    <p><b>Parameters:</b></p>
+    <p>format: <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/Formatter.html#syntax" target="_blank">A format string</a>.</p>
+
+    <p><b>Sample codes</b></p>
+    <p>
+        Below codes show how to split <$art_tag$> and print as linkers.<br>
+        &lt;%  <br>
+          print_array("&lt;a href=\"/search/search.jsp?q=%1$s\" target=\"_blank\"&gt;%1$s&lt;/a&gt;&amp;nbsp;&amp;nbsp;",SPLIT(&lt;$art_tag$&gt;)); <br>
+        %&gt; <br>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#println">println()</a></h2>
+    <p>Print a line seperator string. \r\n for Windows and \n for Unix.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#printin">printin()</a></h2>
+    <p>Print indent</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#nvl">Object NVL(Object expr1, Object expr2)</a></h2>
+    <p>NVL lets you replace null with a string in the results of a query. If expr1 is null, then NVL returns expr2. If expr1 is not null, then NVL returns expr1.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#isnull">boolean ISNULL(Object obj)</a></h2>
+    <p>ISNULL determine which object is null or not</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#if">Object IF(boolean expression, Object true_value,Object false_value)</a></h2>
+    <p>If expression=true, then IF returns true_value; If expression=false, then IF returns false_value.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#equals">boolean EQUALS(Object obj,Object test_obj)</a></h2>
+    <p>If obj equals test_obj, then EQUALS return true, else return false</p>
+    <p>If obj is a number, NPS will convert obj and test_obj to BigDecimal to compare. Otherwise NPS will convert them to String to compare.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#autolink">String AUTOLINK(Object obj)</a></h2>
+    <p>Detect in the keyword-links dictionary and add links for keywords.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#htmlescape">String HTMLESCAPE(Object obj)</a></h2>
+    <p>Escape special characters for HTML</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#xmlescape">String XMLESCAPE(Object obj)</a></h2>
+    <p>Escape special characters for XML</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#decode">Object DECODE(Object control_value,Object value1,Object result1[,Object value2,Object result2...][,Object default_result])</a></h2>
+    <p>
+        DECODE compares control_value to each value one by one. If control_value is equal to a value, then NPS returns the corresponding result. If no match is found, then NPS returns default. If default is omitted, then NPS returns null.
+    </p>
+    <p>
+        If the first search-result pair are numeric, then NPS compares all search-result expressions and converts the remaining arguments to BigDecimal, and returns that datatype.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#split">String[] SPLIT(Object obj1 [,String regex,int limit])</a></h2>
+    <p>Splits this string around matches of the given regular expression.</p>
+
+    <p><b>Parameters</b></p>
+    <p>
+        regex: the delimiting regular expression. If regex is omitted, the default is <b></b>[ \t\n\x0B\f\r]</b>
+        <br>
+       The limit parameter controls the number of times the pattern is applied and therefore affects the length of the resulting array. If the limit n is greater than zero then the pattern will be applied at most n - 1 times, the array's length will be no greater than n, and the array's last entry will contain all input beyond the last matched delimiter. If n is non-positive then the pattern will be applied as many times as possible and the array can have any length. If n is zero then the pattern will be applied as many times as possible, the array can have any length, and trailing empty strings will be discarded.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#instr">int INSTR(Object str,Object str_search[,int fromIndex,int occurrence])</a></h2>
+    <p>
+        The INSTR functions search string for substring. The function returns an integer indicating the position of the character in string that is the first character of this occurrence.        
+    </p>
+
+    <p><b>参数</b></p>
+    <p>
+        fromIndex is an nonzero integer indicating the character of string where NPS begins the search.
+        If position is negative, then NPS counts backward from the end of string and then searches backward from the resulting position.
+        <br>
+
+        occurrence is an integer indicating which occurrence of string NPS should search for. 
+        The value of occurrence must be positive.
+
+        <br>
+       If the search is unsuccessful (if substring does not appear occurrence times after the position character of string), then the return value is 0.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#substr">String SUBSTR(Object str,int start,int count)</a></h2>
+    <p>
+        The SUBSTR functions return a portion of char, beginning at character position, count characters long.
+    </p>
+
+    <p><b>Parameters</b></p>
+    <p>
+        If position is 0, then it is treated as 1.
+        <br>
+
+        If position is positive, then NPS counts from the beginning of char to find the first character.
+        <br>
+
+        If position is negative, then NPS counts backward from the end of char.
+        <br>
+
+        If substring_length is omitted, then NPS returns all characters to the end of char.
+        If substring_length is less than 1, then Oracle returns null.
+
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#replace">String REPLACE(Object str,String regex,String replacement)</a></h2>
+    <p>
+        REPLACE returns char with every occurrence of regex replaced with replacement.
+        If replacement is null, then all occurrences of search_string are removed. If search_string is null, then char is returned.
+    </p>
+
+    <p><b>Parameters</b></p>
+    <p>
+        regex: <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html#sum">the regular expression to which this string is to be matched</a>
+        <br>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#contact">String CONTACT(Object char1, Object char2)</a></h2>
+    <p>
+        CONCAT returns char1 concatenated with char2.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#length">int LENGTH(Object obj)</a></h2>
+    <p>The LENGTH functions return the length of char.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#initcap">String INITCAP(Object obj)</a></h2>
+    <p>INITCAP returns char, with the first letter of each word in uppercase, all other letters in lowercase. Words are delimited by white space or characters that are not alphanumeric.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#lower">String LOWER(Object obj)</a></h2>
+    <p>LOWER returns char, with all letters lowercase.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#upper">String UPPER(Object obj)</a></h2>
+    <p>UPPER returns char, with all letters uppercase.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#lpad">String LPAD(Object obj,int n[,String expr2])</a></h2>
+    <p>LPAD returns string left-padded to length n characters with the sequence of characters in expr2.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#rpad">String RPAD(Object obj,int n[,String expr2])</a></h2>
+    <p>RPAD returns string right-padded to length n characters with expr2</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#ltrim">String LTRIM(Object str[,String trim_str])</a></h2>
+    <p>
+       LTRIM removes from the left end of str all of the characters contained in trim_str. If you do not specify trim_str, it defaults to a single blank. 
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#rtrim">String RTRIM(Object str[,String trim_str])</a></h2>
+    <p>RTRIM removes from the right end of str all of the characters that appear in trim_str. If you do not specify trim_str, it defaults to a single blank.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#trim">String TRIM(Object obj)</a></h2>
+    <p>TRIM enables you to trim leading or trailing characters from a character string.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#tonumber">Number TO_NUMBER(Object str)</a></h2>
+    <p>TO_NUMBER converts string to a value of NUMBER datatype.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#todate">Date TO_DATE(Object str,String format)</a></h2>
+    <p>TO_DATE converts string to a value of DATE datatype.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#tochar">String TO_CHAR(Object obj[,String format])</a></h2>
+    <p>TO_CHAR converts any type to a string.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#sysdate">Date SYSDATE()</a></h2>
+    <p>SYSDATE returns the current date and time.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#addyear">Date ADD_YEARS(Object obj,int years)</a></h2>
+    <p>ADD_YEARS returns the date plus integer years. </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#addmonth">Date ADD_MONTHS(Object obj,int months)</a></h2>
+    <p>ADD_MONTHS returns the date plus integer months. </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#adddays">Date ADD_DAYS(Object obj,int days)</a></h2>
+    <p>ADD_DAYS returns the date plus integer days.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#nextday">Date NEXT_DAY(Object date,String weekday)</a></h2>
+    <p>
+        NEXT_DAY returns the date of the first weekday named by char that is later than the date.
+        The argument weekday must be a day of the week in the date language of your session, either the full name or the abbreviation. The minimum number of letters required is the number of letters in the abbreviated version.
+        The return value has the same hours, minutes, and seconds component as the argument date.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#lastday">Object LAST_DAY(Object date)</a></h2>
+    <p>LAST_DAY returns the date of the last day of the month that contains date. </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#abs">Number ABS(Object n)</a></h2>
+    <p>ABS returns the absolute value of n.</p>
+</div>
+
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#round">Number ROUND(Object n)</a></h2>
+    <p>ROUND returns n rounded to integer places to the right of the decimal point.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#max">Number MAX(Object obj1,Object... objs)</a></h2>
+    <p>MAX returns maximum value of objs.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#min">Number MIN(Object obj1,Object... objs)</a></h2>
+    <p>MIN returns minimum value of objs.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#greatest">String GREATEST(Object str1,Object ...strs)</a></h2>
+    <p>GREATEST returns the greatest of the list of one or more expressions. Each expr is implicitly converted to String before the comparison.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#least">String LEAST(Object str1,Object ...strs)</a></h2>
+    <p>
+        LEAST returns the least of the list of one or more expressions. Each expr is implicitly converted to String before the comparison.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#uid">String UID()</a></h2>
+    <p>UID returns an integer that uniquely identifies the session user(the user who logged on).</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#user">String USER()</a></h2>
+    <p>USER returns the name of the session user (the user who logged on) </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#userenv">String USERENV(String var)</a></h2>
+    <p>USERENV returns information about the current session configured in nps.conf</p>
+
+    <p><b>Parameters</b></p>
+    <p>
+        WEB_ROOT: NPS web root<br>
+        TEMP_ROOTPATH: Current temp path<br>
+        LOCALE: Default locale<br>
+        And other keys defined in nps.conf.
+    </p>
+</div>
+
+    <br><br><br><br>
+  </div>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsArticle</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsArticle class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsArticle表示文章对象。 </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    id<br>
+                    文章唯一标识。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    title<br>
+                    文章标题。可读写
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic</td>
+                <td>
+                    topic<br>
+                    主栏目。可读写
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    url<br>
+                    发布后路径。可读写，但不支持自定义数据源的写操作。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    previd<br>
+                    上一篇文章ID#。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    prevtitle<br>
+                    上一篇文章标题。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    prevurl<br>
+                    上一篇文章URL。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic</td>
+                <td>
+                    prevtopic<br>
+                    上一篇文章栏目。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    prev<br>
+                    上一篇文章。可读写
+                </td>
+            </tr>            
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    nextid<br>
+                    下一篇文章ID#。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    nexttitle<br>
+                    下一篇文章标题。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    nexturl<br>
+                    下一篇文章URL。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic</td>
+                <td>
+                    nexttopic<br>
+                    下一篇文章栏目。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    next<br>
+                    下一篇文章。可读写
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic[]</td>
+                <td>
+                    slavetopics<br>
+                    从栏目列表。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach[]</td>
+                <td>
+                    attaches<br>
+                    附件列表。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    state<br>
+                    文章状态。0:草稿，1:提交待审核，2:已审核待发布，3:已发布。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    bPublished<br>
+                    是否发布。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    createdate<br>
+                    创建时间。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    publishdate<br>
+                    发布时间。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    subtitle<br>
+                    文章副标题。可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    abtitle<br>
+                    文章短标题。可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    keyword<br>
+                    标签。可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    source<br>
+                    来源。可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    author<br>
+                    作者。可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    importance<br>
+                    重要度：0普通 1重要 2非常重要。可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    validdays<br>
+                    有效天数，0表示长期有效。可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    score<br>
+                    积分，可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    isExternalLink<br>
+                    是否为外部链接。只读
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    sourceid<br>
+                    复制后的源ID。只读。不支持自定义数据源
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    new(NpsTopic topic,String title)<br>
+                    构造函数。topic是指定栏目，title是文章标题
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddResource(NpsResource resource)<br>
+                    添加附件。不支持自定义数据源。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsPublished()<br>
+                    是否已发布。true:是，false:不是
+                </td>
+            </tr>
+            <tr class="module">
+                <td width="100">boolean</td>
+                <td>
+                    HasField(String name)<br>
+                    是否包含字段。true:是，false:不是
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>Object</td>
+                <td>
+                    GetFieldValue(String name)<br>
+                    返回name指定的字段值<br>
+                    正文内容返回String对象。其他根据数据库定义相应返回数字类型、字符串类型、日期类型等。                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetFieldValueFormatted(String name,String format)<br>
+                    按format指定的要求格式化返回name指定的字段值
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetFieldValueLimitted(String name,int wordcount)<br>
+                    返回name指定的字段值中的前wordcount个值。<br>
+                    数字将不被截断<br>
+                    wordcount<=0时返回整个字段值。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetCustomField(String name,String value)<br>
+                    AddCustomField(String name,String value)<br>
+                    设置扩展字段的值，如果没有该字段，就添加一个。不支持自定义数据源。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach[]</td>
+                <td>
+                    GetAttaches(String suffix,int max)<br>
+                    返回指定后缀名suffix的附件中的前max个附件。<br>
+                    suffix格式可以使用".jpg *.bmp"进行指定，以;或|或空格或TAB间隔。"*.*"表明返回全部<br>
+                    max<=0时表示返回所有满足条件的附件。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach</td>
+                <td>
+                    GetAttach(int i)<br>
+                    返回第i个附件
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach</td>
+                <td>
+                    GetAttachById(String id)<br>
+                    返回指定id号的附件
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    CopyToTopic(NpsTopic topic) <br>
+                    CopyTo(NpsTopic topic) <br>
+                    复制文章到指定栏目topic，返回复制后的文章<br>
+                    自定义数据源不支持此操作
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddSlaveTopic(NpsTopic topic) <br>
+                    添加从栏目
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    DeleteSlaveTopic(NpsTopic topic) <br>
+                    删除从栏目
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Save() <br>
+                    保存文章。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateContent(String content) <br>
+                    更新正文。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateContentByFile(NpsFile file)<br>
+                    根据文件更新正文。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit() <br>
+                    提交文章。不支持自定义数据源。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Build() <br>
+                    发布文章。栏目页面模板不进行重建。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    BuildAllTopics()<br>
+                    重建相关栏目的所有页面模版。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Cancel(boolean bResetPublishdate) <br>
+                    撤销文章。bResetPublishdate=true，则重置发布时间
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Delete() <br>
+                    删除文章。不支持自定义数据源。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Index(int mode) <br>
+                    提交SOLR索引。mode=0表示添加索引；mode=1表示删除索引。<br>
+                    <font color=red>注意，只有在nps.conf中设置了SOLR参数且当前站点勾选了“为该站点建立全文索引库”时有效。</font>
+                    Build()、Cancel()、Delete()方法将自动索引。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Clear() <br>
+                    清理临时文件。
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+INCLUDE_URL=待包含的URL：
+INCLUDE_BASE_URL=预览用基地址：
+INCLUDE_BASE_URL_HINT=服务器根目录，如http://www.jwebstar.com/
+INCLUDE_ALERT_NO_URL=请输入要包含文件的URL路径
+INCLUDE_ALERT_INVALID_URL=非法的URL，请使用相对路径

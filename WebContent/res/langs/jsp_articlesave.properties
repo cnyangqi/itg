@@ -1,0 +1,2 @@
+ARTICLE_HINT_DELETED=be deleted
+ARTICLE_HINT_CANCELED=be canceled.

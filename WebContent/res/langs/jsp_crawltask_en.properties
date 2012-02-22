@@ -1,0 +1,96 @@
+TASK_HTMLTILE=Web Crawler
+TASK_BUTTON_SAVE=Save
+TASK_BUTTON_DELETE=Delete
+TASK_BUTTON_VIEWLOG=View Log
+TASK_BUTTON_SCHEDULE=Schedule
+TASK_BUTTON_RESUME=Resume
+TASK_BUTTON_PAUSE=Pause
+TASK_BUTTON_RUN=Run immediately
+TASK_BUTTON_RUNAS=Choose
+TASK_BUTTON_CLOSE=Close
+TASK_ALERT_NAME_IS_NULL=Please input the task name
+TASK_ALERT_SITE_IS_NULL=Please choose a site
+TASK_ALERT_RUNAS_IS_NULL=Please choose a user
+TASK_ALERT_TOPIC_IS_NULL=Please choose a topic to submit
+TASK_ALERT_SQL_IS_NULL=Please input the SQL
+TASK_ALERT_INVALID_ARTICLERULE=Please input the article rule and the actual link
+TASK_ALERT_CRONEXP_IS_NULL=Please input cron date expression
+TASK_ALERT_JOBCODE_IS_NULL=Please input job code
+TASK_ALERT_DELETE=Are you sure to delete this task?
+TASK_ALERT_PAUSE=Are you sure to pause this task?
+TASK_ALERT_RESUME=Are you sure to resume this task?
+TASK_ALERT_SCHEDULE=Are you sure to schedule this task?
+TASK_ALERT_SAVEFIRST=Please save first before adding urls or tags
+TASK_ALERT_DELETE_PAGE=Are you sure to delete these urls?
+TASK_ALERT_DELETE_TAG=Are you sure to delete these tags?
+TASK_NAME=Task name:
+TASK_ID=ID#
+TASK_SITE=Site:
+TASK_ENCODING=Encoding:
+TASK_HTTPMETHOD=HTTP method:
+TASK_HTTPMETHOD_GET=GET
+TASK_HTTPMETHOD_POST=POST
+TASK_DETECTDUPLICATE=Ignore duplicate links
+TASK_REGION_START=Analyze all links between:
+TASK_REGION_END=to:
+TASK_NEXTPAGE_START=The tag of 'Next page' start between:
+TASK_NEXTPAGE_END=to:
+TASK_ARTICLE=Article Rules
+TASK_URLFILTER=URL Filter:
+TASK_URLFILTER_HINT=<a href="http://download.oracle.com/javase/1.4.2/docs/api/java/util/regex/Pattern.html" target=_blank>Regular Expression</a> supported.
+TASK_ARTICLE_RULE=Article Rule:
+TASK_ARTICLE_RULE_SAMPLE=Example: openwindow('<$art_id$>')
+TASK_ARTICLE_RULE_HINT=System will return the actual links depends on the variables analyzed from 'article rule'. Variable must start with <$ and end with $>
+TASK_ARTICLE_LINK=Actual Link:
+TASK_ARTICLE_LINK_SAMPLE=Example: /article.jsp?id=<$art_id$>
+TASK_ARTICLE_LINK_HINT=Variables analyzed from 'article rule' and tags in the result set of 'web url' can be used
+TASK_ARTICLE_NEXTPAGE_START=The tag of 'Next page' for articles start between:
+TASK_ARTICLE_NEXTPAGE_END=to:
+TASK_THREAD=Thread:
+TASK_THREAD_HINT=Empty=3
+TASK_INTERVAL=Interval time:
+TASK_INTERVAL_HINT=Empty=10000ms
+TASK_SAVEMODE=Save To:
+TASK_SAVEMODE_ARTICLE=New Article
+TASK_SAVEMODE_SQL=SQL User-defined
+TASK_TOPIC=Topic
+TASK_BUTTON_SELTOPIC=Choose
+TASK_SQL=SQL:
+TASK_SQL_HINT=All tags can be used, not including <$ and $>
+TASK_PAGES=A List of Web URL(s)
+TASK_PAGETYPE=URL type:
+TASK_PAGETYPE_LIST=List Page
+TASK_PAGETYPE_HTML=Article
+TASK_PAGETYPE_RSS=RSS
+TASK_BUTTON_ADD_PAGE=Add
+TASK_BUTTON_DEL_PAGE=Remove permanently
+TASK_PAGE_URL=Web URL
+TASK_TAGS=A List of Tag(s)
+TASK_BUTTON_ADD_TAG=Add
+TASK_BUTTON_DEL_TAG=Remove permanently
+TASK_TAG_TITLE=Title
+TASK_TAG_NAME=Var Name
+TASK_TAG_START=Start from
+TASK_TAG_END=To
+TASK_RUNAS=Run As:
+TASK_STATUS=Job Status:
+TASK_HINT_STATUS_NEW=New
+TASK_HINT_STATUS_BLOCKED=<font color=red>Blocked</font>
+TASK_HINT_STATUS_COMPLETE=Complete
+TASK_HINT_STATUS_ERROR=<font color=red>Error</font>
+TASK_HINT_STATUS_NONE=<font color=red>Not scheduled yet</font>
+TASK_HINT_STATUS_NORMAL=Normal
+TASK_HINT_STATUS_PAUSED=<font color=red>Paused</font>
+TASK_CRONEXP=Cron Date:
+TASK_BUTTON_CRONEXP_HELP=Help
+TASK_CREATOR=Created by:
+TASK_CREATEDATE=Created at:
+TASK_LASTRUN_SERVER=Server:
+TASK_LASTRUN_STATE=State:
+TASK_LASTRUN_STATUS_NORMAL=Success
+TASK_LASTRUN_STATUS_ERROR=<font color=red>Abnormal</font>
+TASK_LASTRUN_DATE=Started At:
+TASK_LASTRUN_TIME=Time(s)
+TASK_JOB=NPS Job
+TASK_LANG=Language
+TASK_BUTTON_JS_HELP=Javascript Object Reference

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsSitemap</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsSitemap class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsSitemap used to generate the Google Sitemap.Sitemaps protocol enables you to send URL list to search engines.
+        <br><br>
+        The index file name seems like sitemapindex1.xml,sitemapindex2.xml,etc.
+        <font color=red>
+        At the first time, you need to login to google and verify your sitemaps.
+        After that,all the sitemap will send to google for update automatically.
+        </font>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsSitemap()<br>
+                    Construction
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Generate(NpsSite site) throws Exception<br>
+                    Generate the sitemap for the site
+                </td>
+            </tr>
+           <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit2Google() throws Exception<br>
+                    Notify google of an update to your Sitemaps
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit2Yahoo() throws Exception<br>
+                    Notify yahoo of an update to your Sitemaps
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit2Live() throws Exception<br>
+                    Notify live of an update to your Sitemaps
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit2Ask() throws Exception<br>
+                    Notify Ask.com of an update to your Sitemaps
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

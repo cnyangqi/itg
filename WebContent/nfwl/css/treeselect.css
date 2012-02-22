@@ -1,0 +1,13 @@
+.ValueFieldClass{disable:true;vertical-align:bottom;FONT-FAMILY: Courier New, Courier;font-size:12px;border-left-width:0;border-top-width:0;border-bottom-width:0;border-right:0 solid #000000;vertical-align:middle;height:18px;width:250px;color:#000000;}
+.SelectButtonClass{position:relative;right:1px;font-size:11px;vertical-align:middle;width:16;height:16;color:#2050b0;background-color:#D0DFF7;border:1 solid #9fA3Ce;writing-mode:tb-rl;font-weight:bold;
+.SelectButtonClass{position:relative;right:1px;font-size:11px;vertical-align:middle;width:16;height:16;color:#2050b0;background-color:#D0DFF7;border:1 solid #9fA3Ce;writing-mode:tb-rl;font-weight:bold;
+}
+.seldiv{
+position:absolute;z-index:1000;overflow-x:hidden;border-left:1 solid #C0C0C0;border-bottom:1 solid #C0C0C0;border-top:1 solid #C0C0C0;border-right:1 solid #C0C0C0;
+SCROLLBAR-FACE-COLOR: #4682B4; 
+SCROLLBAR-HIGHLIGHT-COLOR: #4682B4; 
+SCROLLBAR-SHADOW-COLOR: #FFFFFF; 
+SCROLLBAR-3DLIGHT-COLOR: #FFFFFF; 
+SCROLLBAR-ARROW-COLOR: #ffffff; 
+SCROLLBAR-TRACK-COLOR: #ffffff; 
+SCROLLBAR-DARKSHADOW-COLOR: #4682B4;}

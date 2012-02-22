@@ -1,0 +1,1 @@
+FCKTEMPLATESAVE_DELETED=FCKEditor Template has been deleted.

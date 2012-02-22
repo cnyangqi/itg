@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+  <!DOCTYPE form-validation PUBLIC
+   "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+            "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+  <form-validation>
+      <formset>
+          <form name="userForm">
+              <field property="email" depends="required,email">
+                  <msg name="required" key="user.email.blank" />
+                  <msg name="email" key="user.email" />
+              </field>
+              <field property="nickname" depends="required,cnmaxlength,cnminlength">
+                  <msg name="required"  key="user.nickname.blank" />
+                  <msg name="cnminlength" key="user.nickname.cnminlength" />
+                  <msg name="cnmaxlength" key="user.nickname.cnmaxlength" />
+                  
+                  <arg name="cnminlength" key="${var:cnminlength}" position="0" resource="false" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnminlength</var-name>
+                      <var-value>2</var-value>
+                  </var>
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>10</var-value>
+                  </var>
+              </field>
+           	  <field property="name" depends="required,cnmaxlength">
+                  <msg name="required"  key="user.name.blank" />
+                  <msg name="cnmaxlength" key="user.name.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>10</var-value>
+                  </var>
+              </field>
+              <field property="detailadr" depends="required,cnmaxlength">
+                  <msg name="required"  key="user.detailadr.blank" />
+                  <msg name="cnmaxlength" key="user.detailadr.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>50</var-value>
+                  </var>
+              </field>
+              <field property="mobile" depends="required,mask">
+                  <msg name="required"  key="user.mobile.blank" />
+                  <msg name="mask" key="user.mobile.mask" />
+                  <var>
+                      <var-name>mask</var-name>
+                      <var-value>^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$</var-value>
+                  </var>
+                  
+              </field>
+              <field property="areacode" depends="required,integer,cnmaxlength">
+                  <msg name="required"  key="user.areacode.blank" />
+                  <msg name="integer" key="user.areacode.integer" />
+                  <msg name="cnmaxlength" key="user.areacode.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>4</var-value>
+                  </var>
+              </field>
+              <field property="telephone" depends="required,integer,cnmaxlength">
+                  <msg name="required"  key="user.telephone.blank" />
+                  <msg name="integer" key="user.telephone.integer" />
+                  <msg name="cnmaxlength" key="user.telephone.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>8</var-value>
+                  </var>
+              </field>
+              <field property="subnum" depends="integer,cnmaxlength">
+                  <msg name="integer" key="user.subnum.integer" />
+                  <msg name="cnmaxlength" key="user.subnum.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>3</var-value>
+                  </var>
+              </field>
+              <field property="faxareacode" depends="required,integer,cnmaxlength">
+                  <msg name="integer" key="user.faxareacode.integer" />
+                  <msg name="cnmaxlength" key="user.faxareacode.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>4</var-value>
+                  </var>
+              </field>
+              <field property="fax" depends="required,integer,cnmaxlength">
+                  <msg name="integer" key="user.fax.integer" />
+                  <msg name="cnmaxlength" key="user.fax.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>8</var-value>
+                  </var>
+              </field>
+          </form>
+          
+          <form name="addressForm">
+              <field property="adr_name" depends="required,cnminlength,cnmaxlength">
+                  <msg name="required"  key="address.adr_name.blank" />
+                  <msg name="cnminlength" key="address.adr_name.cnminlength" />
+                  <msg name="cnmaxlength" key="address.adr_name.cnmaxlength" />
+                  
+                  <arg name="cnminlength" key="${var:cnminlength}" position="0" resource="false" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnminlength</var-name>
+                      <var-value>2</var-value>
+                  </var>
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>20</var-value>
+                  </var>
+              </field>
+              <field property="adr_detail" depends="required,cnmaxlength">
+                  <msg name="required"  key="address.adr_detail.blank" />
+                  <msg name="cnmaxlength" key="address.adr_detail.cnmaxlength" />
+                  
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>50</var-value>
+                  </var>
+              </field>
+              <field property="adr_postcode" depends="required,cnminlength,cnmaxlength">
+                  <msg name="required"  key="address.adr_postcode.blank" />
+                  <msg name="cnminlength" key="address.adr_postcode.cnminlength" />
+                  <msg name="cnmaxlength" key="address.adr_postcode.cnmaxlength" />
+                  
+                  <arg name="cnminlength" key="${var:cnminlength}" position="0" resource="false" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnminlength</var-name>
+                      <var-value>6</var-value>
+                  </var>
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>6</var-value>
+                  </var>
+              </field>
+              <field property="adr_mobile" depends="required,mask">
+                  <msg name="required"  key="address.adr_mobile.blank" />
+                  <msg name="mask" key="address.adr_mobile.mask" />
+                  <var>
+                      <var-name>mask</var-name>
+                      <var-value>^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$</var-value>
+                  </var>
+              </field>
+              <field property="adr_areacode" depends="required,integer,cnmaxlength">
+                  <msg name="required"  key="address.adr_areacode.blank" />
+                  <msg name="integer" key="address.adr_areacode.integer" />
+                  <msg name="cnmaxlength" key="address.adr_areacode.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>4</var-value>
+                  </var>
+              </field>
+              <field property="adr_telephone" depends="required,integer,cnmaxlength">
+                  <msg name="required"  key="address.adr_telephone.blank" />
+                  <msg name="integer" key="address.adr_telephone.integer" />
+                  <msg name="cnmaxlength" key="address.adr_telephone.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>8</var-value>
+                  </var>
+              </field>
+              <field property="adr_subnum" depends="integer,cnmaxlength">
+                  <msg name="integer" key="address.adr_subnum.integer" />
+                  <msg name="cnmaxlength" key="address.adr_subnum.cnmaxlength" />
+                  <arg name="cnmaxlength" key="${var:cnmaxlength}" position="0" resource="false" />
+                  <var>
+                      <var-name>cnmaxlength</var-name>
+                      <var-value>3</var-value>
+                  </var>
+              </field>
+              <field property="adr_email" depends="required,email">
+                  <msg name="required" key="address.adr_email.blank" />
+                  <msg name="email" key="address.email" />
+              </field>
+          </form>
+      </formset>
+  </form-validation>

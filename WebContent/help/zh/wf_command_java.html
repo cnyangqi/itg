@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>工作流节点命令二次开发 - Java编程指南 - NPS Version 2.x Documentation </title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="index-page">
+<div id="path"></div>
+<div id="page-content">
+  <h1>工作流节点命令二次开发 - Java编程指南 - NPS Version 2.x Documentation</h1>
+    <p>工作流节点可以使用<a href="wf_command_js.html">JavaScript</a>、DynamicJava、<a href="wf_command_sql.html">SQL</a>三种语言进行业务编程。这里着重介绍如何使用DynamicJava进行二次开发。</p>
+    <p><b>全局变量</b></p>
+    <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>变量名</th>
+                <th>类型</th>
+                <th>含义</th>
+            </tr>
+            <tr class="module">
+                <td>session</td>
+                <td>WorkflowSession</td>
+                <td>记录了当前上下文情景</td>
+            </tr>
+            <tr class="module">
+                <td>out</td>
+                <td>NpsLog</td>
+                <td>日志写入全局文件nps.log</td>
+            </tr>
+            <tr class="module">
+                <td>user</td>
+                <td>User</td>
+                <td>记录当前运行账户</td>
+            </tr>
+            <tr class="module">
+                <td>app_id</td>
+                <td>String</td>
+                <td>申请表ID#</td>
+            </tr>
+            <tr class="module">
+                <td>app_title</td>
+                <td>String</td>
+                <td>申请表标题</td>
+            </tr>
+            <tr class="module">
+                <td>app_emergency</td>
+                <td>int</td>
+                <td>紧急程度。 0普通 5紧急 9特急</td>
+            </tr>
+            <tr class="module">
+                <td>app_businesstype</td>
+                <td>BusinessType</td>
+                <td>业务类型</td>
+            </tr>
+            <tr class="module">
+                <td>app_process</td>
+                <td>WorkProcess</td>
+                <td>业务流程</td>
+            </tr>
+            <tr class="module">
+                <td>app</td>
+                <td>IApp</td>
+                <td>业务数据</td>
+            </tr>
+            <tr class="module">
+                <td>action</td>
+                <td>Action</td>
+                <td>操作，读取操作类型、审批意见、下一环节审批人等信息</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="padding-top:150px"></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NPS自定义数据源的定制开发</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">NPS自定义数据源的定制开发</a></h1>
+        <div class="toplang"></div>
+        <p>在栏目管理中一旦输入自定义数据源表，系统将自动生成一个以自定义数据源表名＋_prop命名的表，我们称为prop表，用于自定义数据源状态管理。其表结构如下：
+        </p>
+        <table align=center>
+            <tr>
+                <td>
+            CREATE TABLE 自定义数据源表名_prop (ID VARCHAR2(50) NOT NULL,   <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;         TITLE VARCHAR2(1000) NOT NULL,  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          SITEID VARCHAR2(10)  NOT NULL,  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          TOPIC VARCHAR2(10) NOT NULL,   <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          STATE NUMBER,   <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          CREATEDATE DATE DEFAULT SYSDATE NOT NULL,  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          PUBLISHDATE DATE,  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;         CONSTRAINT PK_自定义数据源表名_prop PRIMARY KEY (ID,TOPIC)  <br>
+                                              ); <br>
+
+            COMMENT ON COLUMN 自定义数据源表名_prop.TITLE IS '显示用标题'; <br>
+            COMMENT ON COLUMN 自定义数据源表名_prop.SITEID IS '站点ID';  <br>
+            COMMENT ON COLUMN 自定义数据源表名_prop.TOPIC IS '栏目ID'; <br>
+            COMMENT ON COLUMN 自定义数据源表名_prop.STATE IS '状态';  <br>
+            COMMENT ON COLUMN 自定义数据源表名_prop.CREATEDATE IS '创建日期';  <br>
+            COMMENT ON COLUMN 自定义数据源表名_prop.PUBLISHDATE IS '发布日期';  <br>            
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="customdata.html#CustomArticle">Class CustomArticle</a></li>
+      <li><img  src="/images/help/down.gif" /> <a href="customdata.html#attach">Class Attach</a></li>
+
+      <li><img  src="/images/help/down.gif" /> <a href="customdata.html#customxml">custom.xml配置</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="customdata.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="CustomArticle" id="CustomArticle">Class CustomArticle</a></h2>
+     <p>
+         所有自定义数据源类必须从CustomArticle派生。CustomArticle提供了默认情况下的自定义数据源的实现，有以下几个特点：<br>
+         1.除id、title、createdate、publishdate字段外，其他都以TagRS格式存储。而TagRS类似一个以大写数据库字段名为索引的Hashtable；<br>
+         2.不提供附件的操作。所有附件标签操作取值都是为空；<br>
+         3.对系列NpsEvent提供了默认支持，这些事件仅对当前栏目发起的事件响应。<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;1)InsertEvent事件默认响应：将数据插入Topic指定的prop表。如果Topic指定默认状态要求发布的，则发布之；<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;2)UpdateEvent事件默认响应：更新prop表中title的值。如果当前文章状态为已发布或待发布的，则重新发布；<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;3)DeleteEvent事件默认响应：如果文章已经发布，则删除所有静态页面、删除SOLR索引、删除prop表记录；<br> 
+         &nbsp;&nbsp;&nbsp;&nbsp;4)Ready2PublishEvent事件默认响应：发布该文章，并自动生成PublishEvent公告；<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;5)PublishEvent事件默认响应：送SOLR索引。<br>
+         4.不提供前端的管理界面。如果需要在NPS中管理自定义数据源，需要进行二次开发。
+     </p>
+     <dl>
+         <dt>构造函数</dt>
+         <dd>
+             public CustomArticle(NpsContext inCtxt,Topic top,ResultSet rs) throws Exception
+             <br>
+             根据数据库结果集构造CustomArticle。注意，系统发布过程中自动加载的结果集，仅包含prop表和自定义数据源主表字段。
+             <br>
+             <br>
+             Product样例代码：
+             <table>
+                 <tr>
+                     <td>
+                        public Product(NpsContext inCtxt,Topic top,ResultSet rs) throws Exception <br>
+                        {                                                                         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;   super(inCtxt,rs.getString("id"),rs.getString("title"),top);           <br>
+                                                                                                  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //加载主要信息                                                          <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    LoadMainInfo(rs,0);                                                   <br>
+                                                                                                  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //加载本地信息                                                          <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    LoadLocalInfos();                                                     <br>
+                                                                                                  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //加载图片                                                             <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    LoadAttaches();                                                       <br>
+                                                                                                  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //加载通知用户                                                          <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    LoadNotifyInfo();                                                     <br>
+                        }                                                                         <br>
+                     </td>
+                 </tr>
+             </table>
+         </dd>
+
+         <dt>IPublishable系列方法重载</dt>
+         <dd>
+             public boolean HasFiled(String fieldName) <br>
+             判断是否以fieldName命名的字段，如果有，返回true，否则返回false。
+             <br>
+             <br>
+             public Object GetField(String fieldName) throws NpsException <br>
+             得到以fieldName命名的字段值。返回特定的Object对象。CLOB类型返回Reader对象。
+             
+             <br>
+             <br>
+             Product样例代码：
+             <table>
+                 <tr>
+                     <td>
+                                public boolean HasFiled(String fieldName)<br>
+                                {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(fieldName==null || fieldName.length()==0) return false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            String key = fieldName.trim();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.length()==0) return false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            key = key.toUpperCase();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("name")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("code")) return true;//产品代码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("category")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("origin")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("producer")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("exporter")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("brand")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("material")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("product_size")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("product_weight")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("carton")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("carton_weight")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("purchase_price")) return true;//进价<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("price")) return true;//进价<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("fob")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("package_quantity")) return true;//包装数量<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("lead_time")) return true; //交货期<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("moq")) return true;//最小采购数<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("MinimumMoney")) return true;//最小下单金额<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("product_spec")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("package_spec")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(fields==null) return false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            return fields.HasField(key);<br>
+                                }<br>
+<br>
+                                public Object GetField(String fieldName) throws NpsException<br>
+                                {           <br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(fieldName==null || fieldName.length()==0) return null;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           String key = fieldName.trim();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.length()==0) return null;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           key = key.toUpperCase();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("name")) return name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("code")) return code;//产品代码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("category")) return category;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("origin")) return origin;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("producer")) return producer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("exporter")) return exporter;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("brand")) return brand;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("material")) return material;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("product_size")) return product_size;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("product_weight")) return product_weight;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("carton")) return carton;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("carton_weight")) return carton_weight;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("purchase_price")) return purchase_price;//进价<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("price")) return purchase_price;//进价<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("fob")) return fob;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("package_quantity")) return package_quantity;//包装数量<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("lead_time")) return lead_time; //交货期<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("moq")) return moq;//最小采购数<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("MinimumMoney")) return GetMinimumMoney();//最小下单金额<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("product_spec")) return product_spec;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("package_spec")) return package_spec;<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(fields==null) return null;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           return fields.GetField(key);<br>
+                                }
+                     </td>
+                 </tr>
+             </table>
+         </dd>
+
+         <dt>发布事件通知</dt>
+         <dd>通过EventIssue的Fire系列方法发布事件通知，注意Fire方法中的key值，应取值为自定义数据源表名（大写）。<br>
+             Product样例代码：
+            <table>
+                <tr>
+                    <td>
+               //发布准备好发布消息，让各栏目计划发布  <br>
+               public void Publish() throws NpsException  <br>
+               {  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  //Fire Event  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  EventIssue.GetIssue().FireReady2PublishEvent(this,"FT_PRODUCT");  <br>
+               }  <br>
+                    </td>
+                </tr>
+            </table>
+        </dd>
+         
+         <dt>NpsEvent事件处理</dt>
+         <dd>
+             如果默认的事件处理无法满足要求，就需要对NpsEvent处理函数进行重载。<br>
+             public void Insert(Object observer, InsertEvent event)  <br>
+             对InsertEvent事件的响应函数。<br>
+             <br>
+             public void Update(Object observer, UpdateEvent event)  <br>
+             对UpdateEvent事件的响应函数。<br>
+             <br>
+             public void Delete(Object observer, DeleteEvent event)  <br>
+             对DeleteEvent事件的响应函数。<br>
+             <br>
+             public void Ready(Object observer, Ready2PublishEvent event) <br>
+             对Ready2PublishEvent事件的响应函数。<br>
+             <br>
+             public void Publish(Object observer, PublishEvent event)  <br>
+             对PublishEvent事件的响应函数。<br>
+             <br>
+             Product样例代码：<br>
+             <table>
+                 <tr>
+                     <td>
+                            //本单位栏目仅关心自己的产品 <br>
+                            public void Insert(Object observer, InsertEvent event)<br>
+                            {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        if(observer instanceof Topic)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            Topic t = (Topic)observer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            if(!unit_id.equals(t.GetSite().GetUnit().GetId())) return;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            super.Insert(t,event);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        }<br>
+                            }                         
+                     </td>
+                 </tr>
+             </table>
+         </dd>
+     </dl>
+    </div>
+
+    <div class="top"><a href="customdata.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="attach" id="attach">Class Attach</a></h2>
+     <p>
+         Attach类是所有附件类的基类。Article类负责Attach集合的管理。
+     </p>
+     <dl>
+        <dt>IPublishable接口实现</dt>
+        <dd>
+            public String GetURL()<br>
+            返回发布后的Attach的URL路径。
+            <br>
+            <br>
+            public File GetOutputFile()<br>
+            返回临时文件存放位置。
+            <br>
+            <br>
+            
+            Product样例代码：<br>
+            <table>
+                <tr>
+                    <td>
+                            public String GetURL()<br>
+                            {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        return PRODUCT_ATTACH_URL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;               + Utils.FormateDate( art.GetCreateDate() , "yyyy/MM/dd")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;               + "/"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;               + id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;               + (suffix==null?"":suffix);<br>
+                            }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                            public File GetOutputFile()<br>
+                            {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        String temp_filepath = Utils.FormateDate(art.GetCreateDate(),"yyyy/MM/dd") +"/";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        temp_filepath = temp_filepath.replaceAll("//","/");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        if(temp_filepath.startsWith("/"))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            temp_filepath = temp_filepath.substring(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        File temp_file = new File( PRODUCT_ATTACH_PATH,temp_filepath);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        temp_file.mkdirs();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        return new File(temp_file, id + (suffix==null?"":suffix));<br>
+                            }                        
+                    </td>
+                </tr>
+            </table>
+         </dd>
+
+        <dt>Cloneable接口实现</dt>
+        <dd>
+            public Object clone() throws CloneNotSupportedException <br>
+            提供对象clone实现。默认实现如下：
+            <table>
+                <tr>
+                    <td>
+                            public Object clone() throws CloneNotSupportedException<br>
+                            {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        return super.clone();<br>
+                           }
+                    </td>
+                </tr>
+            </table>
+        </dd> 
+    </dl>
+    </div>
+
+    <div class="top"><a href="customdata.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="customxml" id="customxml">custom.xml配置</a></h2>
+     <p>Java类开发完成后，需要配置custom.xml实现自动加载。</p>
+     <dl>
+         <dt>存放位置</dt>
+         <dd>custom.xml存放在与nps.conf相同的目录下，即WEB-INF目录下。</dd>
+         <dt>配置说明</dt>
+         <dd>
+             <table>
+                 <tr>
+                     <td>
+&lt;?xml version="1.0" encoding="UTF-8"?><br>
+&lt;root><br>
+             <font color=red>
+&nbsp;&nbsp;&nbsp;&nbsp;#每一类自定义数据单独放在一个CustomArticle节点下,root节点下CustomArticle接口可以多个。<br> 
+             </font>
+&nbsp;&nbsp;&nbsp;&nbsp;	&lt;CustomArticle>	<br>
+                         <font color=red>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #每个CustomArticle节点必须有且只有一个table和class节点，否则加载时将被忽略。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #table是指要监控的自定义数据源表名，应大写。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #class是指要加载的二次开发的自定义数据源名，建议使用类全名，类必须放在common/lib、WEB-INF/classes、WEB-INF/lib下。<br>
+                         </font>
+                                         
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&lt;table>FT_PRODUCT&lt;/table><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&lt;class>nps.extra.trade.Product&lt;/class>	<br>
+
+                         <br>
+                         <font color=red>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #property节点不是必须的，仅在需要自定义配置时才需要使用。property是全局共享的。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #property下级节点名称为property变量名，值为变量的取值，注意，值是trim后结果。<br>
+                         </font>                             
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&lt;property><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		   &lt;PRODUCT_ATTACH_PATH>c:\\web\\products\\&lt;/PRODUCT_ATTACH_PATH><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		   &lt;PRODUCT_ATTACH_URL>/products/&lt;/PRODUCT_ATTACH_URL><br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property><br>
+&nbsp;&nbsp;&nbsp;&nbsp;	&lt;/CustomArticle><br>
+
+                         <br>
+                         <font color=red>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #event节点不是必须的，仅在需要自定义事件处理时才需要配置。对于CustomArticle派生类重载的NpsEvent处理方法，系统将在启动时自动加载，无需配置。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #event下只能有insert、update、delete、ready、publish四种节点，分别与InsertEvent、UpdateEvent、DeleteEvent、Ready2PublishEvent、PublishEvent事件对应。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #key值为自定义数据源中发布事件通知的KEY值。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #下面的Product样例是用于在产品publish后自动给客户发送电子邮件通知服务。<br>                             
+                         </font>
+                         
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;event><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		  &lt;publish key="FT_PRODUCT">nps.extra.trade.ProductManager&lt;/publish><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;/event><br>
+&lt;/root>                   
+                     </td>
+                 </tr>
+             </table>
+         </dd>
+     </dl>
+    </div>
+</div>
+</body>
+</html>

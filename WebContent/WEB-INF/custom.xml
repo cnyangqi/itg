@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<CustomArticle>	
+		<table>FT_PRODUCT</table>
+		<class>nps.extra.trade.Product</class>	
+		<property>
+		   <PRODUCT_ATTACH_PATH>c:\\web\\products\\</PRODUCT_ATTACH_PATH>
+		   <PRODUCT_ATTACH_URL>/products/</PRODUCT_ATTACH_URL>
+		</property>
+	</CustomArticle>
+</root>

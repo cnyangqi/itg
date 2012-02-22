@@ -1,0 +1,12 @@
+TABS_TABBORDER=内框样式：
+TABS_STYLE_NORMAL=正常样式：
+TABS_STYLE_FOCUS=选中样式：
+TABS_MODE=切换方式：
+TABS_MODE_ONMOUSEMOVE=鼠标移过
+TABS_MODE_ONCLICK=鼠标单击
+TABS_MODE_ONDBLCLICK=鼠标双击
+TABS_ADDMODULE=<span style="font-weight:bold;color:red">点击添加模块：</span>
+TABS_ALERT_NO_TITLE=请输入标题
+TABS_LINK=标签链接到：
+TABS_TARGET=Target:
+TABS_TABHINT=拖动标签排序

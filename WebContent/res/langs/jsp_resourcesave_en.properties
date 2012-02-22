@@ -1,0 +1,1 @@
+RES_HINT_DELETED=Deleted

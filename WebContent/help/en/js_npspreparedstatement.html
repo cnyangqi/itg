@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsPreparedStatement</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsPreparedStatement class</a></h1>
+    <div class="toplang"></div>
+    <p> 
+	NpsPreparedStatement can be applied to implement SQL statement precompiled by ORACLE. 
+	Database connection will adopt DataSource name as "nps" defined in db.xml. 
+	As default, the database connection transaction won’t be automatically submitted. 
+	Use “session.Commit()” to submit transaction. Use “session.Rollback()” to rollback transaction. 
+  	    <br>
+        <br>
+        <font color=red>Currently, large object (CLOB, BLOB, LONG) and array is not supported.</font> 
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">void</td>
+                <td>
+                    SetInt(int parameterIndex,int x) throws Exception<br>
+                    set specific parameter to int value.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDouble(int parameterIndex,double x) throws Exception<br>
+                    set specific parameter to double value.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetString(int parameterIndex,String s) throws Exception<br>
+                    set specific parameter to string value. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDate(int parameterIndex, Date d) throws Exception<br>
+                    set specific parameter to date value. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetNull(int parameterIndex,int sqlType) throws Exception<br>
+                    set specific parameter to null. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResultSet</td>
+                <td>
+                    ExecuteQuery() throws Exception<br>
+                    execute SQL statement, return to result set.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    ExecuteUpdate() throws Exception<br>
+                    execute “Insert、Delete、Update” statement, return to affected rows.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    Close()<br>
+                    close the given object, release the database connection. <br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

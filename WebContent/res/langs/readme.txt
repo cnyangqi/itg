@@ -1,0 +1,1 @@
+应用native2ascii将/res/native/下文件编译后结果存放在这里

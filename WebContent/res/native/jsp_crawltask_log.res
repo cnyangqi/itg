@@ -1,0 +1,11 @@
+LOG_HTMLTILE=Web Crawler Log
+LOG_BUTTON_QUERY=Search
+LOG_BUTTON_CLOSE=Close
+LOG_QUERY_DATE=Dowloaded between:
+LOG_QUERY_ERROR_ONLY=Show errors only
+LOG_URL=Web URL
+LOG_LAST_MODIFIED=Last Modified
+LOG_LENGTH=Length(byte)
+LOG_DOWNLOAD=Downloaded At
+LOG_STATE=Status
+LOG_MSG=Message

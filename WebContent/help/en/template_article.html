@@ -1,0 +1,840 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Guide for article tags</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">Guide for article tags</a></h1>
+    <div class="toplang"></div>
+    <p>Below explains article tags’ grammar, application and context of use.</p>
+    <p><font color=red>Attention for the topic of self-defined data source:</font></p>
+    <p><font color=red>1.only <$art_id$>、<$art_title$>、<$art_url$>、<$art_createdate$> and <$art_publishdate$> is valid among all article tags below. The quotation value of other article tags is null.
+        </font>
+    </p>
+    <p><font color=red>2.For other fields’ usage, please refer to <a href="template_rs.html"> guide for RS tags</a>.</font>
+    </p>
+
+    <p>
+        Since V1.5, page break tag supported for very long page, so, people could create a page break during writing an article.
+        There're two kinds of tag, one is called FCKEditor style and another is called NPS style:<br>
+        <font color=red>
+        &nbsp;&nbsp;&nbsp;&nbsp;FCKEditor style: <u>&lt;div style="page-break-after: always">&lt;span style="display: none">&amp;nbsp;&lt;/span>&lt;/div></u><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;NPS style: <u>&lt;!--pagebreak--></u>
+        </font>
+    </p>
+    <p>
+        Once these tags found in the article content, NPS would generate one more page during passing the tag <$art_content$> of article template, but not <$art_content(90,"...")$> nor <$art_content$> of page template.
+        <br><br> 
+        The default pagination style is <u>onebyone</u> style, which would show all pages generated one by one, It looks like that:<br>
+        <img src="../images/onebyone_en.jpg" border="0"><br><br>
+
+        Please Call the function <u>SetPageBreakStyle4Content(String style)</u> to reset the style. Below shows how to reset your style, for example, <u>modern</u> style. For more details for style, please refer to <a href="template_rs.html"> guide for RS tags</a><br>
+        <font color=red>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;%<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetPageBreakStyle4Content("modern");<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;%><br>
+        </font>
+    </p>
+
+</div>
+
+<div id="quickview">
+    <ul id="toc">
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_id"><$art_id$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_url"><$art_url$></a></li>        
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_title"><$art_title$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_subtitle"><$art_subtitle$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_abtitle"><$art_abtitle$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_author"><$art_author$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_source"><$art_source$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_imgurl"><$art_imgurl$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_tag"><$art_tag$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_validdays"><$art_validdays$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_important"><$art_important$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_creator"><$art_creator$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_publishdate"><$art_publishdate$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_createdate"><$art_createdate$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_previd"><$art_previd$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_prevtitle"><$art_prevtitle$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_prevurl"><$art_prevurl$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_prevtopic"><$art_prevtopic$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_prev"><$art_prev$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_nextid"><$art_nextid$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_nexttitle"><$art_nexttitle$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_nexturl"><$art_nexturl$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_next"><$art_next$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#$art_abstract$"><$art_abstract$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_content"><$art_content$></a></li>
+    </ul>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_id"><$art_id$></a></h2>
+    <p>Article’s unique identifier</p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_title"><$art_title(wordcount:int,append:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>wordcount</td>
+                <td>int</td>
+                <td>
+                    Optional. Indicate the word count you need. Chinese will be counted as one character.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>append</td>
+                <td>String</td>
+                <td>
+                    Optional.If the length of art_title greater than wordcount,NPS will append the string indicated by "append".
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Article title<br>
+    <$art_title$>:return to the entire title。<br>
+    <$art_title(50)$>:Only return to title’s 50 characters, the characters more the 50 will be truncated.<br>
+    <$art_title(50,"..."$>:Only return to title’s 50 characters.The characters more the 50 will be truncated,and "..." appended.<br>
+    for example:<br>
+    art_title="this is a test string" <br>
+    <$art_title(4)$>="this"<br>
+    <$art_title(4,"...")$>="this..."
+    </p>
+  </div>
+
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_subtitle"><$art_subtitle(wordcount:int,append:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>wordcount</td>
+                <td>int</td>
+                <td>
+                    Optional. Indicate the word count you need. Chinese will be counted as one character.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>append</td>
+                <td>String</td>
+                <td>
+                    Optional.If the length of art_subtitle greater than wordcount,NPS will append the string indicated by "append".
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Article subtitle<br>
+    <$art_subtitle$>:<$art_subtitle$>:return to the entire subtitle <br>
+    <$art_subtitle(50)$>:only return to subtitle’s 50 characters, the characters more the 50 will be truncated.<br>
+    <$art_subtitle(50,"...")$>:only return to subtitle’s 50 characters.The characters more the 50 will be truncated and "..." appended.    
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_abtitle"><$art_abtitle(wordcount:int,append:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>wordcount</td>
+                <td>int</td>
+                <td>
+                    Optional. Indicate the word count you need. Chinese will be counted as one character.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>append</td>
+                <td>String</td>
+                <td>
+                    Optional.If the length of art_abtitle greater than wordcount,NPS will append the string indicated by "append".
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Article abbreviated title<br>
+    <$art_abtitle$>:<$art_abtitle$>:return to the entire abbreviated title <br>
+    <$art_abtitle(50)$>:only return to abbreviated title’s 50 characters, the characters more the 50 will be truncated.<br>
+    <$art_abtitle(50,"...")$>:only return to abbreviated title’s 50 characters.The characters more the 50 will be truncated and "..." appended.    
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_url"><$art_url$></a></h2>
+    <p>Article’s url path after publishing.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_author"><$art_author$></a></h2>
+    <p>Article’s author.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_source"><$art_source(wordcount:int,append:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>wordcount</td>
+                <td>int</td>
+                <td>
+                    Optional. Indicate the word count you need. Chinese will be counted as one character.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>append</td>
+                <td>String</td>
+                <td>
+                    Optional.If the length of art_source greater than wordcount,NPS will append the string indicated by "append".
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Article’s source<br>
+    <$art_source$>:return to article’s source <br>
+    <$art_source(50)$>:only return to 50 characters of article’s source, the characters more the 50 will be truncated.<br>
+    <$art_source(50,"...")$>:Only return to 50 characters of article's source.The characters more the 50 will be truncated,and "..." appended.<br>
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_imgurl"><$art_imgurl$></a></h2>
+    <p>Guided Image<br>
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_tag"><$art_tag(wordcount:int,append:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>wordcount</td>
+                <td>int</td>
+                <td>
+                    Optional. Indicate the word count you need. Chinese will be counted as one character.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>append</td>
+                <td>String</td>
+                <td>
+                    Optional.If the length of keyword greater than wordcount,NPS will append the string indicated by "append".
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Tag or category<br>
+    <$art_tag$>:return the tag <br>
+    <$art_tag(50)$>:only return to 50 characters of tag, the characters more the 50 will be truncated.<br>
+    <$art_tag(50,"...")$>:Only return to 50 characters of tag.The characters more the 50 will be truncated,and "..." appended.    
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_validdays"><$art_validdays$></a></h2>   
+    <p>Valid period. The return value is “days”(integer). “0” means permanently valid. 
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_important"><$art_important$></a></h2>
+    <p>Article’s importance. The return value is integer. “0”means ordinary. “1” means important. “2”means very important.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_creator"><$art_creator$></a></h2>
+    <p>Creator’s ID number
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_creatorcn"><$art_creatorcn$></a></h2>
+    <p>Creator’s name
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_creatorfn"><$art_creatorfn$></a></h2>
+    <p>Creator’s full name. Format: Name (department name/unit name)
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_publishdate"><$art_publishdate(format:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>format</td>
+                <td>String</td>
+                <td>
+                    Optional. date format strings，default as yyyy-MM-dd. 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Publishing date. Format can be combined by using parameters below.<br>
+                            <table cellspacing="3" cellpadding="0" border="0">
+                                <tbody>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><b><span style="font-size: 12pt">Letter</span></b></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><b>Date or Time Component 
+              </b></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><b>Presentation</b></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><b><span style="font-size: 12pt">Example</span></b></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">G </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">Era </span><span style="font-size: 12pt">designator </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Text</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">AD </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">y </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">year </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>Year</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">1996; 96 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">M </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Month in year </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Month</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">July; Jul; 07 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">w </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left">Week in year</div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">27 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">W </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Week in month </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">2 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">D </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left">Day in year </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">189 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">d </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Day in month </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">10 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">F </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left">Day of week in month 
+            </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">2 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">E </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Day in week </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Text</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">Tuesday; Tue </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">a </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left">Am/pm marker </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>Text</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">PM </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">H </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Hour in day (0-23) </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">0 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">k </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left">Hour in day (1-24) </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">24 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">K </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Hour in am/pm (0-11) 
+            </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">0 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">h </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left">Hour in am/pm (1-12)</div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">12 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">m </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Minute in hour </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">30 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">s </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left">Second in minute </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">55 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">S </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Millisecond </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">978 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">z </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">Time 
+              zone </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt"><u>General time zone</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span style="font-size: 12pt">Pacific Standard Time; PST; GMT-08:00 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">Z </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left">Time zone </div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt"><u>RFC 822 time zone</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span style="font-size: 12pt">-0800 </span></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div align="left"><span style="font-size: 12pt">Pattern letters are usually repeated, as their number determines the exact presentation:  </span></div>
+                            <ul type="disc">
+                                <li style="text-align: left"><b><span style="font-size: 12pt">Text:</span></b><span style="font-size: 12pt">For formatting, if the number of pattern letters is 4 or more, the full form is used; otherwise a short or abbreviated form is used if available. For parsing, both forms are accepted, independent of the number of pattern letters. </span></li>
+                                <li style="text-align: left"><b><span style="font-size: 12pt">Number:</span></b><span style="font-size: 12pt">For formatting, the number of pattern letters is the minimum number of digits, and shorter numbers are zero-padded to this amount. For parsing, the number of pattern letters is ignored unless it's needed to separate two adjacent fields.</span></li>
+                                <li style="text-align: left"><b><span style="font-size: 12pt">Year:</span></b><span style="font-size: 12pt">For formatting, if the number of pattern letters is 2, the year is truncated to 2 digits; otherwise it is interpreted as a number.</span></li>
+                            </ul>
+                            
+    <div style="margin: 0cm 0cm 0pt 36pt" align="left">For parsing, if the number of pattern letters is more than 2, the year is interpreted literally, regardless of the number of digits. So using the pattern "MM/dd/yyyy", "01/11/12" parses to Jan 11, 12 A.D. 
+
+</div>
+                            
+    <div style="margin: 0cm 0cm 0pt 36pt" align="left">For parsing with the abbreviated 
+      year pattern (&quot;y&quot; or &quot;yy&quot;), SimpleDateFormat must interpret 
+      the abbreviated year relative to some century. It does this by adjusting 
+      dates to be within 80 years before and 20 years after the time the SimpleDateFormat 
+      instance is created. For example, using a pattern of &quot;MM/dd/yy&quot; 
+      and a SimpleDateFormat instance created on Jan 1, 1997, the string &quot;01/11/12&quot; 
+      would be interpreted as Jan 11, 2012 while the string &quot;05/04/64&quot; 
+      would be interpreted as May 4, 1964. During parsing, only strings consisting 
+      of exactly two digits, as defined by Character.isDigit(char), will be parsed 
+      into the default century. Any other numeric string, such as a one digit 
+      string, a three or more digit string, or a two digit string that isn't all 
+      digits (for example, &quot;-1&quot;), is interpreted literally. So &quot;01/02/3&quot; 
+      or &quot;01/02/003&quot; are parsed, using the same pattern, as Jan 2, 3 
+      AD. Likewise, &quot;01/02/-3&quot; is parsed as Jan 2, 4 BC. 
+      <p></p>
+    </div>
+                            
+    <ul type="disc">
+      <li style="text-align: left"><b><span style="font-size: 12pt">Month:</span></b>If 
+        the number of pattern letters is 3 or more, the month is interpreted as 
+        text; otherwise, it is interpreted as a number.</li>
+    </ul>
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_createdate"><$art_createdate(format:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>format</td>
+                <td>String</td>
+                <td>
+                    Optional. Date format string, default as yyyy-MM-dd.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Create date. For the format’s mode, please refer to the tag of art_publishdate.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_previd"><$art_previd$></a></h2>
+    <p>Previous article ID#. If not exists, return null.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_prevtitle"><$art_prevtitle$></a></h2>
+    <p>Previous article's title. If not exists, return null.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_prevurl"><$art_prevurl$></a></h2>
+    <p>Previous article's URL. If not exists, return null
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_prevtopic"><$art_prevtopic$></a></h2>
+    <p>Previous article's topic. If not exists, return null. <br>
+       You can fetch all global tags as following:<br>
+        <$art_prevtopic.top_name$> will return the previous article's topic name
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_prev"><$art_prev$></a></h2>
+    <p>Previous article. If not exists, return null. <br>
+        You can fetch article tags as following:<br>
+        <$art_prev.art_publishdate$> will return the publish date of the previous article.<br>
+        Attention pls:
+        <br><$art_previd$>=<$art_prev.art_id$>, but it's faster because <$art_prev$> will load all datas from Oracle and that will resume some time.
+        So, if you try to get the id only, <$art_previd$> is highly recommended.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_nextid"><$art_nextid$></a></h2>
+    <p>Next article ID#. If not exists, return null.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_nexttitle"><$art_nexttitle$></a></h2>
+    <p>Next article's title. If not exists, return null.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_nexturl"><$art_nexturl$></a></h2>
+    <p>Next article's url. If not exists, return null.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_nexttopic"><$art_nexttopic$></a></h2>
+    <p>Next article's topic. If not exists, return null.
+        You can fetch all global tags as following:<br>
+         <$art_nexttopic$.top_name$> will return the next article's topic name
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_next"><$art_next$></a></h2>
+    <p>Next article. If not exists, return null. <br>
+        You can fetch article tags as following:<br>
+        <$art_next.art_publishdate$> will return the publish date of the next article.<br>
+        Attention pls:
+        <br><$art_nextid$>=<$art_next.art_id$>, but it's faster because <$art_next$> will load all datas from Oracle and that will resume some time.
+        So, if you try to get the id only, <$art_nextid$> is highly recommended.
+    </p>
+  </div>
+
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_abstract"><$art_abstract$></a></h2>
+    <p>Article Abstract. If abstract is empty, and then <b><$art_abstract$></b> equals to <b><$art_content("flat",90,"...")$></b>;</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_content"><$art_content(format:string,wordcount:int,append:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>format</td>
+                <td>String</td>
+                <td>
+                    Optional. foarmat="0" or format="text" indicate the formatted plain text.<br>
+					If there is no format, HTML text is applied.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>wordcount</td>
+                <td>int</td>
+                <td>
+                    Optional. Indicate the word count you need. Chinese will be counted as one character. When wordcount is indicated, the number of plain text’s characters will always be automatically calculated.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>append</td>
+                <td>String</td>
+                <td>
+                    Optional.If the length of art_content greater than wordcount,NPS will append the string indicated by "append".
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+    <p>Article content.<br>
+        <$art_content$>:Return to the whole article marked with HTML.<br>
+        <$art_content("flat")$>:Return to the plain text which neglect the tags of script、title、head、link、style.<br>
+        <$art_content("flat",50)$>:Return to 50 characters of the plain text.<br>
+        <$art_content("flat",50,"...")$>:Return to 50 characters of the plain text.The characters more the 50 will be truncated,and "..." appended.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><$art_content(wordcount:int,append:string)$></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter name</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>wordcount</td>
+                <td>int</td>
+                <td>
+                    Optional. Indicate the word count you need. Chinese will be counted as one character. When wordcount is indicated, the number of plain text’s characters will always be automatically calculated. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>append</td>
+                <td>String</td>
+                <td>
+                    Optional.If the length of art_content greater than wordcount,NPS will append the string indicated by "append".
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+    <p>Article content.
+        <$art_content$>:Return to the whole article marked with HTML<br>
+        <$art_content(50)$>:Return to the plain text which is less than fifty characters and neglect the tags of script、title、head、link、style. One Chinese character will be counted as one character.<br>
+        <$art_content(50,"...")$>:Return to 50 characters of the plain text.The characters more the 50 will be truncated,and "..." appended.
+    </p>
+  </div>
+</div>    
+</body>
+</html>

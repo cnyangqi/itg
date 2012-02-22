@@ -1,0 +1,24 @@
+PAGE_HTMLTILE=网址
+PAGE_BUTTON_SAVE=保存
+PAGE_BUTTON_DELETE=删除
+PAGE_BUTTON_CLOSE=关闭
+PAGE_URL=网址：
+PAGE_URL_SAMPLE=例如：http://www.jwebstar.com/index_%1$s.shtml
+PAGE_URL_HINT=内置参数：%[argument_index$][flags][width][.precision]conversion，详见<a href="http://download.oracle.com/javase/6/docs/api/java/util/Formatter.html" target=_blank>Formatter</a>
+PAGE_GETWAY=参数获取方式：
+PAGE_GETWAY_MANUAL=手工添加
+PAGE_GETWAY_SQL=SQL
+PAGE_SQL=SQL:
+PAGE_VARS=参数列表
+PAGE_BUTTON_ADD_VAR=添加
+PAGE_BUTTON_DEL_VAR=删除
+PAGE_VAR_START=开始值
+PAGE_VAR_END=结束值
+PAGE_VAR_INC=增量
+PAGE_VAR_MINLENGTH=最小长度
+PAGE_VAR_PAD=填充字符
+PAGE_ALERT_URL_IS_NULL=请输入网址
+PAGE_HINT_DELETED=该网址被成功删除
+PAGE_HINT_SAVED=保存成功
+PAGE_ALERT_START_IS_NULL=参数开始值不能为空
+PAGE_ALERT_END_IS_NULL=参数结束值不能为空

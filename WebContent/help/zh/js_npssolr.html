@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsSolr</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsSolr class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsSolr用于自定义全文索引，包括独立的Solr Core和字段集合。目前支持最新的Solr 1.3版本。<br>
+        <font color=red>注意，</font>，NpsSolr不受限于站点配置中“为该站点建立全文索引库 ”选项的限制，但nps.conf文件中的SOLR_URL必须配置
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsSolr(String solrcore,int mode)<br>
+                    构造函数。mode=0表示添加/更新，mode=1表示删除
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddField(String fieldName,String value)<br>
+                    添加字段。字段应符合指定solrcore中的定义。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Index()<br>
+                    提交Solr索引
+                </td>
+            </tr>                        
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>

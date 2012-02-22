@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsChineseConverter</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsChineseConverter class</a></h1>
+    <div class="toplang"></div>
+    <p>NpsChineseConverter用于汉字的简繁转换，支持大陆、台湾、香港、澳门、新加坡、大马专用词典。注：词典来源于MediaWiki。</p>
+</div>
+
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">String</td>
+                <td>
+                    ToSimplified(String text,int synonym) throws Exception<br>
+                    转换为简体中文。text=待转换串,synonym=同义词字典<br>
+                    synonym=1，表示通用简体字典<br>
+                    synonym=3，表示大陆特殊用法，将自动包含通用简体字典<br>
+                    synonym=7，表示新加坡特殊用法，将自动包含通用简体字典<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td width="100">String</td>
+                <td>
+                    ToTraditional(String text,int synonym) throws Exception<br>
+                    转换为繁体中文。text=待转换串,synonym=同义词字典<br>
+                    synonym=2，表示通用繁体字典<br>
+                    synonym=4，表示台湾特殊用法，将自动包含通用繁体字典<br>
+                    synonym=5，表示香港特殊用法，将自动包含通用繁体字典<br>
+                    synonym=6，表示澳门特殊用法，将自动包含通用繁体字典<br>
+                    synonym=8，表示大马特殊用法，将自动包含通用繁体字典<br>
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

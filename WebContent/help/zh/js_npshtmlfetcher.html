@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsHtmlFetcher</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsHtmlFetcher class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsHtmlFetcher用于HTML网页的抓取、保存和图片的缩放。
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">void</td>
+                <td>
+                    AddNameValuePair(String name,String value)<br>
+                    为Login设置参数，name为字段名，value为其对应值。例如：<br>
+                    AddNameValuePair("username","system");<br>
+                    AddNameValuePair("password","manager");<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Login(String url)<br>
+                    登录指定站点。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsHtmlParser</td>
+                <td>
+                    GetHtmlParser(String url,String encoding) throws Exception<br>
+                    获取url指定的网页，并对该网页字段进行分析获得NpsHtmlParser对象
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SaveHtml2File(String url,NpsFile output) throws IOException<br>
+                    获取url指定网页并另存到output文件中
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GetBinary(String url,NpsFile output) throws IOException<br>
+                    获取url指定的二进制文件（例如图片）并另存到output文件中
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ScaleTo(NpsFile src,NpsFile dest,int width,int height) throws Exception<br>
+                    将src文件中的图片按width和height进行缩放，写入dest文件中<br>
+                    width=-1表示按高度自动缩放；height=-1表示按宽度自动缩放
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Process name="test process">
+   <Activity id="a1" name="开始" taskstrategy="FCFA">
+      <Transition id="t1" name="送处长" to="a2">
+         <Condition language="JAVASCRIPT">
+           <![CDATA[
+           ]]>
+         </Condition>
+      </Transition>
+      <PreCommand type="SQL">
+	         <![CDATA[
+	           ]]>
+      </PreCommand>
+      <PostCommand type="JAVASCRIPT">
+					  <![CDATA[
+					  ]]>         
+      </PostCommand>      
+   </Activity>
+   <Activity id="a2" name="待处长审核" taskstrategy="FCFA">
+      <Transition id="t2" name="送局长" to="a3">
+         <Condition language="JAVASCRIPT">
+           <![CDATA[
+           ]]>
+         </Condition>
+      </Transition>
+      <Participant>
+        <Company>default</Company>
+        <Dept></Dept>
+        <Human></Human>
+        <Role></Role>
+        <Sql></Sql>
+      </Participant>
+      <PreCommand type="SQL">
+	         <![CDATA[
+	           ]]>
+      </PreCommand>
+      <PostCommand type="JAVA">
+					  <![CDATA[
+					  ]]>         
+      </PostCommand>      
+   </Activity>
+   <Activity id="a3" name="待局长审核" taskstrategy="FCFA">
+      <Transition id="t3" name="通过" to="a4">
+         <Condition language="JAVASCRIPT">
+           <![CDATA[
+           ]]>
+         </Condition>
+      </Transition>
+      <Participant>
+        <Company>default</Company>
+        <Dept></Dept>
+        <Human></Human>
+        <Role></Role>
+        <Sql></Sql>
+      </Participant>
+      <PreCommand type="SQL">
+	         <![CDATA[
+	           ]]>
+      </PreCommand>
+      <PostCommand type="JAVASCRIPT">
+					  <![CDATA[
+					  ]]>         
+      </PostCommand>      
+   </Activity>   
+   <Activity id="a4" name="结束" taskstrategy="FCFA">
+      <PreCommand type="SQL">
+	         <![CDATA[
+	           ]]>
+      </PreCommand>
+      <PostCommand type="JAVASCRIPT">
+					  <![CDATA[
+					  ]]>         
+      </PostCommand>      
+   </Activity>      
+</Process>

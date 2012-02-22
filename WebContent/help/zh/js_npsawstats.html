@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsAwstats</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsAwstats class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsAwstats用于生成AWStats系列站点统计报告。对于小型站点，建议采用按月或按年方式生成报告；对于中大型站点，建议采用按天甚至按小时生成报告。<br><br>
+
+        <font color=red>
+        1.在NPS服务器上必须安装perl，且在系统环境变量path中包含该路径。在windows环境下可以安装ActivePerl。<br><br>
+        </font>
+
+        2.awstats_include.inc文件调整<br>
+        如果你使用的是APACHE或Lotus Notes/Domino Combined Log Format格式的日志文件，awstats_include.inc就无须调整。
+        否则，请按以下说明进行调整。<br>
+        <font color=red>
+        1)打开{$NPS_HOME}/awstats/conf/awstats_include.inc<br>
+        找到LogFormat段，根据说明正确设置LogFormat的值。<br>
+        2)删除或覆盖{$TEMP_ROOTPATH}/awstats/conf/awstats_include.inc文件（如果有）<br>    
+        </font>
+
+        <br>
+        3.请根据awstats_include.inc中的配置正确配置你的WEB服务器的日志格式。以下以Apache为例进行说明，其他WEB服务器请参见WEB服务器配置说明。<br>
+            1)Apache的combined log format设置－awstats_include.inc默认采用的格式<br>
+        <font color=red>
+            CustomLog /logs/httpd/www.jwebstar.com_access_log combined <br>
+        </font>
+            2)Apache的common log format设置<br>
+        <font color=red>
+            CustomLog /logs/httpd/www.jwebstar.com_access_log common<br>
+        </font>
+        <br>
+        <font color=red>
+        4.你也可以在awstats_include.inc中显式指定LogFile参数（参看AWStats配置手册）。<br>
+        但一旦调用AddNpsFile()或AddFile()函数后该配置将失效。<br>
+        </font>
+
+        <br>
+        以下代码演示了按月生成当月访问日志报表。
+    <table border="1" width="100%">
+        <tr><td>
+            var site = session.GetSite('jwebstar');<br>
+            var awstats = new NpsAwstats(site,'cn');<br>
+            awstats.AddFile('/weblogs/jwebstar%YY-24%MM-24%DD-24.log');<br><br>
+
+            var today = new Date();<br>
+            var year = today.getYear();<br>
+            if (year < 2000) year = year + 1900; <br>
+            var month = today.getMonth()+1;<br>
+            awstats.ReportAllByMonth(year,month);
+        </td></tr>
+    </table>
+
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsAwstats</td>
+                <td>
+                    NpsAwstats(NpsSite site,String lang)<br>
+                    构造函数。<br>
+                    lang为要生成的网页所使用的语言，为二位编码，同国家地区标准代码。en表示英文，cn表示简体中文，tw表示繁体中文。<br>
+                   <table border="1">
+                        <tr><td>
+                            Albanian=al, Bosnian=ba, Bulgarian=bg, Catalan=ca, Chinese (Taiwan)=tw, Chinese (Simpliefied)=cn, Croatian=hr,
+        Czech=cz, Danish=dk, Dutch=nl, English=en, Estonian=et, Euskara=eu, Finnish=fi, French=fr, Galician=gl,
+        German=de, Greek=gr, Hebrew=he, Hungarian=hu, Icelandic=is, Indonesian=id, Italian=it, Japanese=jp,
+        Korean=ko, Latvian=lv, Norwegian (Nynorsk)=nn, Norwegian (Bokmal)=nb, Polish=pl, Portuguese=pt, Portuguese
+        (Brazilian)=br, Romanian=ro, Russian=ru, Serbian=sr, Slovak=sk, Solvenian=si, Spanish=es, Swedish=se, Thai=th,
+        Turkish=tr, Ukrainian=ua, Welsh=cy
+                        </td></tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddNpsFile(NpsFile logfile)<br>
+                    加入多个指定的文件（不能是目录）用于日志分析。<br>
+                    可以多次调用以包含一组日志文件。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddFile(String logfile)<br>
+                    加入多个指定的文件用于日志分析，logfile可以使用通配符。可以多次调用以包含一组日志文件。<br>
+                    以下参数可以直接使用（来自AWStats的LogFile的相关说明）<br>
+                    #   %YYYY-n  is replaced with 4 digits year we were n hours ago<br>
+                    #   %YY-n    is replaced with 2 digits year we were n hours ago<br>
+                    #   %MM-n    is replaced with 2 digits month we were n hours ago<br>
+                    #   %MO-n    is replaced with 3 letters month we were n hours ago<br>
+                    #   %DD-n    is replaced with day we were n hours ago<br>
+                    #   %HH-n    is replaced with hour we were n hours ago<br>
+                    #   %NS-n    is replaced with number of seconds at 00:00 since 1970<br>
+                    #   %WM-n    is replaced with the week number in month (1-5)<br>
+                    #   %Wm-n    is replaced with the week number in month (0-4)<br>
+                    #   %WY-n    is replaced with the week number in year (01-52)<br>
+                    #   %Wy-n    is replaced with the week number in year (00-51)<br>
+                    #   %DW-n    is replaced with the day number in week (1-7, 1=sunday)<br>
+                    #                              use n=24 if you need (1-7, 1=monday)<br>
+                    #   %Dw-n    is replaced with the day number in week (0-6, 0=sunday)<br>
+                    #                              use n=24 if you need (0-6, 0=monday)<br><br>
+                    例如：<br>
+                    "*.log"表示使用所有以.log为后缀的文件<br><br>
+                    "/weblogs/jwebstar%YY-24%MM-24%DD-24.log"表示使用jwebstar080618.log格式命名的文件，且日期是昨天的日志。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportByYear(int year,String output) throws Exception<br>
+                    按年生成output指定的统计报告，output参见下表。
+                    <table border="1">
+                        <tr>
+                            <td>output</td>
+                            <td>含义</td>
+                        </tr>
+                        <tr>
+                            <td>null</td>
+                            <td>生成Main Page</td>
+                        </tr>
+                        <tr>
+                            <td>alldomains</td>
+                            <td>参观者的网域或国家</td>
+                        </tr>
+                        <tr>
+                            <td>allhosts</td>
+                            <td>主机－全部列出</td>
+                        </tr>
+                        <tr>
+                            <td>lasthosts</td>
+                            <td>主机－最近参观日期</td>
+                        </tr>
+                        <tr>
+                            <td>unknownip</td>
+                            <td>主机－无法反解译的IP地址</td>
+                        </tr>
+                        <tr>
+                            <td>alllogins</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>lastlogins</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>allrobots</td>
+                            <td>搜索引擎网站的机器人-全部列出</td>
+                        </tr>
+                        <tr>
+                            <td>lastrobots</td>
+                            <td>搜索引擎网站的机器人－最近参观日期</td>
+                        </tr>
+                        <tr>
+                            <td>urldetail</td>
+                            <td>浏览器统计－存取次数－全部列出</td>
+                        </tr>
+                        <tr>
+                            <td>urlentry</td>
+                            <td>浏览器统计－存取次数－入站处</td>
+                        </tr>
+                        <tr>
+                            <td>urlexit</td>
+                            <td>浏览器统计－存取次数－出站处</td>
+                        </tr>
+                        <tr>
+                            <td>browserdetail</td>
+                            <td>浏览器－版本</td>
+                        </tr>
+                        <tr>
+                            <td>osdetail</td>
+                            <td>操作系统－版本</td>
+                        </tr>
+                        <tr>
+                            <td>unknownbrowser</td>
+                            <td>浏览器－无法得知</td>
+                        </tr>
+                        <tr>
+                            <td>unknownos</td>
+                            <td>操作系统－无法得知</td>
+                        </tr>
+                        <tr>
+                            <td>refererse</td>
+                            <td>来源网址-由那些搜索引擎转介</td>
+                        </tr>
+                        <tr>
+                            <td>refererpages</td>
+                            <td>来源网址-由那些其他网站转介</td>
+                        </tr>
+                        <tr>
+                            <td>keyphrases</td>
+                            <td>搜索－用以搜索的短语</td>
+                        </tr>
+                        <tr>
+                            <td>keywords</td>
+                            <td>搜索－用以搜索的关键词</td>
+                        </tr>
+                        <tr>
+                            <td>errors404</td>
+                            <td>HTTP 错误码－找不到的网页</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportAllByYear(int year) throws Exception<br>
+                    按年生成所有的统计报告。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportByMonth(int year,int month,String output) throws Exception<br>
+                    按月生成output指定的统计报告，output参见上表。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportAllByMonth(int year,int month) throws Exception<br>
+                    按月生成所有的统计报告。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportByDay(int year,int month,int day,String output) throws Exception<br>
+                    按天生成output指定的统计报告，output参见上表。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportAllByDay(int year,int month,int day) throws Exception<br>
+                    按天生成所有的统计报告。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportByHour(int year,int month,int day,int hour,String output) throws Exception<br>
+                    按小时生成output指定的统计报告，output参见上表。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportAllByHour(int year,int month,int day,int hour) throws Exception<br>
+                    按小时生成所有的统计报告。
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+<br><br><br><br><br><br><br>
+</div>
+
+</div>
+</body>
+</html>

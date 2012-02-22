@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsWebServiceClient</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsWebServiceClient class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsWebServiceClient用于实现远程WebService接口调用。<br>
+        以下代码演示了从www.jwebstar.com上的Login方法，传入两个参数，第一个是用户名，第二个是密码，返回值是true/false。
+    </p>
+    <table border="1" width="100%">
+        <tr><td>
+            var client = new NpsWebServiceClient("http://www.jwebstar.com/admin/WebService.jws?wsdl");<br>
+            var args = new Array();<br>
+            args[0]="your email";<br>
+            args[1]="your password";<br>
+            var result = client.Invoke("Login",args);<br>
+            out.Error(result[0]);<br>
+        </td></tr>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsWebServiceClient(String url)<br>
+                    构造函数。url是WSDL地址。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    HTTPAuth(String username,String password)<br>
+                    设置采用RFC2617- HTTP Authentication约定的方式认证。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetProperty(String name,Object value) throws Exception<br>
+                    为创建的XFire对象设置属性。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Object[]</td>
+                <td>
+                    Invoke(String method_name,Object[] args) throws Exception<br>
+                    调用method_name的远程方法。args是传入该方法的参数列表。<br>
+                    1.如果没有参数，则args=null；<br>
+                    2.如果只有一个参数，则可以直接写入参数或者传入只有一个参数的数组。例如：<br>
+                      var result = client.Invoke("Query","query_string");<br>
+                    或者 <br>
+                      var args = new Array();<br>
+                      args[0] = "query_string";<br>
+                      var result = client.Invoke("Query",args);<br>
+                    3.如果有多个参数，则应使用数组。<br>
+
+                    <br><br>
+                    返回值是一个数组，如果只有一个返回值，那么就在result[0]中<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br><br>
+</div>
+</div>
+</body>
+</html>

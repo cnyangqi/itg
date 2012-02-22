@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Guide for RESOURCE statement</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">Guide for RESOURCE statement</a></h1>
+    <div class="toplang"></div>
+    <p>RESOURCE statement is used for reading attachments of topic.</p>
+    <p>Note:<font color=red>For Custom topics, it will return a empty list always.</font></p>
+   <h1><font color="red">RESOURCE grammar</font></h1>
+   <p>
+	 &lt;res id=(id:STRING) topic=(topic:STRING) type=(type:STRING) where=(where:string) orderby=(orderby:string) from=(from:int) rows=(rows:int) page=(page:int) style=(style:String)>  <br>
+		  &nbsp;&nbsp;&nbsp;&nbsp;--Input your text content here<br>
+	 &lt;/res>
+   </p>
+   <p><font color=red>Topic parameter must be placed after id parameter and before other parameters.</font></p>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+        <tr>
+          <th>parameters</th>
+          <th>type</th>
+          <th>meaning</th>
+        </tr>
+        <tr class="module">
+          <td>id</td>
+          <td>STRING</td>
+          <td> Unique identification of the RS. It must begin with letters or
+            underline. </td>
+        </tr>
+        <tr class="module">
+          <td>topic</td>
+          <td>STRING</td>
+          <td> The topic code that need to be inquired. You can quote article tag
+            and attachment tag only with the ID number of the RES.<br />
+            Optional, if topic is not assigned, then the system
+            would calculate according to current context and pick the topic that
+            current template belongs to.<br />
+            <br>
+            If topic assigned to empty string(""), it will retrive all attachments in current site.
+            <br>
+            i.e.: a topic named “news” would be:<br />
+            &lt;res id ="r1" topic="news"><br />
+               &nbsp;&nbsp;&nbsp;&nbsp; <$r1.res_title$><br />
+            &lt;/res><br />
+            </td>
+        </tr>
+        <tr class="module">
+          <td>type</td>
+          <td>STRING</td>
+          <td> Optional. Indicate the type of attachment, expressed as attachment
+            suffix. Multiple types can be separated by “;”, space, “tab”, “,”
+            or “|” and is not case sensitive. If the type is not set, it means
+            all attachment will be taken. It equals type="*.*".
+            <p>For example, ".jpg;.gif" means pictures matching jpg and gif format.</p>
+            <p> ".jpg|.bmp|.gif" </p>
+            <p> "*.jpg|.bmp|*.gif" </p>
+            <p> ".jpg;.bmp;.gif" </p>
+            <p> "jpg|bmp|gif" </p>
+            <p> "jpg bmp gif" </p></td>
+        </tr>
+        <tr class="module">
+          <td>where</td>
+          <td>string</td>
+          <td>
+              Optional,Additional WHERE clause for SQL,and must appear with the topic parameters together.
+              The statement will appeare in the following SQL statement in red marked with where_clause.
+              <br>
+              select c.*,d.name creator_cn,e.unit<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;  from article a, attach b,resources c,users d,dept e,topic f<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;  Where a.Id=b.artid And c.id=b.resid and c.creator=d.id and d.dept=e.id and a.topic=f.id <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           and (f.code='<$top_code$>' or f.code like '<$top_code$>.%') and f.siteid='<$site_id$>'<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           and (<font color=red>where_clause</font>) <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          order by <font color=red>orderby_statement</font>    <br>
+
+          </td>
+        </tr>
+        <tr class="module">
+          <td>orderby</td>
+          <td>string</td>
+          <td>
+              Optional.The ORDER BY clause allows you to sort the records in your result set.<br>
+              "a.important desc,a.publishdate desc,a.createdate desc,a.id,b.idx" as default which means ordering by article's importance, publish date, create date, article and attachment's index in article.<br>
+          </td>
+        </tr>
+        <tr class="module">
+          <td>from</td>
+          <td>int</td>
+          <td> Optional, reading data from the item of number X. <br />
+            As default, it will calculate from number 0.</td>
+        </tr>
+        <tr class="module">
+          <td>rows</td>
+          <td>int</td>
+          <td> Optional, reading total items of X, All the rest data will be read
+            if it haven’t been filled. </td>
+        </tr>
+        <tr class="module">
+          <td>page</td>
+          <td>int</td>
+          <td> <p>Optional, pagination. System will automatically page when the
+              item number was reached.<br />
+              A sample css style file comes with NPS, you could find it at <$NPS_HOME$>/css/pagebreak.css, the easies way is to copy it to your website and customize it.
+            </p>
+            <p>&nbsp;</p></td>
+        </tr>
+        <tr class="module">
+              <td>style</td>
+              <td>String</td>
+              <td>
+                  Optional, pagination style. Default value is "modern".<br>
+                  A sample css style file comes with NPS, you could find it at <$NPS_HOME$>/css/pagebreak.css, the easies way is to copy it to your website and customize it.
+                  <table border="1" width="100%">
+                      <tr>
+                          <th width="120">Symbol</th>
+                          <th>Meaning</th>
+                      </tr>
+                      <tr>
+                          <td>none</td>
+                          <td>do NOT show the navigation at all.</td>
+                      </tr>
+                      <tr>
+                          <td>modern</td>
+                          <td>A modern pagination style which is the default style for RS statement.<br>
+                              If you set locale to zh_CN at nps.conf, it should be the same as "modern_zh"; else it should be the same as "moder_en".
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_zh</td>
+                          <td>A chinese modern pagination style. It looks like that:<br>
+                              <img src="../images/modern_cn.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_en</td>
+                          <td>An english modern pagination style. It looks like that:<br>
+                              <img src="../images/modern_en.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_custom</td>
+                          <td>In this way, you could control all fields used for modern printing process.
+                              <br><font color=red>Attention: pls set all fields listed in Table#Modern showned below before RS statment.</font>
+                          </td>
+                      </tr>
+
+                      <tr>
+                          <td>onebyone</td>
+                          <td>A pagination style to list all pages one by one, no omit. This is the default style for content pagination of article.
+                              If you set locale to zh_CN at nps.conf, it should be the same as "onebyone_zh"; else it should be the same as "onebyone_en".
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_zh</td>
+                          <td>A chinese pagination style to list all pages one by one. It looks like that:<br>
+                              <img src="../images/onebyone_cn.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_en</td>
+                          <td>An english pagination style to list all pages one by one. It looks like that:<br>
+                              <img src="../images/onebyone_en.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_custom</td>
+                          <td>In this way, you could control all fields used for onebyone printing process.
+                              <br><font color=red>Attention: pls set all fields listed in Table#Onebyone showned below before RS statment.</font>
+                      </tr>
+                  </table>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+<br><br>
+<h1><font color="red">How to customize pagination style</font></h1>
+  <p>
+      Please use JAVA statement to set all fields showed below before RS statement.<br>
+      ATTENTION PLS：<br>
+      <font color=red>
+      1.please re-set all fields but not one of them only.<br>
+      2.If you only want to customize your CSS style, please just do it with /css/pagebreak.css<br>
+      3.Format String Syntax, please see java <u>Formatter</u> class for more detail: <br>
+      </font>
+
+          The format specifiers for general, character, and numeric types have the following syntax: <br>
+          <font color=red>%[argument_index$][flags][width][.precision]conversion</font><br><br>
+          The optional argument_index is a decimal integer indicating the position of the argument in the argument list. The first argument is referenced by "1$", the second by "2$", etc.<br><br>
+          The optional flags is a set of characters that modify the output format. The set of valid flags depends on the conversion. <br><br>
+          The optional width is a non-negative decimal integer indicating the minimum number of characters to be written to the output.<br><br>
+          The optional precision is a non-negative decimal integer usually used to restrict the number of characters. The specific behavior depends on the conversion.<br><br>
+          The required conversion is a character indicating how the argument should be formatted. The set of valid conversions for a given argument depends on the argument's data type.<br>
+          <table cellpadding="5" summary="genConv">
+              <tbody>
+                  <tr>
+                      <th valign="bottom">Conversion</th>
+                      <th valign="bottom">Argument Category</th>
+                      <th valign="bottom">Description</th>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'b'</code>, <code>'B'</code></td>
+                      <td valign="top">general</td>
+                      <td>If the argument <i>arg</i> is <code>null</code>, then the result is &quot;<code>false</code>&quot;. If <i>arg</i> is a <code>boolean</code> or <a title="class in java.lang" href="http://download.java.net/jdk7/docs/api/java/lang/Boolean.html"><code>Boolean</code></a>, then the result is the string returned by <a href="http://download.java.net/jdk7/docs/api/java/lang/String.html#valueOf(boolean)"><code>String.valueOf(arg)</code></a>. Otherwise, the result is &quot;true&quot;.</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'h'</code>, <code>'H'</code></td>
+                      <td valign="top">general</td>
+                      <td>If the argument <i>arg</i> is <code>null</code>, then the result is &quot;<code>null</code>&quot;. Otherwise, the result is obtained by invoking <code>Integer.toHexString(arg.hashCode())</code>.</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'s'</code>, <code>'S'</code></td>
+                      <td valign="top">general</td>
+                      <td>If the argument <i>arg</i> is <code>null</code>, then the result is &quot;<code>null</code>&quot;. If <i>arg</i> implements <a title="interface in java.util" href="http://download.java.net/jdk7/docs/api/java/util/Formattable.html"><code>Formattable</code></a>, then <a href="http://download.java.net/jdk7/docs/api/java/util/Formattable.html#formatTo(java.util.Formatter, int, int, int)"><code>arg.formatTo</code></a> is invoked. Otherwise, the result is obtained by invoking <code>arg.toString()</code>.</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'c'</code>, <code>'C'</code></td>
+                      <td valign="top">character</td>
+                      <td>The result is a Unicode character</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'d'</code></td>
+                      <td valign="top">integral</td>
+                      <td>The result is formatted as a decimal integer</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'o'</code></td>
+                      <td valign="top">integral</td>
+                      <td>The result is formatted as an octal integer</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'x'</code>, <code>'X'</code></td>
+                      <td valign="top">integral</td>
+                      <td>The result is formatted as a hexadecimal integer</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'e'</code>, <code>'E'</code></td>
+                      <td valign="top">floating point</td>
+                      <td>The result is formatted as a decimal number in computerized scientific notation</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'f'</code></td>
+                      <td valign="top">floating point</td>
+                      <td>The result is formatted as a decimal number</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'g'</code>, <code>'G'</code></td>
+                      <td valign="top">floating point</td>
+                      <td>The result is formatted using computerized scientific notation or decimal format, depending on the precision and the value after rounding.</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'a'</code>, <code>'A'</code></td>
+                      <td valign="top">floating point</td>
+                      <td>The result is formatted as a hexadecimal floating-point number with a significand and an exponent</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'t'</code>, <code>'T'</code></td>
+                      <td valign="top">date/time</td>
+                      <td>Prefix for date and time conversion characters. See <a href="http://download.java.net/jdk7/docs/api/java/util/Formatter.html#dt">Date/Time Conversions</a>.</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'%'</code></td>
+                      <td valign="top">percent</td>
+                      <td>The result is a literal <code>'%'</code> (<tt>'\u0025'</tt>)</td>
+                  </tr>
+                  <tr>
+                      <td valign="top"><code>'n'</code></td>
+                      <td valign="top">line separator</td>
+                      <td>The result is the platform-specific line separator</td>
+                  </tr>
+              </tbody>
+          </table>
+
+      <br>
+      For example, below shows how to get a pagination without summary bar and select box.<br>
+      &lt;% <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_HEADER = "&lt;div class='pagebreak_modern'>"; <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_PREVPAGE = "&lt;span class='prevpage'>&lt;a href='%1$s'>Previous&lt;/a>&lt;/span>";<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_NEXTPAGE = "&lt;span class='nextpage'>&lt;a href='%1$s'>Next&lt;/a>&lt;/span>";<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_SKIP  = "&lt;span class='omit'>...&lt;/span>";<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_PAGE = "&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span>";<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_CURRENTPAGE = "&lt;span class='currentpage'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span>";<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_TOTAL = null;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_SELECTBOX = null;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_FOOTER = "&lt;/div>";<br>
+      %> <br>
+  </p>
+  <h2>Default field settings for modern style</h2>
+  <table border="1" width="800" class="related" cellspacing="0" cellpadding="0" >
+      <tr>
+          <th width="200">Symbol</th>
+          <th width="100">Meaning</th>
+          <th>Value</th>
+          <th width="200">Parameter(s)</th>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_HEADER</td>
+          <td>page header</td>
+          <td>&lt;div class='clear'>&lt;/div>&lt;div class='pagebreak_modern'></td>
+          <td>&nbsp;</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_PREVPAGE</td>
+          <td>Previous Page</td>
+          <td>&lt;span class='prevpage'>&lt;a href='%1$s'>Previous&lt;/a>&lt;/span></td>
+          <td>URL for previous</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_NEXTPAGE</td>
+          <td>Next Page</td>
+          <td>&lt;span class='nextpage'>&lt;a href='%1$s'>Next&lt;/a>&lt;/span></td>
+          <td>URL for next</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_SKIP</td>
+          <td>Omit symbol</td>
+          <td>&lt;span class='omit'>...&lt;/span></td>
+          <td>&nbsp;</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_PAGE</td>
+          <td>page number</td>
+          <td>&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span></td>
+          <td>URL,Page number</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_CURRENTPAGE</td>
+          <td>Current page</td>
+          <td>&lt;span class='currentpage'>%2$s&lt;/span></td>
+          <td>URL,page number</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_TOTAL</td>
+          <td>Summary Bar</td>
+          <td>&lt;span class='total'>共%2$d页&lt;/span></td>
+          <td>records, pages, records per page, current page number</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_SELECTBOX</td>
+          <td>select box</td>
+          <td>&lt;select class='page_select' onchange='javascript:window.location=this.value'></td>
+          <td>&nbsp;</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_FOOTER</td>
+          <td>page footer</td>
+          <td>&lt;/div></td>
+          <td>&nbsp;</td>
+      </tr>
+  </table>
+
+  <br><br>
+  <h2>Default field settings for onebyone style</h2>
+  <table border="1" width="800" class="related" cellspacing="0" cellpadding="0" >
+      <tr>
+          <th width="200">Symbol</th>
+          <th width="100">Meaning</th>
+          <th>Value</th>
+          <th width="200">Parameter(s)</th>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_HEADER</td>
+          <td>page header</td>
+          <td>&lt;div class='clear'>&lt;/div>&lt;div class='pagebreak_onebyone'></td>
+          <td>&nbsp;</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_PREVPAGE</td>
+          <td>Previous page</td>
+          <td>&lt;span class='prevpage'>&lt;a href='%1$s'>上一页&lt;/a>&lt;/span></td>
+          <td>URL for previous page</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_NEXTPAGE</td>
+          <td>Next page</td>
+          <td>&lt;span class='nextpage'>&lt;a href='%1$s'>下一页&lt;/a>&lt;/span></td>
+          <td>URL for next page</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_SKIP</td>
+          <td>Omit symbol</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_PAGE</td>
+          <td>Page number</td>
+          <td>&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span></td>
+          <td>URL, page number</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_CURRENTPAGE</td>
+          <td>Current page</td>
+          <td>&lt;span class='currentpage'>%2$s&lt;/span></td>
+          <td>URL, page number</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_TOTAL</td>
+          <td>Summary bar</td>
+          <td>&nbsp;</td>
+          <td>records, pages, records per page, current page number</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_SELECTBOX</td>
+          <td>select box</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+      </tr>
+      <tr>
+          <td>PAGEBREAK_FOOTER</td>
+          <td>page footer</td>
+          <td>&lt;/div></td>
+          <td>&nbsp;</td>
+      </tr>
+  </table>
+
+  <br><br>
+  <h1><font color="red">Sample Coding</font></h1>
+    <p> <b>Get all attachments in current topic.</b><br>
+      &lt;res id="r1"> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp; <$r1.res_title$> <br>
+      &lt;/res> <br>
+      <br>
+      <b>Get all attachments in current topic too.</b><br>
+      &lt;res id="r1" topic=<$top_code$>> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp; <$r1.res_title$> <br>
+      &lt;/res> <br>
+
+       <br>
+       Get all attachments which importance is "very important", and order by publish date<br>
+       &lt;res id="r1" topic=<$top_code$> where="a.important=2" orderby="a.publishdate"> <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <$r1.res_title$> <br>
+       &lt;/res> <br>
+
+      <br>
+      <b>Get top 20 attachments in topic coded in "top1"</b><br>
+      &lt;res id="r1" topic="top1" rows=20> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp; <$r1.res_title$> <br>
+      &lt;/res> <br>
+      <br>
+      <b>Get all attachments in current topic,and display them by 20 rows per page</b><br>
+      &lt;res id="r1" page=20> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp; <$r1.res_title$> <br>
+      &lt;/res> <br>
+    </p>
+</div>
+   <br><br><br><br>
+</div>
+</body>
+</html>

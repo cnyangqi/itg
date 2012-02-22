@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Guide for crontab - NPS Version 1.0 Documentation </title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="index-page">
+<div id="path"></div>
+<div id="page-content">
+<h1>Guide for crontab - NPS Version 1.0 Documentation</h1>
+
+<h3><a name="CronTriggersTutorial-Format"></a>Format--From Quartz</h3>
+
+<p>A cron expression is a string comprised of 6 or 7 fields separated by white space. Fields can contain any of the
+    allowed values, along with various combinations of the allowed special characters for that field. The fields are as
+    follows:</p>
+<table class="confluenceTable">
+    <tbody>
+        <tr>
+            <th class="confluenceTh">Field Name</th>
+            <th class="confluenceTh">Mandatory?</th>
+            <th class="confluenceTh">Allowed Values</th>
+            <th class="confluenceTh">Allowed Special Characters</th>
+        </tr>
+        <tr>
+            <td class="confluenceTd">Seconds</td>
+            <td class="confluenceTd">YES</td>
+            <td class="confluenceTd">0-59</td>
+            <td class="confluenceTd">, - * /</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd">Minutes</td>
+            <td class="confluenceTd">YES</td>
+            <td class="confluenceTd">0-59</td>
+            <td class="confluenceTd">, - * /</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd">Hours</td>
+            <td class="confluenceTd">YES</td>
+            <td class="confluenceTd">0-23</td>
+            <td class="confluenceTd">, - * /</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd">Day of month</td>
+            <td class="confluenceTd">YES</td>
+            <td class="confluenceTd">1-31</td>
+            <td class="confluenceTd">, - * ? / L W C</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd">Month</td>
+            <td class="confluenceTd">YES</td>
+            <td class="confluenceTd">1-12 or JAN-DEC</td>
+            <td class="confluenceTd">, - * /</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd">Day of week</td>
+            <td class="confluenceTd">YES</td>
+            <td class="confluenceTd">1-7 or SUN-SAT</td>
+            <td class="confluenceTd">, - * ? / L C #</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd">Year</td>
+            <td class="confluenceTd">NO</td>
+            <td class="confluenceTd">empty, 1970-2099</td>
+            <td class="confluenceTd">, - * /</td>
+        </tr>
+    </tbody>
+</table>
+<p>So cron expressions can be as simple as this: <tt>* * * * ? *</tt><br/>
+    or more complex, like this: <tt>0 0/5 14,18,3-39,52 ? JAN,MAR,SEP MON-FRI 2002-2010</tt></p>
+
+<h3><a name="CronTriggersTutorial-Specialcharacters"></a>Special characters</h3>
+<ul>
+    <li><b><tt>*</tt></b> (<em>&quot;all values&quot;</em>) - used to select all values within a field. For example,
+        &quot;*&quot; in the minute field means <em>&quot;every minute&quot;</em>.
+    </li>
+</ul>
+<ul>
+    <li><b><tt>?</tt></b> (<em>&quot;no specific value&quot;</em>) - useful when you need to specify something in one of
+        the two fields in which the character is allowed, but not the other. For example, if I want my trigger to fire
+        on a particular day of the month (say, the 10th), but don't care what day of the week that happens to be, I
+        would put &quot;10&quot; in the day-of-month field, and &quot;?&quot; in the day-of-week field. See the examples
+        below for clarification.
+    </li>
+</ul>
+<ul>
+    <li><b><tt>-</tt></b> - used to specify ranges. For example, &quot;10-12&quot; in the hour field means <em>&quot;the
+        hours 10, 11 and 12&quot;</em>.
+    </li>
+</ul>
+<ul>
+    <li><b><tt>,</tt></b> - used to specify additional values. For example, &quot;MON,WED,FRI&quot; in the day-of-week
+        field means <em>&quot;the days Monday, Wednesday, and Friday&quot;</em>.
+    </li>
+</ul>
+<ul>
+    <li><b><tt>/</tt></b> - used to specify increments. For example, &quot;0/15&quot; in the seconds field means <em>
+        &quot;the seconds 0, 15, 30, and 45&quot;</em>. And &quot;5/15&quot; in the seconds field means <em>&quot;the
+        seconds 5, 20, 35, and 50&quot;</em>. You can also specify '/' after the '*' character - in this case '*' is
+        equivalent to having '0' before the '/'. '1/3' in the day-of-month field means <em>&quot;fire every 3 days
+        starting on the first day of the month&quot;</em>.
+    </li>
+</ul>
+<ul>
+    <li><b><tt>L</tt></b> (<em>&quot;last&quot;</em>) - has different meaning in each of the two fields in which it is
+        allowed. For example, the value &quot;L&quot; in the day-of-month field means <em>&quot;the last day of the
+        month&quot;</em> - day 31 for January, day 28 for February on non-leap years. If used in the day-of-week field
+        by itself, it simply means &quot;7&quot; or &quot;SAT&quot;. But if used in the day-of-week field after another
+        value, it means <em>&quot;the last xxx day of the month&quot;</em> - for example &quot;6L&quot; means <em>&quot;the
+        last friday of the month&quot;</em>. When using the 'L' option, it is important not to specify lists, or ranges
+        of values, as you'll get confusing results.
+    </li>
+</ul>
+<ul>
+    <li><b><tt>W</tt></b> (<em>&quot;weekday&quot;</em>) - used to specify the weekday (Monday-Friday) nearest the given
+        day. As an example, if you were to specify &quot;15W&quot; as the value for the day-of-month field, the meaning
+        is: <em>&quot;the nearest weekday to the 15th of the month&quot;</em>. So if the 15th is a Saturday, the trigger
+        will fire on Friday the 14th. If the 15th is a Sunday, the trigger will fire on Monday the 16th. If the 15th is
+        a Tuesday, then it will fire on Tuesday the 15th. However if you specify &quot;1W&quot; as the value for
+        day-of-month, and the 1st is a Saturday, the trigger will fire on Monday the 3rd, as it will not 'jump' over the
+        boundary of a month's days. The 'W' character can only be specified when the day-of-month is a single day, not a
+        range or list of days.
+    </li>
+</ul>
+<table class="tipMacro" cellspacing="8" cellpadding="5" width="85%" align="center" border="0">
+    <colgroup>
+        <col width="24"/>
+        <col/>
+    </colgroup>
+    <tbody>
+        <tr>
+            <td valign="top"><img height="16" alt="" src="http://www.opensymphony.com/images/icons/emoticons/check.gif"
+                                  width="16" align="absMiddle" border="0"/></td>
+            <td>
+                <p>The 'L' and 'W' characters can also be combined in the day-of-month field to yield 'LW', which
+                    translates to <em>&quot;last weekday of the month&quot;</em>.</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<ul>
+    <li><b><tt>#</tt></b> - used to specify &quot;the nth&quot; XXX day of the month. For example, the value of &quot;6#3&quot;
+        in the day-of-week field means <em>&quot;the third Friday of the month&quot;</em> (day 6 = Friday and &quot;#3&quot;
+        = the 3rd one in the month). Other examples: &quot;2#1&quot; = the first Monday of the month and &quot;4#5&quot;
+        = the fifth Wednesday of the month. Note that if you specify &quot;#5&quot; and there is not 5 of the given
+        day-of-week in the month, then no firing will occur that month.
+    </li>
+</ul>
+<ul>
+    <li><b><tt>C</tt></b> (<em>&quot;calendar&quot;</em>) - this means values are calculated against the associated
+        calendar, if any. If no calendar is associated, then it is equivalent to having an all-inclusive calendar. A
+        value of &quot;5C&quot; in the day-of-month field means <em>&quot;the first day included by the calendar on or
+        after the 5th&quot;</em>. A value of &quot;1C&quot; in the day-of-week field means <em>&quot;the first day
+        included by the calendar on or after Sunday&quot;</em>.
+    </li>
+</ul>
+<table class="infoMacro" cellspacing="8" cellpadding="5" width="85%" align="center" border="0">
+    <colgroup>
+        <col width="24"/>
+        <col/>
+    </colgroup>
+    <tbody>
+        <tr>
+            <td valign="top"><img height="16" alt=""
+                                  src="http://www.opensymphony.com/images/icons/emoticons/information.gif" width="16"
+                                  align="absMiddle" border="0"/></td>
+            <td>
+                <p>The legal characters and the names of months and days of the week are not case sensitive.
+                    <tt>MON</tt> is the same as <tt>mon</tt>.</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h3><a name="CronTriggersTutorial-Examples"></a>Examples</h3>
+
+<p>Here are some full examples:</p>
+<table class="confluenceTable">
+    <tbody>
+        <tr>
+            <th class="confluenceTh">Expression</th>
+            <th class="confluenceTh">Meaning</th>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 0 12 * * ?</tt></td>
+            <td class="confluenceTd">Fire at 12pm (noon) every day</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 ? * *</tt></td>
+            <td class="confluenceTd">Fire at 10:15am every day</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 * * ?</tt></td>
+            <td class="confluenceTd">Fire at 10:15am every day</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 * * ? *</tt></td>
+            <td class="confluenceTd">Fire at 10:15am every day</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 * * ? 2005</tt></td>
+            <td class="confluenceTd">Fire at 10:15am every day during the year 2005</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 * 14 * * ?</tt></td>
+            <td class="confluenceTd">Fire every minute starting at 2pm and ending at 2:59pm, every day</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 0/5 14 * * ?</tt></td>
+            <td class="confluenceTd">Fire every 5 minutes starting at 2pm and ending at 2:55pm, every day</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 0/5 14,18 * * ?</tt></td>
+            <td class="confluenceTd">Fire every 5 minutes starting at 2pm and ending at 2:55pm, AND fire every 5 minutes
+                starting at 6pm and ending at 6:55pm, every day
+            </td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 0-5 14 * * ?</tt></td>
+            <td class="confluenceTd">Fire every minute starting at 2pm and ending at 2:05pm, every day</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 10,44 14 ? 3 WED</tt></td>
+            <td class="confluenceTd">Fire at 2:10pm and at 2:44pm every Wednesday in the month of March.</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 ? * MON-FRI</tt></td>
+            <td class="confluenceTd">Fire at 10:15am every Monday, Tuesday, Wednesday, Thursday and Friday</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 15 * ?</tt></td>
+            <td class="confluenceTd">Fire at 10:15am on the 15th day of every month</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 L * ?</tt></td>
+            <td class="confluenceTd">Fire at 10:15am on the last day of every month</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 ? * 6L</tt></td>
+            <td class="confluenceTd">Fire at 10:15am on the last Friday of every month</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 ? * 6L</tt></td>
+            <td class="confluenceTd">Fire at 10:15am on the last Friday of every month</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 ? * 6L 2002-2005</tt></td>
+            <td class="confluenceTd">Fire at 10:15am on every last friday of every month during the years 2002, 2003,
+                2004 and 2005
+            </td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 15 10 ? * 6#3</tt></td>
+            <td class="confluenceTd">Fire at 10:15am on the third Friday of every month</td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 0 12 1/5 * ?</tt></td>
+            <td class="confluenceTd">Fire at 12pm (noon) every 5 days every month, starting on the first day of the
+                month.
+            </td>
+        </tr>
+        <tr>
+            <td class="confluenceTd"><tt>0 11 11 11 11 ?</tt></td>
+            <td class="confluenceTd">Fire every November 11th at 11:11am.</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+</body>
+</html>

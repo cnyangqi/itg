@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Guide for JAVA statement</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble">
+    <h1><a id="#page-header">Guide for JAVA statement</a></h1>
+    <div class="toplang"></div>
+    <p> You can writer java code in JAVA statement.JAVA statement begin with <b> &lt;% </b> and end with <b> %> </b>.<br>
+	<br>
+	<font color=red>You can't define a class or an interface or a function in JAVA statement.
+	                Import statement and package statement are not supported too.
+	</font>
+	<br>
+	<br>	
+	Template tags such as article tags and global tags can be used in java code and none statement can be nested in JAVA statement directly.
+	</p>
+	<h1><font color="red">JAVA grammar</font></h1>
+		<p>
+		 &lt;%<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;--input java code here<br>
+		 %>
+		</p>
+
+	<h1><font color="red">Variables and Methods</font></h1>	 
+    <p> 
+   	  All variables and methods defined by nps.compiler.ArticleClassBase can be used in article template.<br>
+	  All variables and methods defined by nps.compiler.PageClassBase can be used in page template.<br>      	  
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                
+          <th>variable</th>
+                
+          <th>type</th>
+                
+          <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>ctxt</td>
+                <td>NpsContext</td>
+                
+          <td>current context object.All objects can get such as database connection,current 
+            user and site etc. </td>
+  			</tr>
+            <tr class="module">
+                
+          <td>site</td>
+          <td>Site</td>
+          <td>current site object</td>
+  			</tr>
+			            <tr class="module">
+                
+          <td>top</td>
+          <td>Topic</td>
+          <td>current topic object</td>
+  			</tr>
+			            <tr class="module">
+                
+          <td>art</td>
+          <td>Article</td>
+                
+          <td>current article object.Only valid in article template.<br>
+ 		      self-defined datasource objects are derived from CustomArticle,and others derived from NormalArticle
+		  </td>
+  			</tr>			
+			 <tr class="module">
+                
+          <td>out</td>
+          <td>JavaWriter</td>
+                
+          <td>Writer for html data.<br>
+            out.print(Object) means to print the string.<br>
+            out.printil(Object) means to print the current indention, and then 
+            the string, and a '\n'.<br>
+            out.println(Object) means to print the given string followed by '\n' 
+          </td>
+        </tr>
+        <tr class="module">
+             <td>print()</td>
+             <td>Function</td>
+             <td>Since V1.5. Please use these methods instead of out.print() to output html data.<br>
+               print(Object) means to print the object, which could be an Integer, String or Clob<br>
+               printil(Object) means to print the current indention, and then the String and a '\n'<br>
+               println(Object) means to print the given string followed by '\n'
+               </td>
+        </tr>
+        </tbody>
+	</table>	 
+	 </p> 	 
+	 
+	 <h1><font color="red">Sample coding</font></h1>
+	<p>
+           <b>Codes for only output even line.</b><br>
+		   &lt;rs id="rs1" sql="select name,price from product"><br>
+		   &lt;% <br>
+			  &nbsp;&nbsp;&nbsp;&nbsp;
+			  if((Integer)&lt;$rs1.rowno$>%2==0) <br>
+			  &nbsp;&nbsp; &nbsp;&nbsp;
+			  {  <br>
+		   %><br>
+			  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &lt;$rs1.name$>:&lt;$rs1.price$>  <br>
+				  
+		   &lt;% <br>
+			   &nbsp;&nbsp;&nbsp;&nbsp;
+			   } <br>
+		   %> <br>
+		   &lt;/rs>
+		 </p>    
+	  
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>   
+<project name="gnt Auto build" basedir="." default="build">   
+  
+    <!-- The CVSROOT value -->   
+    <property name="cvsroot" value=":pserver:tch@61.164.51.234:e:/cvsroot"/>   
+     
+    <property name="lzzt.dir" value="D:\workspace\ithinkgo\lzzt"/>
+    
+    
+    <!--<condition property="direxist">
+        <and>
+            <available file="${itg.dir}\webroot\WEB-INF\classes" type="dir"/>
+        </and>
+    </condition>-->
+    
+    
+    <target name="build">
+      <cvs command="update -P -d "
+         cvsroot="${cvsroot}"
+         dest="${lzzt.dir}" passfile="ant-cvs.cvspass"/>
+      <echo message="update project directory successed!"/>
+    </target>
+</project>

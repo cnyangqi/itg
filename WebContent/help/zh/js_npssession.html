@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsSession</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsSession class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsSession对象记录了当前上下文情境。通过全局变量<b>session</b>直接引用当前的NpsSession。</p>
+    <p> <font color=red>NpsSession不能被New操作</font></p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsUser</td>
+                <td>
+                    GetCurrentUser()<br>
+                    返回当前运行用户。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsSite</td>
+                <td>
+                    GetSite()<br>
+                    返回最近打开的站点。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsSite</td>
+                <td>
+                    GetSite(String id)<br>
+                    返回指定站点。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsLog</td>
+                <td>
+                    GetDefaultLog()<br>
+                    得到默认的日志记录器。默认写入全局的nps.log文件中，同时在应用服务器终端输出，例如Tomcat缺省配置将同时输出到catalina.out。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsLog</td>
+                <td>
+                    CreateLog(String filename)<br>
+                    创建自己的日志记录器，写入filename指定的文件中。文件写入采用Append方式。<br>
+                    filename将自动映射到当前使用站点的根路径。
+                    例如当前站点根路径为c:\web； 那么以下三种情况：<br>
+                    1.filename=c:\web\logs\mylog.txt<br>
+                    2.filename=c:\logs\mylog.txt<br>
+                    3.filename=/logs/mylog.txt<br>
+                    其最终结果都指向c:\web\logs\mylog.txt文件。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsPreparedStatement</td>
+                <td>
+                    PrepareStatement(String sql) throws Exception<br>
+                    生成NpsPreparedStatement对象，绑定变量后调用ExecuteUpdate或ExecuteQuery执行SQL语句。<br>
+                    ExecuteQuery()方法将返回结果集NpsResultSet对象，通过结果集对象获取字段值。<br>
+                    注意：<font color=red>数据库连接将采用在db.xml中定义的DataSource名称为nps的连接。</font>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Commit()<br>
+                    提交所有数据库变更。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Rollback()<br>
+                    回滚所有数据库变更。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetEnvironmentVar(Object key,Object value)<br>
+                    设置系统环境变量。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Object</td>
+                <td>
+                    GetEnvironmentValue(Object key)<br>
+                    得到系统环境变量。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetEnvironmentString(Object key)<br>
+                    得到系统环境变量。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveEnvironmentVar(Object key)<br>
+                    删除系统环境变量。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDebugEnabled()<br>
+                    进入Debug模式。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsDebugEnabled()<br>
+                    判断是否在Debug模式中。true:是 false:不是
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetServerName()<br>
+                    返回当前运行服务器，按hostname(ip地址)格式返回。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    GetLastrun()<br>
+                    最后运行时间。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    GetLastExitStatus()<br>
+                    最后运行返回状态。0表示正常退出 1表示发生了异常
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

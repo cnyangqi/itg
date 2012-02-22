@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh_CN" lang="zh_CN">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NPS站点导出与数据备份</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">NPS站点导出与数据备份</a></h1>
+        <div class="toplang"></div>
+        <p>本手册用于站点的导出以及Sqlite V3.6格式的数据备份。</p>
+    </div>
+    <div id="quickview"><ul id="toc">
+    <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="#importexport">站点的导入导出</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="#dump">数据备份</a></li>
+    </ul>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="importexport" id="importexport">站点的导入导出</a></h2>
+       <p>站点导出的数据包括：单位的基本信息（但不包含部门和用户）、站点定义、栏目定义、模版、任务、触发器。
+           站点导出的数据统一存放在NPS自定义格式的ZIP文件中，导出的数据主要用于从测试机到生产环境的部署，不包含文章及自定义数据源的数据。
+           与导出功能相对应，可以使用导入功能导入整个站点。
+       </p>
+    <dl>
+      <dt>站点导出</dt>
+      <dd>
+          系统管理员或站点管理员可以进行站点导出。在<b>站点管理</b>中打开具体站点后，点击<b>导出</b>按钮即可以导出数据。
+      </dd>
+      <dt>站点导入</dt>
+      <dd>
+          只有系统管理员可以进行站点的导入。<br>
+          <font color=red>
+         1.确认该单位的代码是否在库中已有。如果与库中的重复，将被跳过（即不覆盖），导入的站点也将属于该单位。<br>
+         2.确认该站点ID在系统中是否存在。如果存在，系统将自动覆盖所有站点、模版配置信息，合并栏目信息（即相同栏目覆盖，不同栏目保留）！<br>
+         </font>
+
+          <br> 
+          成功导入后，还有以下注意点：<br>
+          <font color=red>
+    1.栏目的版主将被忽略，成功后请重新设置版主。<br>
+    2.模板应用范围指定为特定站点的，将自动设置为只能在当前导入的站点下使用。<br>
+    3.模板的创建者将被置为你，创建时间为导入时间。
+          </font>
+      </dd>
+    </dl>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="dump" id="dump">数据备份</a></h2>
+       <p>数据备份用于全站点所有数据的备份，备份的数据格式为Sqlite V3.6数据库格式。SQLite是一款轻型的数据库，它能够支持Windows/Linux/Unix等等主流的操作系统，同时能够跟很多程序语言相结合，比如Tcl、PHP、Java等，
+           还有ODBC接口，同时它还支持事务处理功能等等。你可以通过Sqlite实现NPS到其他系统的迁移。
+       </p>
+       <dl>
+          <dt>备份管理</dt>
+          <dd>
+              只有系统管理员才能进行备份管理。备份管理的工作是设置要备份的数据库表。默认情况下，NPS的系统表被自动导出，且不能被重新定义。在V1.x版本中，系统表包含了SITE、SITE_HOST、SITE_OWNER、SITE_VARS、TOPIC、TOPIC_OWNER、TOPIC_VARS、TOPIC_PTS、TEMPLATE、EVENT_TRIGGER、JOB、CONFIG_BACKUP、ARTICLE、ARTICLE_TOPICS、ATTACH、FCKTemplate、UNIT、DEPT、USERS、ROLE、USERROLE、USERROLE_GRANTABLE、BULLETIN以及所有自定义数据源的prop表。
+              <br><br>
+              对于二次开发的相关表，系统管理员可以通过<b>备份管理</b>进行设置，设置时需要使用select语句设置数据源，同时写入指定的表名。
+              <br><br>
+              <font color=red>
+                  注意：目前导出的数据类型尚不支持long和long raw类型数据，这类字段将被跳过。建议使用clob或blob。
+              </font>
+          </dd>
+       </dl>
+       <dl>
+           <dt>日常备份</dt>
+           <dd>
+               站点管理员应进行定期备份。定期备份可以通过站点配置界面中的<b>备份</b>按钮进行。如果需要进行自动备份，可以基于NpsBackup创建自动备份任务。例如：<br><br>
+               以下代码演示了如何进行定时数据备份，并通过邮件发送。<br>
+               var backup_agent = new NpsBackup();<br>
+
+               var dmp_file = null;   <br>
+               try <br>
+               {   <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   dmp_file = backup_agent.Dump(session.GetSite("your site id"));  <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   var email = new NpsEmail();<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetCharset('UTF-8');<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetHost("your smtp host");<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetAuthentication("your email address","your password");<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetFrom('youremail@email.com');<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.AddTo('youremail@email.com');<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetSubject('NPS Dump Data ' + new Date());<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetHtmlMsg('');<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.AddAttach(dmmp_file);<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.Send();<br>
+               }   <br>
+               catch(e) <br>
+               {        <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   out.Error(e); <br>
+               }  <br>
+               finally  <br>
+               { <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   if(dmp_file!=null) dmp_file.Delete();   <br>
+               }  <br>
+           </dd>
+       </dl>
+    </div>
+</div>
+</body>
+</html>

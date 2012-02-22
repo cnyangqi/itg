@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+	  "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+	  "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	
+	<form-beans>
+		<form-bean name="confirmorderForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="or_invoicetitle" type="java.lang.String"/>
+			<form-property name="or_memo" type="java.lang.String"/>
+		</form-bean>
+		<form-bean name="userForm" type="com.nfwl.itg.user.UserForm"/>
+		<form-bean name="addressForm" type="com.nfwl.itg.user.ITG_ADDRESSForm"/>
+		<!-- <form-bean name="rechargerecForm" type="com.nfwl.itg.user.ITG_RECHARGEREC"/> -->
+		
+		
+	</form-beans>
+	<global-forwards>
+		<forward name="nologing" path="/index_zh_CN.jsp"></forward>
+		<forward name="orderlogin" path="/order/login.jsp"></forward>
+		<forward name="userError" path="/itgerror.jsp"></forward>
+		<forward name="userFailed" path="/itgerror.jsp"></forward>
+		<forward name="orderError" path="/itgerror.jsp"></forward>
+		<forward name="orderFailed" path="/itgerror.jsp"></forward>
+		<forward name="myorder" path="/user/order.do?cmd=search"></forward>
+	</global-forwards>
+	<action-mappings>	
+	
+	
+		<action 
+			path="/user/load"
+			type="com.nfwl.itg.user.LoadAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="czkrechargeSuccess" path="/user/czkrechargerc.jsp"/>
+			<forward name="rechargeSuccess" path="/user/rechargerc.jsp"/>
+			<forward name="changepasswordSuccess" path="/user/changepassword.jsp"/>
+			
+		</action>
+		
+
+		
+			
+		<!-- address -->
+		<action 
+			path="/order/address"
+			type="com.nfwl.itg.order.AddressAction"
+			name="addressForm"
+			scope="request"
+			parameter="cmd"
+			validate="true"
+			input="/order/cartAddress.jsp"
+			>	
+		</action>
+		
+		<action 
+			path="/user/loadaddress"
+			type="com.nfwl.itg.user.LoadAddressAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="deleteSuccess" path="/user/myaddress.jsp"/>
+			<forward name="viewSuccess" path="/user/myaddress.jsp"/>
+			<forward name="setdefaultSuccess" path="/user/myaddress.jsp"/>
+			<forward name="orderAddressSuccess" path="/order/cartAddress.jsp"/>
+			
+		</action>
+		
+		<action 
+			path="/user/address"
+			type="com.nfwl.itg.user.AddressAction"
+			name="addressForm"
+			scope="request"
+			parameter="cmd"
+			validate="true"
+			input="/user/myaddress.jsp"
+			>	
+			<forward name="insertSuccess" path="/user/myaddress.jsp"/>
+			<forward name="modifySuccess" path="/user/myaddress.jsp"/>
+			
+		</action>
+		<!-- address-->
+
+		<!-- ordermanager action -->
+		<action 
+			path="/order/login"
+			type="com.nfwl.itg.common.LoginAction"
+			scope="request"
+			parameter="cmd"
+			>	
+			<forward name="cartLogin_success" path="/order/login.jsp"/>
+		</action>
+		
+		
+		<action 
+			path="/order/cart"
+			type="com.nfwl.itg.order.CartAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="viewSuccess" path="/order/cart.jsp"/>
+			<forward name="addSuccess" path="/order/cart.jsp"/>
+			<forward name="delSuccess" path="/order/cart.jsp"/>
+			
+		</action>
+		
+		
+		<action 
+			path="/order/carrymode"
+			type="com.nfwl.itg.order.CarrymodeAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="initSuccess" path="/order/carryMode.jsp"/>
+			
+			
+		</action>
+		
+		<action 
+			path="/order/paymode"
+			type="com.nfwl.itg.order.PaymodeAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="initSuccess" path="/order/payMode.jsp"/>
+			
+			
+		</action>
+		
+		<action 
+			path="/order/pay"
+			type="com.nfwl.itg.order.PayAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			
+		</action>
+		<action 
+			path="/order/loadconfirmorder"
+			type="com.nfwl.itg.order.ConfirmOrderAction"
+			scope="request"
+			parameter="cmd"
+			>	
+			<forward name="viewSuccess" path="/order/confirmOrder.jsp"/>
+		</action>
+		
+		<action 
+			path="/order/confirmorder"
+			type="com.nfwl.itg.order.ConfirmOrderAction"
+			name="confirmorderForm"
+			scope="request"
+			parameter="cmd"
+			validate="true"
+			input="/order/confirmOrder.jsp"
+			>	
+			<forward name="confirmSuccess" path="/order/confirmOrder.jsp"/>
+		</action>
+		
+		<action 
+			path="/order/buy"
+			type="com.nfwl.itg.order.Order_GoAction"
+			scope="request"
+			parameter="cmd"
+			>	
+			<forward name="addPrdSuccess" path="/order/order_go.jsp"/>
+		</action>
+		
+		<action 
+			path="/order/ordergo"
+			type="com.nfwl.itg.order.Order_GoAction"
+			name="addressForm"
+			scope="request"
+			parameter="cmd"
+			validate="true"
+			input="/order/order_go.jsp"
+			>	
+		</action>
+		
+		<!-- ordermanager action -->
+		
+		
+		
+		<!-- usermanager action-->
+		
+		<action 
+			path="/user/loaduser"
+			type="com.nfwl.itg.user.LoadUserAction"
+			scope="request"
+			parameter="cmd"
+			>	
+			<forward name="modfiySuccess" path="/user/user.jsp"/>
+			<forward name="acctountInfoSuccess" path="/user/myindex.jsp"/>
+			
+		</action>
+		
+		<action 
+			path="/user/user"
+			type="com.nfwl.itg.user.UserAction"
+			name="userForm"
+			scope="request"
+			parameter="cmd"
+			validate="true"
+			input="/user/user.jsp"
+			>	
+			<forward name="modfiySuccess" path="/user/user.jsp"/>
+			<forward name="changepasswordSuccess" path="/user/changepassword.jsp"/>
+			<forward name="changepasswordError" path="/user/changepassword.jsp"/>
+			
+			
+		</action>
+	
+		<action 
+			path="/user/order"
+			type="com.nfwl.itg.user.OrderAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="searchSuccess" path="/user/myorder.jsp"/>
+			<forward name="detailSuccess" path="/user/myorderdetail.jsp"/>
+			<forward name="viewSuccess" path="/nfwl/order/order_view.jsp"/>
+		</action>
+		
+		<!-- fixedpointuser yangq -->
+		<action 
+			path="/user/fixedpoint"
+			type="com.nfwl.itg.user.FixedpointAction"
+			name="userForm"
+			scope="request"
+			parameter="cmd"
+			input="/user/fixedpointuseradd.jsp"
+			>	
+			<forward name="searchSuccess" path="/user/fixedpointuser.jsp"/>
+			<forward name="editSuccess" path="/user/fixedpointuseredit.jsp"/>
+		</action>
+		
+		<action 
+			path="/user/ordermodify"
+			type="com.nfwl.itg.user.OrderModifyAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="viewSuccess" path="/user/orderdetail.jsp"/>
+			<forward name="changeAddressSuccess" path="/user/changeorderaddress.jsp"/>
+			<forward name="changeAddressFailed" path="/user/changeorderaddress.jsp"/>
+			<forward name="changePaySuccess" path="/user/changeorderpay.jsp"/>
+			<forward name="changePayFailed" path="/user/changeorderpay.jsp"/>
+			<forward name="cancheSuccess" path="/user/orderdetail.jsp"/>
+			<forward name="cancheFailed" path="/user/orderdetail.jsp"/>
+			<forward name="receivingSuccess" path="/user/orderdetail.jsp"/>
+			<forward name="receivingFailed" path="/user/orderdetail.jsp"/>
+		</action>
+		
+		<action 
+			path="/user/ordereval"
+			type="com.nfwl.itg.user.OrderEvalAction"
+			scope="request"
+			parameter="cmd"
+			
+			>
+			<forward name="orderEvalInitSuccess" path="/user/evalorder.jsp"/>
+			<forward name="orderEvalSuccess" path="/user/evalorder.jsp"/>
+			<forward name="orderEvalInitFailed" path="/user/evalorder.jsp"/>
+			<forward name="orderEvalFailed" path="/user/evalorder.jsp"/>
+		</action>
+	
+		<action 
+			path="/user/collectrec"
+			type="com.nfwl.itg.user.CollectrecAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="searchSuccess" path="/user/mycollectrec.jsp"/>
+			
+		</action>
+		
+		<action 
+			path="/user/messageeval"
+			type="com.nfwl.itg.user.MessageevalAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="searchSuccess" path="/user/mymessageeval.jsp"/>
+			
+		</action>
+		
+		<action 
+			path="/user/suggest"
+			type="com.nfwl.itg.user.SuggestAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="searchSuccess" path="/user/mysuggest.jsp"/>
+			
+		</action>
+		
+		<action 
+			path="/user/pointrec"
+			type="com.nfwl.itg.user.PointercAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="searchSuccess" path="/user/mypointrec.jsp"/>
+			
+		</action>
+		<action 
+			path="/user/rechargerec"
+			type="com.nfwl.itg.user.RechargercAction"
+			scope="request"
+			parameter="cmd"
+			
+			>	
+			<forward name="searchSuccess" path="/user/rechargerclist.jsp"/>
+			<forward name="czkRechargeSuccess" path="/user/czkrechargerc.jsp"/>
+			<forward name="alipayRechargeSuccess" path="/user/rechargeAlipayto.jsp"/>
+			<forward name="onlyalipay" path="/user/czkrechargerc.jsp"/>
+
+		</action>
+		
+		
+		 
+		<!--usermanager action-->
+	</action-mappings>
+	<message-resources parameter="MessageResources" />
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validator-user.xml,/WEB-INF/validator-order.xml"/> 
+	</plug-in>
+	
+</struts-config>
+

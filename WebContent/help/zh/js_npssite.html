@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsSite</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsSite class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsSite表示站点对象。 </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    id<br>
+                    站点唯一标识。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    name<br>
+                    站点名称。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    unitid<br>
+                    单位唯一标识。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    unitname<br>
+                    单位名称。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    solrcore<br>
+                    solr core
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    keywordlinks<br>
+                    热字。一行是一组热字。一组热字中，多个关键字必须以逗号(,)间隔，最后一个是URL链接。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsTopic</td>
+                <td>
+                    GetTopic(String id)<br>
+                    返回指定id号的栏目。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic</td>
+                <td>
+                    GetTopicByCode(String code)<br>
+                    返回指定栏目代号的栏目。栏目代号按上下级次序以.间隔标识。<br>
+                    例如新闻(news)栏目下的国际新闻(international)栏目，
+                    其代号为news.international
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    GetArticle(String id)<br>
+                    返回指定ID号的文章。自定义数据源栏目不能引用该方法获得文章。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    GetCustomArticle(String id,NpsTopic top)<br>
+                    返回指定ID号的文章。自定义数据源栏目使用。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticleCollection</td>
+                <td>
+                    GetAllArticles(int state)<br>
+                    返回站点内指定state的文章列表。<br>
+                    state可以使用以下值：0草稿 1提交待审核 2审核通过待发布 3发布成功
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticleCollection</td>
+                <td>
+                    GetArticles(NpsTopic topic,int state,boolean included)<br>
+                    返回topic指定栏目下状态为state的所有文章列表。<br>
+                    state可以使用以下值：0草稿 1提交待审核 2审核通过待发布 3发布成功<br>
+                    incluced=true表示返回下级栏目所有文章。<br>
+                    incluced=false仅返回当前栏目文章。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticleCollection</td>
+                <td>
+                    FTSearch(String query,int max)<br>
+                    全文检索，返回符合特定query条件的检索结果集。<br>
+                    query语法参考SOLR语法说明。<br>
+                    max表示返回的最大数。max<=0表示返回全部符合条件的结果集。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResource</td>
+                <td>
+                    GetResource(String id)<br>
+                    返回指定ID号的资源。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResourceCollection</td>
+                <td>
+                    GetResourcesByType(int type,String suffixes)<br>
+                    返回指定类型、特定后缀的资源集合。<br>
+                    type=-1表示所有类型，0表示图片，1表示文档，2表示视频，3表示音频，4表示Flash，5表示其他<br>
+                    suffixes表示文件后缀，多个文件后缀以“|”或“,”或“;”间隔，例如.jpg|.bmp|.gif表示后缀是jpg或bmp或gif的文件。.*表示所有文件
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResourceCollection</td>
+                <td>
+                    GetResourcesByTopic(NpsTopic topic)<br>
+                    返回返回被topic引用的资源集合。
+                </td>
+            </tr>
+            
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    BuildArticles(NpsArticleCollection arts)<br>
+                    重建结果集中的所有文章<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    IndexArticles(NpsArticleCollection arts)<br>
+                    对结果集中的所有文章重建索引<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Build(boolean rebuildall)<br>
+                    重建/发布站点。<br>
+                    rebuildall=true，重建所有已有文章<br>
+                    rebuildall=false,发布待发布文章
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Index()<br>
+                    重新索引所有文章
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Archive()<br>
+                    遍历所有要归档的栏目，并按栏目提供的归档方案归档。<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddKeywordLink(String keyword,String url)<br>
+                    增加热字<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddKeywordLinks(String line)<br>
+                    增加一组热字。多个关键以逗号(,)间隔，最后一个是链接。<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveKeywordLink(String keyword,String url)<br>
+                    删除热字<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveKeywordLinks(String url)<br>
+                    删除链接到url的一组热字<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

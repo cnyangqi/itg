@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsPop3</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsPop3 class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsPop3用于接收电子邮件。</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsPop3</td>
+                <td>
+                    NpsPop3(String host,int port)<br>
+                    构造函数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Connect(String user,String passwd)<br>
+                    使用给定的邮件帐号进行POP3认证。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ConnectSSL(String user,String passwd)<br>
+                    使用SSL连接进行POP3认证。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    PostTo(NpsTopic topic,String prefix_subject,boolean delete_mail)<br>
+                    收取未读邮件，并提交到指定的栏目。<br>
+                    如果需要根据主题前缀进行过滤，请设置prefix_subject，
+                    例如prefix_subject="news:"表示以news:开头的所有邮件；prefix_subject=null或""表示不进行过滤。<br>
+                    delete_mail表示正常提交后是否删除远程邮箱中的邮件。true表示完成后自动删除邮件。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Close()<br>
+                    关闭连接，并更新邮箱。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>How-To Programming apps based on workflow</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">How-To Programming apps based on workflow</a></h1>
+        <div class="toplang"></div>
+        <p>Please be noted:<br>
+            1. Workflow engine interact with your apps via IApp interface, that's to say your app must implement all methods of IApp;<br>
+            2. All actions such as submitting jobs or getting routers are pushed together in Client class, it's the best way to integrate with workflow using this class;<br>
+            3. We also offer one javascript class named 'Workflow' which give you the ability of submitting jobs via AJAX<br>
+        </p>
+        <p>
+           Data flow: <br>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             User click the 'Send' button              <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -> Javascript class Workflow pop up a dialog for choosing router, participants and also asking for suggest <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -> User click the 'Ok' button to submit <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -> Javascript class Workflow post your form and your JSP will receive all data <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -> Your JSP handle all data via your javabean <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -> Your javabean submit a job via java class Client <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -> Done.
+        </p>
+    </div>
+    <div id="quickview">
+        <ul id="toc">
+          <li><img  src="/images/help/down.gif" /> <a href="#iapp">Java Interface IApp</a></li>
+          <li><img src="/images/help/down.gif" /><a href="#client">Java Class Client</a></li>
+          <li><img src="/images/help/down.gif" /><a href="#jsp">JSP requirements</a></li>
+          <li><img  src="/images/help/down.gif" /> <a href="#javascript">Javascript Class Workflow</a></li>
+        </ul>
+        <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="iapp" id="iapp">Java Interface IApp</a></h2>
+     <p>
+         All javabean interacting with workflow must implement this interface.
+     </p>
+     <dl>
+            <dt>public String GetBusinessType()</dt>
+            <dd>return business type</dd>
+            <dt>public String GetAppId()</dt>
+            <dd>return your app id#</dd>
+            <dt>public String GetTitle()</dt>
+            <dd>return title</dd>
+            <dt>public int GetEmergency()</dt>
+            <dd>return emergency. 0=Normal; 5=Emergent; 9=Urgent</dd>
+            <dt>public JSONObject toJSON() throws JSONException</dt>
+            <dd>return all business data in json format</dd>
+            <dt>public String toJSONString()</dt>
+            <dd>return all business data in json string format</dd>
+         </dd>
+    </dl>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="client" id="client">Java Class Client</a></h2>
+     <p>
+         This class push together all functions needed for interacting with workflow engine.
+     </p>
+     <dl>
+         <dt>Constructor</dt>
+         <dd>
+             public Client(Connection conn, User user, IApp app) throws NpsException,SQLException, JSONException
+             <br>
+             Connection - Database connection<br>
+             User - Current user<br>
+             IApp - Your javabean
+         </dd>
+     </dl>
+
+     <p style="color:red;font-weight:900;font-size:16px;">
+        Category - Query status
+     </p>
+      <dl>
+         <dt>boolean IsMyJob()</dt>
+         <dd>return true if this is my job, else false</dd>
+
+         <dt>boolean IsNew()</dt>
+         <dd>Test if this is a new job</dd>
+
+         <dt>boolean IsRunning()</dt>
+         <dd>Test if this is still in running state</dd>
+
+         <dt>boolean IsCompleted()</dt>
+         <dd>Test if this is approved</dd>
+
+         <dt>boolean IsTerminated()</dt>
+         <dd>Test if this is terminated or rejected</dd>
+
+         <dt>boolean IsRevoked()</dt>
+         <dd>Test if this is revoked</dd>
+      </dl>
+
+      <p style="color:red;font-weight:900;font-size:16px;">
+         Category - Query progress
+      </p>
+      <dl>
+         <dt>List&lt;Date> GetProgress()</dt>
+         <dd>return a list of progress tagging by begin date. Workflow engine will create a new progress for 'Start' or 'Restart' operation.</dd>
+
+         <dt>List&lt;Suggest> GetSuggest()</dt>
+         <dd>return a list of suggest for the latest progress.</dd>
+
+         <dt>List&lt;Suggest> GetSuggest(Date start)</dt>
+         <dd>return a list of suggest for progress specified by 'start'</dd>
+      </dl>
+
+      <p style="color:red;font-weight:900;font-size:16px;">
+          Category - interact
+      </p>
+      <dl>
+         <dt>List&lt;WorkTransition> GetTransitions()</dt>
+         <dd>return all available routers</dd>
+
+         <dt>List&lt;WorkTransition> GetStartTransitions()</dt>
+         <dd>return all available routers from start node</dd>
+
+         <dt>List&lt;String[]> GetParticipants(String transition_id)</dt>
+         <dd>return a list of participants for router<br>
+             String[0]=UID, String[1]=User name</dd>
+
+         <dt>void Send(String transition_id, List&lt;String[]> participants, String suggest)</dt>
+         <dd>Submit job<br>
+             transition_id - router id<br>
+             participants - participants; String[0]=UID,String[1]=User name<br>
+          </dd>
+
+         <dt>void Reject(String suggest) throws NpsException</dt>
+         <dd>Reject job</dd>
+
+         <dt>List&lt;String[]> GetReturnJobs() throws NpsException</dt>
+         <dd>return a list of previous job for returning purpose<br>
+             String[0]=Job id#, String[1]=Job name</dd>
+
+         <dt>List&lt;String[]> GetParticipantsByJob(String job_id) throws NpsException</dt>
+         <dd>return a list of participants for previous job<br>
+             String[0]=UID, String[1]=User name
+         </dd>
+
+         <dt>void ReturnTo(String jobid,List&lt;String[]> participants, String suggest) throws NpsException</dt>
+         <dd>Send back for re-checking<br>
+             jobid - previous job id# to return<br>
+             participants - String[0]=UID，String[1]=User name
+         </dd>
+
+         <dt>void Revoke(String suggest) throws NpsException</dt>
+         <dd>Revoke</dd>
+
+         <dt>void Stop(String suggest) throws NpsException</dt>
+         <dd>Stop approving</dd>
+
+         <dt>void Restart(String transition_id, List&lt;String[]> participants, String suggest) throws NpsException</dt>
+         <dd>Restart. This is suitable for repeatable-tasks or cancelling and re-approving by creator<br>
+             transition_id - router id#<br>
+             participants - String[0]=UID,String[1]=User name
+         </dd>
+     </dl>
+
+        <h2><a name="suggest" id="suggest">Class Suggest</a></h2>
+        <dl>
+            <dt>public String GetJobId()</dt>
+            <dd>return job id#</dd>
+
+            <dt>public String GetProcessId()</dt>
+            <dd>return process id#</dd>
+
+            <dt>public String GetActivityId()</dt>
+            <dd>return activity id#</dd>
+
+            <dt>public Date GetReadyDate()</dt>
+            <dd>return the date job created</dd>
+
+            <dt>public Date GetFinishDate()</dt>
+            <dd>return the date job finished, NULL if this job is running</dd>
+
+            <dt>public boolean IsRunning()</dt>
+            <dd>Test if it is running</dd>
+
+            <dt>public boolean IsCompleted()</dt>
+            <dd>Test if it is completed</dd>
+
+            <dt>public boolean IsTerminated()</dt>
+            <dd>Test if it is terminated or rejected</dd>
+
+            <dt>public String GetTerminateBy()</dt>
+            <dd>return the user name who terminate this job</dd>
+
+            <dt>public String GetTerminateCause()</dt>
+            <dd>return the reason to terminate</dd>
+
+            <dt>public List&lt;Performer> GetPerformers()</dt>
+            <dd>return a list of performer order by sign date</dd>
+       </dl>
+
+       <h2><a name="performer" id="performer">Class Performer</a></h2>
+        <p>Class Performer recorder all signer and suggests</p>
+        <dl>
+            <dt>public String GetUserName()</dt>
+            <dd>return signer</dd>
+
+            <dt>public String GetAssignerName()</dt>
+            <dd>return attorney</dd>
+
+            <dt>public int GetSuggestType()</dt>
+            <dd>return the type of suggest. 1=rejected, 2=returned to previous node for re-checking, 3=pass</dd>
+
+            <dt>public String GetSuggest()</dt>
+            <dd>return suggest</dd>
+        </dl>
+    </div>
+    
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="jsp" id="jsp">JSP规范</a></h2>
+     <p>My todo list page(/workflow/todo.jsp) will send below parameters when clicked:
+         <table width=400>
+           <tr>
+               <th>Parameter</th><th>means</th>
+           </tr>
+           <tr>
+               <td>business_type</td>
+               <td>business type</td>
+           </tr>
+        <tr>
+            <td>app_id</td>
+            <td>your app id#</td>
+        </tr>
+        <tr>
+            <td>job_id</td>
+            <td>job id#</td>
+        </tr>
+        </table>
+     </p>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="javascript" id="javascript">Javascript Class Workflow</a></h2>
+     <p>Class Workflow is an AJAX implementation for submitting, rejecting, returning, revoking, restarting and stopping job.<br><br>
+       <font color=red>
+         Please include workflow.css in your JSP like below: <br>
+         <b>&lt;LINK href="/css/workflow.css" type=text/css rel=stylesheet></b>
+         <br><br>
+         Please include prototype.js and workflow.js in your JSP like below:<br>
+         <b>&lt;script language="javascript" src="/jscript/prototype.js">&lt;/script></b><br>
+         <b>&lt;script language="javascript" src="/jscript/workflow.js">&lt;/script></b><br>
+        </font>
+     </p>
+     <dl>
+         <dt>Constrcutor</dt>
+         <dd>Workflow(business_type, app_id, form_id)<br>
+             business_type - business type, not null<br>
+             app_id - your app id#, empty for new job<br>
+             form_id - your form to submitting job
+         </dd>
+
+         <dt>send(json_data)</dt>
+         <dd>Pop up a dialog before submitting job for choosing router, participants and inputting suggest.<br>
+             json_data - If the workflow process's routers depend on your application data, please input here.
+             For example, send({'money':$('money_field').value});
+         </dd>
+
+         <dt>reject()</dt>
+         <dd>Pop up a dialog before rejecting job for inputting suggest.
+         </dd>
+
+         <dt>returnTo()</dt>
+         <dd>Pop up a dialog before returning job for choosing previous job, participants and inputting suggest.</dd>
+
+         <dt>revoke()</dt>
+         <dd>Pop up a dialog before revoking for inputting suggest.
+         </dd>
+
+         <dt>stop()</dt>
+         <dd>Pop up a dialog before stopping all jobs for inputting suggest.
+         </dd>
+
+         <dt>restart()</dt>
+         <dd>Pop up a dialog before restarting for choosing routers, participants and inputting suggest.
+         </dd>
+
+         <dt>close()</dt>
+         <dd>close dialog</dd>
+     </dl>
+
+     <br><br>
+     <p><b>Sample codes</b></p>
+     <table width=100% border=1>
+         <tr><td>
+                &lt;html><br>
+                &lt;head><br>
+                &nbsp;&nbsp;    &lt;LINK href="/css/style.css" rel = stylesheet><br>
+                &nbsp;&nbsp;    &lt;LINK href="/css/workflow.css" type=text/css rel=stylesheet><br>
+                &nbsp;&nbsp;    &lt;script language="javascript" src="/jscript/prototype.js"></script><br>
+                &nbsp;&nbsp;    &lt;script language="javascript" src="/jscript/workflow.js"></script><br>
+                &nbsp;&nbsp;    &lt;script language="javascript"><br>
+                &nbsp;&nbsp;        function send()<br>
+                &nbsp;&nbsp;        {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;            var client = new Workflow("41","","frm1");<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;            client.send();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;       function restart()<br>
+                 &nbsp;&nbsp;       {<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           var client = new Workflow("41","","frm1");<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           client.restart();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;       function reject()<br>
+                 &nbsp;&nbsp;       {<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           var client = new Workflow("41","","frm1");<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           client.reject();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;       function stop()<br>
+                 &nbsp;&nbsp;       { <br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           var client = new Workflow("41","","frm1");<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           client.stop();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;       function returnto()<br>
+                 &nbsp;&nbsp;       {<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           var client = new Workflow("41","08eef7f2-4868-4c63-9940-9f416c75fa03","frm1");<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           client.returnTo();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;   &lt;/script><br>
+                &lt;/head><br>
+                &lt;body><br>
+                &nbsp;&nbsp;   &lt;input type=button name=btn_send value="send" onclick="send()"><br>
+                &nbsp;&nbsp;   &lt;input type=button name=btn_restart value="restart" onclick="restart()"><br>
+                &nbsp;&nbsp;   &lt;input type=button name=btn_reject value="reject" onclick="reject()"><br>
+                &nbsp;&nbsp;  &lt;input type=button name=btn_stop value="stop" onclick="stop()"><br>
+                &nbsp;&nbsp;   &lt;input type=button name=btn_return value="return to" onclick="returnto()"><br>
+                &nbsp;&nbsp;   &lt;form id="frm1" name="frm1" method="post"><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;       Title:&lt;input type="text" name="title" id="title" value=""><br>
+                &nbsp;&nbsp;   &lt;/form><br>
+                &lt;/body><br>
+                &lt;/html><br>
+         </td></tr>
+     </table>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

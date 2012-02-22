@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Advanced Programming with JavaScript Class</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">Advanced Programming with JavaScript Class</a></h1>
+        <div class="toplang"></div>
+        <p>
+            The built-in JavaScript Class can be applied to develop and manage website at high-level.
+        </p>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="skill_js.html#customdata">Publish self-defined datasource automatically</a></li>
+      <li><img  src="/images/help/down.gif" /> <a href="skill_js.html#dailynewdata">List of latest daily news</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="skill_js.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="customdata" id="customdata">Publish self-defined datasource automatically</a></h2>
+     <p>
+         The table below demonstrates the process of writing data created by table “A” into “A_prop” table and then publishing it. 
+		 The website's id is "testsite" and the topic’s code is "news.A”.
+		 
+         <table border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    var pstmt = null; <br>
+                    var sql = null;<br>
+                    try  <br>
+                    {    <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var site = session.GetSite("testsite");  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var topic = site.GetTopicByCode("news.A"); <br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        //write data into “A_prop” table. The data should exist in table “A” while doesn’t exist in “A_prop” table<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        //state=2 means it has been already verified while is pending for publishing  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        sql = "insert into A_prop(id,title,siteid,topic,state) select id,name,?,?,2 from A where not exists(select id from A_prop where A.id=A_PROP.id)"; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt = session.PrepareStatement(sql);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt.SetString(1,site.id);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt.SetString(2,topic.id);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt.ExecuteUpdate();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        session.Commit();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt.Close();<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        //publish articles of topic “news.A” <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        topic.Build(false);<br>                        
+                    }   <br>
+                    catch(e)  <br>
+                    {  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        out.Error(e);  <br>
+                    }  <br>
+                    finally   <br>
+                    {         <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp; 
+                        if(pstmt!=null) pstmt.Close();  <br>
+                    }   <br>
+                </td>
+            </tr>
+         </table>
+     </p>
+    </div>
+
+    <div class="top"><a href="skill_js.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="dailynewdata" id="dailynewdata">List of latest daily news</a></h2>
+     <p>
+         The table below demonstrates how to use fulltext search engine to get the list of  articles daily published,and write the list to "/xml/my.xml". 
+		 The website's ID is “testsite”.
+         <table border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    var xmlfile = null;<br> 
+                    try  <br>
+                    {    <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        xmlfile = new NpsFile("/xml/my.xml"); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        xmlfile.OpenWriter(false);  <br><br>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var site = session.GetSite("testsite");  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var query = "publishdate:[NOW/DAY-1DAY TO NOW/DAY";
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var arts = site.FTSearch(query,0); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        for(var i=0;i&lt;arts.count;i++) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        { <br>                                            
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             var art = arts.GetNthArticle(i); <br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;id>"); <br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString(art.id);<br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;/id>"); <br><br>
+
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;title>"); <br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString(art.title);<br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;/title>"); <br><br>
+
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;url>"); <br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString(art.url);<br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;/url>"); <br><br>
+
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             art.Clear();<br>
+                         &nbsp;&nbsp;&nbsp;&nbsp;
+                        } <br>
+                    }   <br>
+                    catch(e)  <br>
+                    {  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        out.Error(e);  <br>
+                    }  <br>
+                    finally   <br>
+                    {         <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        if(xmlfile!=null) xmlfile.Close();  <br>
+                    }   <br>
+                </td>
+            </tr>
+         </table>
+     </p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,824 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>RS标签使用指南</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">RS语句使用说明</a></h1>
+    <div class="toplang"></div>
+    <p>RS语句用于读取指定栏目或SQL数据。RS语句可以嵌套使用RS、ATTACH、MAP和JAVA语句。</p>
+    <p> 注意：在应用SQL直接读取数据库时，<font color=red>BLOB、JAVA_OBJECT、LONGVARBINARY、VARBINARY、STRUCT、REF、DATALINK、LONGVARCHAR、OTHER、DISTINCT数据不被支持，将被跳过且返回NULL。</font></p>
+   <h1><font color="red">RS语法</font></h1>
+   <p>
+	 &lt;rs id=(id:STRING) sql=(sql:STRING) topic=(topic:STRING) where=(where:string) orderby=(orderby:string) from=(from:int) rows=(rows:int) page=(page:int) style=(style:String)>  <br>
+		  &nbsp;&nbsp;&nbsp;&nbsp;--在此写入你的正文内容 <br>
+	 &lt;/rs>
+   </p>
+   <p><font color=red>一旦sql或topic出现，其必须在id之后，在from、rows、page、style、where、orderby之前。</font></p>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>参数名</th>
+              <th>类型</th>
+              <th>含义</th>
+          </tr>
+          <tr class="module">
+              <td>id</td>
+              <td>STRING</td>
+              <td>
+                  必须。该RS的唯一号。必须以字母或下划线开头。
+              </td>
+          </tr>
+          <tr class="module">
+              <td>sql</td>
+              <td>STRING</td>
+              <td>
+                  要执行的SQL查询语句。<br>
+            可选。如果没有指定，默认为topic选项，topic取值为当前模板所在的栏目。<br>
+                  如果需要包含上下文中出现的字段或者JAVA字符串，应使用&lt;%=开头，并使用%>封闭，在JAVA字符串中可以直接使用正文标签和全局标签以及上下文定义的变量。下面样例说明了如何按产品查询其销售情况。<br>
+                  &lt;rs id="rs1" sql="select productid,productname from product"> <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;   <$rs1.productname$>                                           <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;   &lt;rs id="rs2" sql=&lt;%="select customer from sales where productid=" + <$rs1.productid$>%>>   <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <$rs2.customer$>                                <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;   &lt;/rs>                      <br>
+                  &lt;/rs>
+              </td>
+          </tr>
+          <tr class="module">
+              <td>topic</td>
+              <td>STRING</td>
+              <td>
+                  要查询的栏目代号。在该RS段中可以引用正文标签和附件标签，但注意要加上该RS段的ID号。<br>
+                  可选，如果SQL和topic都没有指定，系统将取值为根据当前上下文计算的当前模板所在栏目。
+                  对于自定义数据源，仅读取指定栏目的文章；对于非自定义数据源，将读取指定栏目及其下级栏目的所有文章。
+                  <br>
+                  如果指定了topic=""，表示读取当前栏目所属站点的所有非自定义数据源文章。<br>
+
+                  <br>
+                  例如有栏目名称为news，<br>
+                  &lt;rs id ="rs1" topic="news"> <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;    <$rs1.name$>         <br>
+                  &lt;/rs>                <br>
+              </td>
+          </tr>
+          <tr class="module">
+              <td>where</td>
+              <td>string</td>
+              <td>
+                  可选，仅在指定topic（或sql和topic均未设定）时有效。where语句将出现在以下SQL语句红色标注的where_clause中。<br>
+                  <b>自动排序栏目的SQL如下：</b><br>
+                  1)对于非自定义数据源文章的SQL语句如下：<br>
+                  select a.*,b.name uname,c.name deptname,d.name unitname <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;    from article a,users b,dept c,unit d,topic e  <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       where a.topic=e.id  and b.dept=c.id and c.unit=d.id and a.creator=b.id and (e.code ='<$top_code$>' or e.code like '<$top_code$>.%') and a.state=3 and a.siteid='<$site_id$>'  <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           and (<font color=red>where_clause</font>) <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          order by <font color=red>orderby_statement</font>    <br>
+                  <br><br>
+                  2)对于自定义数据源的SQL语句如下：<br>
+                  select b.*,a.title,a.siteid,a.topic,a.state,a.createdate,a.publishdate <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;      from <$custom_table$> b,<$custom_table$>_prop a  <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      where a.state=3 and b.id=a.id and a.topic='<$top_id$>'  <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           and (<font color=red>where_clause</font>) <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          order by <font color=red>orderby_statement</font>    <br>
+
+                  <br><br>
+                  <b>手工排序栏目的SQL如下：</b><br>
+                  select a.* from article_sort a where a.state=3 and a.siteid='<$site_id$>' and a.topic='<$top_id$>'<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;     and (<font color=red>where_clause</font>) <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          order by <font color=red>orderby_statement</font>    <br>
+              </td>
+          </tr>
+          <tr class="module">
+              <td>orderby</td>
+              <td>string</td>
+              <td>
+                  可选，表示排序方法。SQL语句参加where子句说明。<br>
+                  <b>自动排序栏目的默认排序：</b><br>
+                  对于非自定义数据源文章的排列默认按重要度和发布日期降序排列，即orderby="a.important desc,a.publishdate desc"。<br>
+                  对于自定义数据源，默认按发布日期降序排列。即orderby="a.publishdate desc"。<br><br><br>
+                  <b>手工排序栏目默认按手工排列。即orderby="a.idx,a.publishdate desc"</b>
+              </td>
+          </tr>
+
+          <tr class="module">
+              <td>from</td>
+              <td>int</td>
+              <td>
+                  可选，从第X条开始读取数据。默认从0开始计数。
+              </td>
+          </tr>
+         <tr class="module">
+              <td>rows</td>
+              <td>int</td>
+              <td>
+                  可选，共取X条。不填读取剩余的所有数据。
+              </td>
+          </tr>
+        <tr class="module">
+              <td>page</td>
+              <td>int</td>
+              <td>
+                  可选，分页数。达到该条数后，系统将自动分页。
+              </td>
+          </tr>
+        <tr class="module">
+              <td>style</td>
+              <td>String</td>
+              <td>
+                  可选，分页导航条样式。只有在page设置时有效，取值如下。如果RS语句设置了page参数，缺省的style样式是modern。<br>
+                  css文件样例请参考/css/pagebreak.css进行定义，缺省的样例参看下图。
+                  <table border="1" width="100%">
+                      <tr>
+                          <th width="120">取值</th>
+                          <th>含义</th>
+                      </tr>
+                      <tr>
+                          <td>none</td>
+                          <td>不显示分页导航</td>
+                      </tr>
+                      <tr>
+                          <td>modern</td>
+                          <td>现代流行样式。RS语句的缺省样式。
+                              根据nps.conf中设置的当前位置locale参数，自动选择语言，即如果是中文，等同于moder_zh；其他等同于moder_en
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_zh</td>
+                          <td>现代流行样式，中文显示。效果如下：<br>
+                              <img src="../images/modern_cn.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_en</td>
+                          <td>现代流行样式，英文显示。效果如下：<br>
+                              <img src="../images/modern_en.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_custom</td>
+                          <td>现代流行样式，但按手工设置的选项打印。参见样式定制说明。
+                          </td>
+                      </tr>
+
+                      <tr>
+                          <td>onebyone</td>
+                          <td>该样式将全部列出所有分页。文章分页(正文部分有分页符时文章模板将自动分页)的缺省样式。
+                              根据nps.conf中设置的当前位置locale参数，自动选择语言，即如果是中文，等同于onebyone_zh；其他等同于onebyone_en
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_zh</td>
+                          <td>该样式将全部列出所有分页，中文显示。效果如下：<br>
+                              <img src="../images/onebyone_cn.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_en</td>
+                          <td>该样式将全部列出所有分页，英文显示。效果如下：<br>
+                              <img src="../images/onebyone_en.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_custom</td>
+                          <td>该样式将全部列出所有分页，但按手工设置的选项打印。参见样式定制说明。</td>
+                      </tr>
+                  </table>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <br><br>
+  <h1><font color="red">分页样式定制参数说明</font></h1>
+    <h2>样式定义方法</h2>
+    <p>
+        &nbsp;&nbsp;&nbsp;&nbsp;在模板需要定制的位置前（一般是RS语句前），嵌入JAVA语句。<br>
+        &nbsp;&nbsp;注意：<br>
+        <font color=red>
+        &nbsp;&nbsp;&nbsp;&nbsp;1.建议是一次定义整组变量，而不是一个。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;2.<u>%1$s</u>用于表示参数。%1$表示第一个，%2$表示第二个；s表示是字符串，d表示是数字。所以，%1$s表示第一个参数格式化为字符串显示，%1$d表示第一个参数格式化为数字显示。具体可以参照String.format()函数的说明。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;3.如果仅仅是调整CSS样式，请参见/css/pagebreak.css样例进行调整。<br>     
+        </font>
+        <br>
+        例如,以下定义导航栏不清除样式，英文导航，并且显示当前链接，但是没有合计信息和下拉选择框导航。<br>
+        &lt;% <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_HEADER = "&lt;div class='pagebreak_modern'>"; <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_PREVPAGE = "&lt;span class='prevpage'>&lt;a href='%1$s'>Previous&lt;/a>&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_NEXTPAGE = "&lt;span class='nextpage'>&lt;a href='%1$s'>Next&lt;/a>&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_SKIP  = "&lt;span class='omit'>...&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_PAGE = "&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_CURRENTPAGE = "&lt;span class='currentpage'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_TOTAL = null;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_SELECTBOX = null;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_FOOTER = "&lt;/div>";<br>
+        %> <br>
+    </p>
+    <h2>modern样式的缺省定义</h2>
+    <table border="1" width="800" class="related" cellspacing="0" cellpadding="0" >
+        <tr>
+            <th width="200">变量</th>
+            <th width="120">含义</th>
+            <th>缺省值</th>
+            <th width="200">参数</th>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_HEADER</td>
+            <td>页眉</td>
+            <td>&lt;div class='clear'>&lt;/div>&lt;div class='pagebreak_modern'></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_PREVPAGE</td>
+            <td>前一页</td>
+            <td>&lt;span class='prevpage'>&lt;a href='%1$s'>上一页&lt;/a>&lt;/span></td>
+            <td>链接地址</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_NEXTPAGE</td>
+            <td>下一页</td>
+            <td>&lt;span class='nextpage'>&lt;a href='%1$s'>下一页&lt;/a>&lt;/span></td>
+            <td>链接地址</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_SKIP</td>
+            <td>省略符</td>
+            <td>&lt;span class='omit'>...&lt;/span></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_PAGE</td>
+            <td>页码</td>
+            <td>&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span></td>
+            <td>链接地址,页码(数字)</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_CURRENTPAGE</td>
+            <td>当前页</td>
+            <td>&lt;span class='currentpage'>%2$s&lt;/span></td>
+            <td>链接地址，页码(数字)</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_TOTAL</td>
+            <td>合计信息</td>
+            <td>&lt;span class='total'>共%2$d页&lt;/span></td>
+            <td>总记录数,总页数,每页条数,当前页码</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_SELECTBOX</td>
+            <td>下拉选择框</td>
+            <td>&lt;select class='page_select' onchange='javascript:window.location=this.value'></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_FOOTER</td>
+            <td>页脚</td>
+            <td>&lt;/div></td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+    <br><br>
+    <h2>onebyone样式的缺省定义</h2>
+    <table border="1" width="800" class="related" cellspacing="0" cellpadding="0" >
+        <tr>
+            <th width="200">变量</th>
+            <th width="100">含义</th>
+            <th>缺省值</th>
+            <th width="200">参数</th>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_HEADER</td>
+            <td>页眉</td>
+            <td>&lt;div class='clear'>&lt;/div>&lt;div class='pagebreak_onebyone'></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_PREVPAGE</td>
+            <td>前一页</td>
+            <td>&lt;span class='prevpage'>&lt;a href='%1$s'>上一页&lt;/a>&lt;/span></td>
+            <td>链接地址</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_NEXTPAGE</td>
+            <td>下一页</td>
+            <td>&lt;span class='nextpage'>&lt;a href='%1$s'>下一页&lt;/a>&lt;/span></td>
+            <td>链接地址</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_SKIP</td>
+            <td>省略符</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_PAGE</td>
+            <td>页码</td>
+            <td>&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span></td>
+            <td>链接地址,页码(数字)</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_CURRENTPAGE</td>
+            <td>当前页</td>
+            <td>&lt;span class='currentpage'>%2$s&lt;/span></td>
+            <td>链接地址，页码(数字)</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_TOTAL</td>
+            <td>合计信息</td>
+            <td>&nbsp;</td>
+            <td>总记录数,总页数,每页条数,当前页码</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_SELECTBOX</td>
+            <td>下拉选择框</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_FOOTER</td>
+            <td>页脚</td>
+            <td>&lt;/div></td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+  <br><br>
+  <h1><font color="red">RS标签使用说明</font></h1>   
+      <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th width="75">标签名</th>
+              <th width="54">类型</th>
+              <th width="292">含义</th>
+          </tr>
+          <tr class="module">
+              <td>rowno</td>
+              <td>int</td>
+              <td>
+                  当前行号
+              </td>
+          </tr>
+		</tbody>
+	</table>
+  <p>
+    1.标签以<$开头，$>结尾定义。<br>
+	2.标签以RS的ID号作为前缀进行引用，例如<$rs1.productname$>。注意：<font color=red>ID大小写应与定义中的形同，后面变量不区分大小写。</font><br>
+    3.rowno标签表明当前行号，为整数。例如<$rs1.rowno$>。<br>
+    4.RS语句中采用了topic参数的，可以加上RS的ID号作为前缀引用正文标签。对于自定义数据源，正文标签仅限于<$art_id$>、<$art_title$>、<$art_url$>、<$art_createdate$>和<$art_publishdate$><br>
+    5.RS语句中可以嵌套ATTACH语句。对于自定义数据源，除非定制（例如产品管理），一般附件标签不起作用（也即没有任何数据）。<br>
+    6.RS语句中采用了sql参数的，使用RS的ID号作为前缀加上字段名进行引用，字段名不区分大小写。<br>
+    7.标签后面可以加括号紧跟格式化参数或字数限制条件，例如<$rs1.productname(50)$>。对于不同类型数据，其主要含义有：<br><br>
+        &nbsp;&nbsp; &nbsp;&nbsp;
+	    1)<a id="#string">字符串类型</a>： <br>
+            <$rs1.productname(50)$>表示取productname的前50个字符，中文字符算1个字符；<br>
+            <$rs1.productname(50,"...")$>表示取productname的前50个字符，超出的最后追加...<br>
+        <br><br>
+        &nbsp;&nbsp; &nbsp;&nbsp;
+		2)<a id="#number">数字类型</a>，参见下表说明；<br>
+                <table cellspacing="3" cellpadding="0" summary="Chart showing symbol,location, localized, and meaning." border="0">
+                    <tbody>
+                        <tr bgcolor="#ccccff">
+                            <th align="left">符号</th>
+                            <th align="left">位置</th>
+                            <th align="left">含义</th>
+                        </tr>
+                        <tr valign="top">
+                            <td><code><font face="NSimsun">0</font></code></td>
+                            <td>数字</td>
+                            <td>阿拉伯数字</td>
+                        </tr>
+                        <tr valign="top" bgcolor="#eeeeff">
+                            <td><code><font face="NSimsun">#</font></code></td>
+                            <td>数字字</td>
+                            <td>阿拉伯数字，如果不存在则显示为 0</td>
+                        </tr>
+                        <tr valign="top">
+                            <td><code><font face="NSimsun">.</font></code></td>
+                            <td>数字</td>
+                            <td>小数分隔符或货币小数分隔符</td>
+                        </tr>
+                        <tr valign="top" bgcolor="#eeeeff">
+                            <td><code><font face="NSimsun">-</font></code></td>
+                            <td>数字</td>
+                            <td>减号</td>
+                        </tr>
+                        <tr valign="top">
+                            <td><code><font face="NSimsun">,</font></code></td>
+                            <td>数字</td>
+                            <td>分组分隔符</td>
+                        </tr>
+                        <tr valign="top" bgcolor="#eeeeff">
+                            <td><code><font face="NSimsun">E</font></code></td>
+                            <td>数字</td>
+                            <td>分隔科学计数法中的尾数和指数。<em>在前缀或后缀中无需加引号。</em></td>
+                        </tr>
+                        <tr valign="top">
+                            <td><code><font face="NSimsun">;</font></code></td>
+                            <td>子模式边界</td>
+                            <td>分隔正数和负数子模式</td>
+                        </tr>
+                        <tr valign="top" bgcolor="#eeeeff">
+                            <td><code><font face="NSimsun">%</font></code></td>
+                            <td>前缀或后缀</td>
+                            <td>乘以 100 并显示为百分数</td>
+                        </tr>
+                        <tr valign="top">
+                            <td><code><font face="NSimsun">\u2030</font></code></td>
+                            <td>前缀或后缀</td>
+                            <td>乘以 1000 并显示为千分数</td>
+                        </tr>
+                        <tr valign="top" bgcolor="#eeeeff">
+                            <td><code><font face="NSimsun">&curren;</font></code> (<code><font face="NSimsun">\u00A4</font></code>)</td>
+                            <td>前缀或后缀</td>
+                            <td>货币记号，由货币符号替换。如果两个同时出现，则用国际货币符号替换。如果出现在某个模式中，则使用货币小数分隔符，而不使用小数分隔符。</td>
+                        </tr>
+                        <tr valign="top">
+                            <td><code><font face="NSimsun">'</font></code></td>
+                            <td>前缀或后缀</td>
+                            <td>用于在前缀或或后缀中为特殊字符加引号，例如 <code><font face="NSimsun">&quot;'#'#&quot;</font></code> 将 123 格式化为 <code><font face="NSimsun">&quot;#123&quot;</font></code>。要创建单引号本身，请连续使用两个单引号：<code><font face="NSimsun">&quot;# o''clock&quot;</font></code>。</td>
+                        </tr>
+                    </tbody>
+                </table>
+             <br>
+            &nbsp;&nbsp; &nbsp;&nbsp;
+			3)<a id="#date">日期类型</a>：格式化字符串，例如<$rs.salesdate("yyyyMMdd")$>。默认格式为"yyyy-MM-dd"。参见下表说明：<br>
+                          <table cellspacing="3" cellpadding="0" border="0">
+                                <tbody>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><b><span >字母 </span></b></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><b><span >日期或时间元素 </span></b></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><b><span >表示 </span></b></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><b><span >示例 </span></b></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >G </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >Era </span><span >标志符 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Text</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >AD </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >y </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >年 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>Year</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >1996; 96 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >M </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >年中的月份 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Month</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >July; Jul; 07 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >w </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >年中的周数 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >27 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >W </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >月份中的周数 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >2 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >D </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >年中的天数 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >189 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >d </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >月份中的天数 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >10 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >F </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >月份中的星期 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >2 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >E </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >星期中的天数 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Text</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >Tuesday; Tue </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >a </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >Am/pm </span><span >标记 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>Text</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >PM </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >H </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >一天中的小时数（0-23） </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >0 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >k </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >一天中的小时数（1-24） </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >24 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >K </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >am/pm </span><span >中的小时数（0-11） </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >0 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >h </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >am/pm </span><span >中的小时数（1-12） </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >12 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >m </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >小时中的分钟数 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >30 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >s </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >分钟中的秒数 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >55 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >S </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >毫秒数 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>Number</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >978 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >z </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >时区 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span ><u>General time zone</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8">
+                                        <div align="left"><span >Pacific Standard Time; PST; GMT-08:00 </span></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >Z </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >时区 </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span ><u>RFC 822 time zone</u> </span></div>
+                                        </td>
+                                        <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent">
+                                        <div align="left"><span >-0800 </span></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+							<br>
+                            &nbsp;&nbsp; &nbsp;&nbsp;
+		   4)<a id="#clob">CLOB类型</a>：<br>
+           &nbsp;&nbsp; &nbsp;&nbsp;       
+		   1."0"或"text"表示格式化后的纯文本（将忽略所有HTML标签，空格、HTML空格（但全角空格保留）；<br>
+           &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        
+		   例如 <$rs1.content("text")$> 将返回格式化后的content数据。<br>
+           <$rs1.content("text",50)$> 将返回格式化后的content数据中的前50个字符。等同于<$rs1.content(50)$><br>
+           <$rs1.content("text",50,"...")$> 将返回格式化后的content数据中的前50个字符，超出50个的在末尾追加...<br>
+
+           <br>
+           &nbsp;&nbsp; &nbsp;&nbsp;
+		   2.数字表明取的个数，将自动格式化成纯文本然后返回。<br>
+           &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         
+		   例如<$rs1.content(500)$> 将返回格式化后的前500个字符。1个中文算1个字符。<br>
+           <$rs1.content(500)$> 将返回格式化后的content数据中的前500个字符。等同于<$rs1.content(500,"")$><br>
+           <$rs1.content(500,"...")$> 将返回格式化后的content数据中的前500个字符，超出500个的在末尾追加...<br>
+
+  </p>
+  <br><br>
+  <h1><font color="red">样例代码</font></h1>   
+   <p>
+   以下代码演示了读取当前栏目下所有文章。<br>
+   &lt;rs id="rs1"> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$rs1.art_title$> <br>
+   &lt;/rs> <br>
+
+   <br>
+   以下代码作用同上，也是读取当前栏目下所有文章。<br>
+   &lt;rs id="rs1" topic=<$top_code$>> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$rs1.art_title$> <br>
+   &lt;/rs> <br>
+
+   <br>
+   以下代码演示了读取指定栏目中的重要度为非常重要的文章，按发布时间升序排列。<br>
+   &lt;rs id="rs1" topic=<$top_code$> where="a.important=2" orderby="a.publishdate"> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$rs1.art_title$> <br>
+   &lt;/rs> <br>
+
+   <br>
+   以下代码演示了读取栏目代号为top1的栏目下20篇文章。<br>
+   &lt;rs id="rs1" topic="top1" rows=20> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$rs1.art_title$> <br>
+   &lt;/rs> <br>   
+   
+   <br>
+   以下代码演示了读取当前栏目下文章并以20条每页进行分页。<br>
+   &lt;rs id="rs1" page=20> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$rs1.art_title$> <br>
+   &lt;/rs> <br>   
+   
+   <br>
+   以下代码演示了读取sql中前20行数据。<br>
+   &lt;rs id="rs1" sql="select productid,productname from product" rows=20> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$rs1.productname$> <br>
+   &lt;/rs> <br>   
+
+   <br>
+   以下代码演示了rs嵌套和sql中嵌入JAVA语句。其执行结果是读取product中数据并根据productid读取customer表数据<br>
+   &lt;rs id="rs1" sql="select productid,productname from product"> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$rs1.productname$> <br>
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  &lt;rs id="rs2" sql=&lt;%="select customer from sales where productid=" + <$rs1.productid$>%>>  <br>
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <$rs2.customer$>  <br>
+	  &nbsp;&nbsp;&nbsp;&nbsp;	 
+      &lt;/rs> <br>
+   &lt;/rs> <br>   
+   
+   </p>	
+</div>
+
+<div id="quickview">
+    <ul id="toc">
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#string">字符串格式化</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#number">数字格式化</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#date">日期格式化</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#clob">CLOB格式化</a></li>
+    </ul>
+</div>
+
+
+</div>
+</body>
+</html>

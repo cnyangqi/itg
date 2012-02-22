@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>ATTATCH语句使用指南</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">ATTATCH语句使用说明</a></h1>
+    <div class="toplang"></div>
+	<p>
+	Attach语句用于读取当前上下文中文章的附件，Attach语句出现位置具有一定限制性：<br>
+	 1)文章模板中，未包含在RS标签体内的附件引用表明是对当前文章的附件列表。<br>
+	 2)页面模板中必须被RS语句包含。<br>
+	 3)多层嵌套的RS语句中，指向离该ATTACH最近的RS结果集，且仅在带Topic标记的RS语句中有效。<br>
+     4)应使用"att."前缀引用附件标签。注意，att必须小写。    
+    </p>
+	
+    <h1><font color="red">Attach语法</font></h1>
+    <p>    &lt;att type=(t:STRING) rows=(rows:int)> <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;--在此写入你的正文内容 <br>
+           &lt;/att>
+  <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>参数名</th>
+                <th>类型</th>
+                <th>含义</th>
+            </tr>
+            <tr class="module">
+                <td>type</td>
+                <td>STRING</td>
+                <td>
+                    可选。表示附件类型，以附件后缀表示，多个类型以;或空格或tab键或,或|间隔，不区分大小写。
+        type不设置时表示取所有附件，等同于type="*.*"。
+                    <p>例如，".jpg;.gif"表示匹配jpg和gif格式的图片。</p>
+                    <p>    ".jpg|.bmp|.gif"     </p>
+                    <p>    "*.jpg|.bmp|*.gif"   </p>
+                    <p>    ".jpg;.bmp;.gif"     </p>
+                    <p>    "jpg|bmp|gif"
+                    <p>    "jpg bmp gif"       </p>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>rows</td>
+                <td>int</td>
+                <td>
+                    可选。表示附件取的个数。不填或<=0表示取所有。<br>和type联合使用时表示取TYPE类型附件的最大条数。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+  <br><br><br><br>
+</div>
+</body>
+</html>

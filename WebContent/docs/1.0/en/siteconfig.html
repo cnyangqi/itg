@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="UTF-8" lang="UTF-8">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NPS website configuration and management</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">NPS website configuration and management</a></h1>
+        <div class="toplang"></div>
+        <p>This manual is about configuring and managing websites.</p>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="#unitconfig">Unit management</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="#siteconfig">Site Configuration</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="#topicconfig">Topic Management</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="unitconfig" id="unitconfig">Unit management</a></h2>
+       <p>Unit management mainly refers to opening account for unit, configuring department, and managing people’s account.</p>
+    <dl>
+      <dt>opening account for unit</dt>
+      <dd>
+  	      Login NPS as system administrator. 
+		  <font color=red>Once installing system, the defaulted user name for administrator is “system”, password is “manager”.</font>
+          <br>
+        Click <b>“unit Admin”</b> in the left navigation bar and click <b>“add 
+        unit”</b> in the right workspace as showed below. The “unit name” and 
+        “unique identifier” is required to fill. The unique identifier is globally 
+        unique, we advise to fill it with the abbreviation of unit name. <br>
+          <img src="./images/createunit.png"><br>
+          Save and close the new window, then start to configure department.
+      </dd>
+      <dt>Department configuration</dt>
+      <dd>
+	      Click <b>“unit Admin”</b> in the left navigation bar and choose the unit whose department needs to be configured (click “checkbox” in the left). 
+		  Clicking <b>“dept Admin”</b>.<br>
+  	      The tree structure in the left lists all available parts. 
+		  There is only unit name in the tree structure if it is the first time opening account. 
+		  Click the unit name and input department information in the right.
+          <br>
+          <img src="./images/createdept.png"><br>
+          <font color=red>
+          If you want to set up top-level department, you need to choose top-level unit in the left navigation bar (such as jwebstar corp. in the chart above).
+		  <br>
+          If you want to set up lower-level department, you need to choose its superior department in the left navigation bar, then click <b>“Add child”</b>.
+          <br>
+          You can merge or independently operate department through dragging and dropping nodes in the left. 
+          </font>            
+      </dd>
+      <dt>Managing staff’s account</dt>
+      <dd>
+          After entering the department configuration interface, you can choose the department that need to <b>"add user"</b> in the left department tree. Then click “add user” in the right.
+          <br>
+          <img src="./images/createuser.png"><br>
+              The items marked with red are required to fill.<br>
+          <font color=red>
+		      Log-in account is namely your user name, and it’s not case sensitive. The log-in account is globally unique.
+			  Password is advised to be longer than 8 bits.
+              <br>
+			  Super user is the account for system administrator. 
+			  Only system administrators are able to new super user.              
+          </font>
+      </dd>
+    </dl>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="siteconfig" id="siteconfig">website configuration</a></h2>
+       <p>
+	   The function of website configuration is to plan website’s deployment solution and management solution. Deployment solution refers to distributing front WEB server, setting picture&attachment server and organizing directory for local temporary files. Management solution mainly means assigning website administrator.
+	   </p>
+       <img src="./images/createsite.png"> <br>
+       <p>
+              The items marked with red are required to fill.<br>
+              Website unique identifier should be English letters or digits. 
+			  It is a unique ID in the global website. 
+			  The website name could be full name, abbreviation, or Chinese name.
+			  <br><br>
+           <font color=red>
+              All the files published by website are coded with UTF-8, thus requires:<br>
+               1.Choosing UTF-8 as default code when configuring front WEB server such as Apache.<br>
+               2.All the META head assigned in templates should designate UTF-8.<br>
+               3.All the static web pages that made and uploaded manually should be coded in UTF-8 ( the META head and coding type of HTML files should be also coded in UTF-8). The files coding can be converted by professional tools such as UltraEdit or EditPlus.<br>
+           </font>
+              <br>
+              Extension file name is the extended name of published and generated files. It depends on the configuration of your WEB server (for example, <a href="http://httpd.apache.org">APACHE</a>). Generally:<br>
+              <br>
+              1.SHTML means static webpage supporting SSI command.<br>
+              2.HTML or HTM means static webpage.<br>
+              3.Some special application could be also set as JSP. For example: pages requiring strict control on authority could be published as JSP. The JSP pages published and generated by independent server should be separated with open HTML code.
+			  In addition, you can also use self-defined filename suffixes such as JHTML, etc. However, you should configure the front WEB server so as to correctly identify the type you have set.
+			  <br>
+           <br>
+           The function of website publishing directory is for storing the serial files published by NPS. 
+           <font color=red>
+           For large website, it is better to make separate partition for website publishing directory. The character of LINUX is that files are relatively small and there are many files sharing one directory. Therefore, in case of using LINUX operating system, we advise to use Reiserfs file system as partition’s file system. Reiserfs have outstanding performance in reading-writing directory contained massive small files. Even if processing directory contained 10 thousand files, Reiserfs still keep a desirable performance. For more details, please refer to articles on system optimization.</font>
+		   <br>
+           <br>
+           <font color=red>
+		   Regarding large web site, picture&attachment server and static webpage server should be separate (for example, large portals). </font>
+		   <a href="http://tinyhttpd.sourceforge.net">Tiny HTTPd</a> is more efficient; therefore, it is better to allocate Tiny HTTPd for picture&attachment server. In this case, you should particularly specify the picture and attachment’s root directory as well as publishing directory. Moreover, you should set an independent server which is solely for uploading picture and attachment. 
+		   <br>
+           1.Picture&attachment’s root directory should point at the picture&attachment server’s domain name, for example, http://image.jwebstar.com/.<br>
+           2.In case of some big picture&attachment, it is better to set separate partition for their publishing directory on NPS.<br>           
+		   3.For large scale picture service which is under centralized network storage environment (for example, SAN), it is not necessary to establish independent picture&attachment server (namely don’t make allocation in front WEB sever with FTP mode). In contrast, you should use “mount” mode to independently upload SAN partition to every server. We advise to adopt <a href="http://oss.oracle.com/projects/ocfs2/">OCFS2</a> as SAN file system, which is convenient to concurrently writing multiple nodes. For more details, please refer to articles on system optimization.<br>
+           4.System limitation: picture&attachment applies localized storage mode, therefore, when NPS server is in cluster structure, you should put all picture&attachment directory in centralized storage mode (for example, SAN environment) to prevent attachment from missing during publishing process.<br>
+           5.ATTENTION PLS: in order to preview images for resources, Picture&attachment's root directory must start with http:// or https://
+
+           <br>
+           It is necessary for uploading server to provide FTP service, and LINUX should adopt vsftpd. The uploading user should have authority to create directory and read-write files. If there are multiple front WEB servers, then all of them could be added. Every file published will automatically have a uploading route according to its uploading root directory.
+		   <br>
+
+           <br>
+		   The website administrator have all-round authority in managing the website, including setting department, adjusting personnel, establishing and organizing column, managing template, rebuilding and publishing websites, assigning column moderator, verifying and publishing articles. Such authorities are particularly useful when managing serial websites.
+           <br>
+		    <font color=red>The website administrator has to be member of the organization that the website belongs to.</font> 
+           The number of website administrator could be plural.
+       </p>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="topicconfig" id="topicconfig">Topic Management</a></h2>
+    <p>The topic management is in tree structure, which enables you to directly design, organize, and arrange the whole website structure. Click <b>"topic Admin"</b> in the left navigation bar, as showed below:</p><br>
+    <img src="./images/createtopic.png"><br>
+    <p>
+       When the first time you manage topic, you should directly click the website name in the topic table to establish top-level topic.<br>
+       <font color=red>
+           1.When establishing top-level topic, you should click the website name in the left topic table, then input topic information.<br>
+           2.In case of establishing lower-level topic for certain topic, please select this topic in the left topic table, then click "Add child" to input information of the lower-level topic.<br>
+           3.You can drag and drop topic to re-organize its level and structure, you can even duplicate and move topic among different websites.<br>
+       </font>
+
+       <br>
+       The topic name should be easy to remember, such as “news”,it can be Chinese as well.<br>
+       <font color=red>The topic’s alias name should be globally unique and must be presented as English or digit. </font>，<br>
+       <font color=red>
+	   The topic’s code name will enable you to quickly organize template tags (namely topic code) according to its hierarchy. Every topic’s alias name should contains “.” except the top-level topic. 
+	   </font>
+	   For example, the alias name of the “Chinese news” topic which under “news” is china, therefore, the topic’s code name is “news.china”.
+       <br>
+       <br> 
+      The article modes include draft, submitted while verifying, verified while publishing, automatically publish. <br>
+        1.The draft can only be seen by its creator.<br>
+        2.Submitted while verifying means the article is being verified by moderator or website administrator. Once adopt the mode, all the newly established and saved articles will be automatically submitted for verification.<br>
+        3.Both verified while publishing and automatically publish mode means the article will be automatically published. After being successfully published, the article mode will be automatically turned into “published”.<br>
+
+      <br>  
+      Article score is for accounting statistics.<br>
+
+      <br>
+      Article template is for presenting ultimate articles. 
+	  Page template is employed to generate topic navigation, home page, and serial files fitted for certain area or format.<br>
+	  
+	  Articles can only be input into the lowest-level topic. 
+	  For example: if “Chinese news” and “international news” are under the topic of “news”, 
+	  then you should fix whether the article belongs to “Chinese news” or “international news” other than classify the article as “news”. 
+	  
+      <font color=red>As a result, article template is necessary for the lowest-level topic. </font><br>
+      The application and design of Page template is flexible.
+	  Different template design and manufacture plan as well as particular application requirement can result different page template.
+	  Please refer to the know-how of designing template.<br>
+
+      <br>
+      Topic admin has the authority to verify and delete articles in the topic; moreover, he/she can also re-organize the topic.<br>
+
+      <br>
+	  Self-defined data source can be docked with external application, thus you can extract and publish data. The table name of self-defined data source could be the real table name or view.
+      <br>
+	  For example: you have a professional gold quotation system and now you want to automatically publish the quotation information in HTML format in your website, then you could integrate the self-defined data source with current data. For more integration solutions, please refer to external data integration solutions. 
+      <br>
+      If you use the product management module, then the relevant topic’s self-defined data source table name should be set to FT_PRODUCT.          
+    </p>    
+    </div>    
+</div>
+</body>
+</html>

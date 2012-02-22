@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsAtomClient</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsAtomClient class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsAtomClient用于通过Atom发布协议与远程服务器进行交互<br>
+        以下代码演示了从nps.myserver.com下载文档，并发布到testsite站点的news栏目。
+        nps.myserver.com部署了NPS服务。
+    </p>
+    <table border="1" width="100%">
+        <tr><td>
+            var site = session.GetSite("testsite");<br>
+            var topic = site.GetTopicByCode("news");<br>
+            var client = new NpsAtomClient("http://nps.jwebstar.com/");<br>
+            client.NpsLogin("/webapi/login","system","manager");<br>
+            var articles = client.List("/webapi/posts/testsite/");<br>
+            for(var i=0;i&lt;articles.length;i++)<br>
+            {  <br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               client.DownloadArticle(articles[i],topic);<br>
+            }<br>
+            client.Clear();<br>
+        </td></tr>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsAtomClient(String host)<br>
+                    构造函数。host是指该客户端要链接的站点根路径。例如http://nps.jwebstar.com:8080/
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    HttpBasicLogin(String uri,String uid,String pwd) throws Exception<br>
+                    采用Http基本认证方式登录。uri是登录地址，uid是用户名，pwd是密码
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GoogleLogin(String uri,String uid, String pwd, String service) throws Exception<br>
+                    采用GoogleLogin方式登录Google。uri是登录地址，uid是用户名，pwd是密码，service是google服务
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    NpsLogin(String uri,String uid,String pwd) throws Exception<br>
+                    登录NPS服务器。uri是登录地址，一般为/webapi/login
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    FormLogin(String uri,Object fieldnames,Object fieldvalues) throws Exception<br>
+                    采用Form Post形式登录。fieldnames是字段名数组，fieldvalues是相对应的字段值数组
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    DownloadArticle(String url,NpsTopic topic) throws Exception<br>
+                    从url处下载文章并提交到topic栏目，返回值是提交后的文章。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResource</td>
+                <td>
+                    DownloadResource(String url,NpsSite site) throws Exception<br>
+                    从url处下载资源并保存到site站点（即该资源宿主站点是site)，返回值是保存后的资源。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResource</td>
+                <td>
+                    DownloadResourceAndPublishTo(String url,NpsTopic topic) throws Exception<br>
+                    从url处下载资源并生成文章发布到指定的topic栏目。该资源的宿主站点是site，返回值是保存后的资源。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Object</td>
+                <td>
+                    List(String url) throws Exception<br>
+                    从url处获得的feed中包含的所有链接，返回值是一个数组，包含所有链接。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    PostArticle(String url, NpsArticle nps_art) throws Exception<br>
+                    提交文章。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    PostResource(String url, NpsResource nps_resource) throws Exception<br>
+                    提交资源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Delete(String url) throws Exception<br>
+                    删除资源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Clear()<br>
+                    清理临时文件，断开连接
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br><br>
+</div>
+</div>
+</body>
+</html>

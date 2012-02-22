@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>附件标签使用指南</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">附件标签使用说明</a></h1>
+    <div class="toplang"></div>
+    <p>本文说明了附件标签的语法、用途和使用情境。</p>
+</div>
+
+<div id="quickview">
+    <ul id="toc">
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#rowno"><$rowno$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#id"><$res_id$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#name"><$res_title$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#url"><$res_url$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#size"><$res_size$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#remark"><$res_content$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#suffix"><$res_suffix$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#creator"><$res_creator$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#creator_cn"><$res_creatorcn$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#createdate"><$res_createdate$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#index"><$res_index$></a></li>
+    </ul>
+</div>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+      <h2><a id="#id"><$res_id$></a></h2>
+      <p>附件唯一标识号。</p>
+  </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+    <div class="section">
+        <h2><a id="#rowno"><$rowno$></a></h2>
+        <p>行号，为整数。</p>
+    </div>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+  <h2><a id="#name"><$res_title(wordcount:int,append:String)$></a></h2>
+  <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>参数名</th>
+              <th>类型</th>
+              <th>含义</th>
+          </tr>
+          <tr class="module">
+              <td>wordcount</td>
+              <td>int</td>
+              <td>
+                  可选。指明取的字数。中文算1个字符。
+              </td>
+          </tr>
+          <tr class="module">
+              <td>append</td>
+              <td>String</td>
+              <td>
+                  可选。超出wordcount个字符后，自动在后面追加append串。
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <p>附件的标题名称。<br>
+  <$res_title$>：返回附件的全名。 <br>
+  <$res_title(50)$>：附件名称中50以上的将被截断，仅返回附件名称中的前50个字符。等同于<$res_title(50,"")$><br>
+  <$res_title(50,"...")$>：返回附件名称中前50个字符，超出部分追加...
+  </p>
+</div>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+  <h2><a id="#suffix"><$res_suffix$></a></h2>
+  <p>文件名后缀，小写。例如.jpg</p>
+</div>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+  <h2><a id="#creator"><$res_creator$></a></h2>
+  <p>创建人ID号</p>
+  </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+    <div class="section">
+    <h2><a id="#creator_cn"><$res_creatorcn$></a></h2>
+    <p>创建人姓名</p>
+    </div>
+
+   <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+    <div class="section">
+    <h2><a id="#createdate"><$res_createdate$></a></h2>
+    <p>创建时间</p>
+    </div>
+
+   <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+    <div class="section">
+    <h2><a id="#remark"><$res_content$></a></h2>
+    <p>附件备注说明</p>
+    </div>
+
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+  <h2><a id="#size"><$res_size(format:String)$></a></h2>
+  <p>文件长度。</p>
+  <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>参数名</th>
+              <th>类型</th>
+              <th>含义</th>
+          </tr>
+          <tr class="module">
+              <td>format</td>
+              <td>String</td>
+              <td>
+                  B、BYTE：以Byte为单位返回字符串，例如1,024,102Byte<br>
+                  K、KB：以K为单位返回字符串，例如1,024KB<br>
+                  M、MB：以M为单位返回字符串，例如1.20MB<br>
+                  G、GB：以G为单位返回字符串，例如0.50GB<br>
+                  H、Human-readable:按最适合读者阅读模式自动转换。<br>
+                  以上Format均不区分大小写。<br><br>
+                  其他格式化串，是指对byte为计算单位的值进行格式化。参看下面的NumberFormat说明。
+              </td>
+          </tr>
+      </tbody>
+  </table>
+
+  <p>
+      例如，文件长度为1,264,128Byte，那么：<br>
+      <$res_size$>:返回1264128，为数字；<br>
+      <$res_size("KB")$>:返回1,234.5KB；<br>
+      <$res_size("MB")$>:返回1.21MB；<br>
+      <$res_size("h")$>:返回1.21MB
+  </p>
+  <p>NumberFormat说明：</p>
+  <table cellspacing="3" cellpadding="0" summary="Chart showing symbol,location, localized, and meaning." border="0">
+  <tbody>
+      <tr bgcolor="#ccccff">
+          <th align="left">符号</th>
+          <th align="left">位置</th>
+          <th align="left">含义</th>
+      </tr>
+      <tr valign="top">
+          <td><code><font face="NSimsun">0</font></code></td>
+          <td>数字</td>
+          <td>阿拉伯数字</td>
+      </tr>
+      <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">#</font></code></td>
+          <td>数字</td>
+          <td>阿拉伯数字，如果不存在则显示为 0</td>
+      </tr>
+      <tr valign="top">
+          <td><code><font face="NSimsun">.</font></code></td>
+          <td>数字</td>
+          <td>小数分隔符或货币小数分隔符</td>
+      </tr>
+      <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">-</font></code></td>
+          <td>数字</td>
+          <td>减号</td>
+      </tr>
+      <tr valign="top">
+          <td><code><font face="NSimsun">,</font></code></td>
+          <td>数字</td>
+          <td>分组分隔符</td>
+      </tr>
+      <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">E</font></code></td>
+          <td>数字</td>
+          <td>分隔科学计数法中的尾数和指数。<em>在前缀或后缀中无需加引号。</em></td>
+      </tr>
+      <tr valign="top">
+          <td><code><font face="NSimsun">;</font></code></td>
+          <td>子模式边界</td>
+          <td>分隔正数和负数子模式</td>
+      </tr>
+      <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">%</font></code></td>
+          <td>前缀或后缀</td>
+          <td>乘以 100 并显示为百分数</td>
+      </tr>
+      <tr valign="top">
+          <td><code><font face="NSimsun">\u2030</font></code></td>
+          <td>前缀或后缀</td>
+          <td>乘以 1000 并显示为千分数</td>
+      </tr>
+      <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">&curren;</font></code> (<code><font face="NSimsun">\u00A4</font></code>)</td>
+          <td>前缀或后缀</td>
+          <td>货币记号，由货币符号替换。如果两个同时出现，则用国际货币符号替换。如果出现在某个模式中，则使用货币小数分隔符，而不使用小数分隔符。</td>
+      </tr>
+      <tr valign="top">
+          <td><code><font face="NSimsun">'</font></code></td>
+          <td>前缀或后缀</td>
+          <td>用于在前缀或或后缀中为特殊字符加引号，例如 <code><font face="NSimsun">&quot;'#'#&quot;</font></code> 将 123 格式化为 <code><font face="NSimsun">&quot;#123&quot;</font></code>。要创建单引号本身，请连续使用两个单引号：<code><font face="NSimsun">&quot;# o''clock&quot;</font></code>。</td>
+      </tr>
+  </tbody>
+  </table>
+
+</div>
+
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+  <h2><a id="#url"><$res_url$></a></h2>
+  <p>附件URL访问绝对路径。</p>
+</div>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+  <h2><a id="#url2"><$res_url("width:int,height:int")$></a></h2>
+  <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>参数名</th>
+              <th>类型</th>
+              <th>含义</th>
+          </tr>
+          <tr class="module">
+              <td>width</td>
+              <td>int</td>
+              <td>
+                  -1或不是数字类型的取值，width将被设置为自动缩放。
+              </td>
+          </tr>
+          <tr class="module">
+              <td>height</td>
+              <td>int</td>
+              <td>
+                  -1或不是数字类型的取值，height将被设置为自动缩放。
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <p><font color=red>只有对JPG、BMP、GIF、TIF格式图片文件有效。否则width、height参数将同时被忽略。</font></p>
+  <p>系统将按width和height的要求自动缩放图片，并返回该图片的URL访问路径。 <br>
+  <$res_url("100,200")$>：将生成width=100,height=200的新图片并返回该图片的URL路径。
+  </p>
+</div>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+  <h2><a id="#url3"><$res_url(width:int,height:int)$></a></h2>
+  <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>参数名</th>
+              <th>类型</th>
+              <th>含义</th>
+          </tr>
+          <tr class="module">
+              <td>width</td>
+              <td>int</td>
+              <td>
+                  -1或不是数字类型的取值，width将被设置为自动缩放。
+              </td>
+          </tr>
+          <tr class="module">
+              <td>height</td>
+              <td>int</td>
+              <td>
+                  -1或不是数字类型的取值，height将被设置为自动缩放。
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <p><font color=red>只有对JPG、BMP、GIF、TIF格式图片文件有效。否则width、height参数将同时被忽略。</font></p>
+  <p>系统将按width和height的要求自动缩放图片，并返回该图片的URL访问路径。 <br>
+  <$res_url(100,200)$>：将生成width=100,height=200的新图片并返回该图片的URL路径。 <br>
+  <$res_url(100,-1)$>：将生成width=100自动缩放图片并返回新图片的URL路径。
+  </p>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+      <h2><a id="#index"><$res_index$></a></h2>
+      <p>附件顺序号，为整数。</p>
+  </div>
+</div>
+
+    <br><br><br><br>
+  </div>
+</body>
+</html>

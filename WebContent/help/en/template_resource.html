@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Guide for attachment tags</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble">
+    <h1><a id="#page-header">Guide for attachment tags</a></h1>
+    <div class="toplang"></div>
+    <p>Below explains attachment tags’ grammar, application and context of use.</p>
+</div>
+
+<div id="quickview">
+    <ul id="toc">
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#rowno"><$rowno$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#att_id"><$res_id$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#att_name"><$res_title$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#att_url"><$res_url$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_size"><$res_size$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#remark"><$res_content$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#art_suffix"><$res_suffix$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#creator_cn"><$res_creatorcn$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#createdate"><$res_createdate$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#creator"><$res_creator$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#index"><$res_index$></a></li>
+    </ul>
+</div>
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#att_id"><$res_id$></a></h2>
+    <p>Attachment’s unique identifier.</p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#rowno"><$rowno></a></h2>
+    <p>Row number in current list, which is integer.</p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#att_name"><$res_title(wordcount:int,append:string)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+
+          <th>parameter</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>wordcount</td>
+                <td>int</td>
+                <td>
+                    Optional. Indicate the number of character which will be taken. Chinese will be counted as one character.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>append</td>
+                <td>String</td>
+                <td>
+                    Optional.If the length of attachment’s name greater than wordcount,NPS will append the string indicated by "append".
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Attachment caption.<br>
+	<$res_title$>:Return to attachment’s full name.<br>
+    <$res_title(50)$>:Only return to 50 characters of attachment’s name, the characters more the 50 will be truncated.<br>
+    <$res_title(50,"...")$>:Only return to 50 characters of attachment’s name.The characters more the 50 will be truncated,and "..." appended.
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_suffix"><$res_suffix$></a></h2>
+    <p>Filename extension in lowercase, for example, '.jpg'</p>
+  </div>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+  <h2><a id="#creator"><$res_creator$></a></h2>
+  <p>Creator ID</p>
+  </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+    <div class="section">
+    <h2><a id="#creator_cn"><$res_creatorcn$></a></h2>
+    <p>The full name of the creator</p>
+    </div>
+
+   <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+    <div class="section">
+    <h2><a id="#createdate"><$res_createdate$></a></h2>
+    <p>Create Date</p>
+    </div>
+
+   <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+    <div class="section">
+    <h2><a id="#remark"><$res_content$></a></h2>
+    <p>The remark</p>
+    </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#art_size"><$res_size$></a></h2>
+    <p>File size</p>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>parameter</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>format</td>
+                <td>String</td>
+                <td>
+                    B、BYTE: return the length of the file in bytes,for example:1,024,102Byte<br>
+                    K、KB: return the length of the file in KB,for example:1,024KB<br>
+                    M、MB:return the length of the file in MB,for example:1.20MB<br>
+                    G、GB:return the length of the file in GB,for example:0.50GB<br>
+                    H、Human-readable:return the human-readable file size.<br>
+                    <br>
+                    Other format string will return format the file size in bytes.
+                    See NumberFormat Instruction below.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>
+        For Example,if the file length is 1,264,128Byte,then<br>
+        <$res_size$>:return 1264128;<br>
+        <$res_size("KB")$>:return 1,234.5KB<br>
+        <$res_size("MB")$>:return 1.21MB<br>
+        <$res_size("h")$>:return 1.21MB
+    </p>
+    <p>NumberFormat Instruction</p>
+    <table cellspacing="3" cellpadding="0" summary="Chart showing symbol,location, localized, and meaning." border="0">
+      <tbody>
+        <tr bgcolor="#ccccff">
+          <th align="left">Symbol </th>
+          <th align="left">Location </th>
+          <th align="left">Meaning</th>
+        </tr>
+        <tr valign="top">
+          <td><code><font face="NSimsun">0</font></code></td>
+          <td>Number</td>
+          <td>Digit </td>
+        </tr>
+        <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">#</font></code></td>
+          <td>Number</td>
+          <td>Digit, zero shows as absent </td>
+        </tr>
+        <tr valign="top">
+          <td><code><font face="NSimsun">.</font></code></td>
+          <td>Number</td>
+          <td>Decimal separator or monetary decimal separator </td>
+        </tr>
+        <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">-</font></code></td>
+          <td>Number</td>
+          <td>Minus sign </td>
+        </tr>
+        <tr valign="top">
+          <td><code><font face="NSimsun">,</font></code></td>
+          <td>Number</td>
+          <td>Grouping separator </td>
+        </tr>
+        <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">E</font></code></td>
+          <td>Number</td>
+          <td>Separates mantissa and exponent in scientific notation. Need not
+            be quoted in prefix or suffix. </td>
+        </tr>
+        <tr valign="top">
+          <td><code><font face="NSimsun">;</font></code></td>
+          <td>Subpattern boundary </td>
+          <td>Separates positive and negative subpatterns </td>
+        </tr>
+        <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">%</font></code></td>
+          <td>Prefix or suffix</td>
+          <td>Multiply by 100 and show as percentage </td>
+        </tr>
+        <tr valign="top">
+          <td><code><font face="NSimsun">\u2030</font></code></td>
+          <td>Prefix or suffix</td>
+          <td>Multiply by 1000 and show as per mille </td>
+        </tr>
+        <tr valign="top" bgcolor="#eeeeff">
+          <td><code><font face="NSimsun">&curren;</font></code> (<code><font face="NSimsun">\u00A4</font></code>)</td>
+          <td>Prefix or suffix</td>
+          <td>Currency sign, replaced by currency symbol. If doubled, replaced
+            by international currency symbol. If present in a pattern, the monetary
+            decimal separator is used instead of the decimal separator. </td>
+        </tr>
+        <tr valign="top">
+          <td><code><font face="NSimsun">'</font></code></td>
+          <td>Prefix or suffix</td>
+          <td>Used to quote special characters in a prefix or suffix, for example,
+            &quot;'#'#&quot; formats 123 to &quot;#123&quot;. To create a single
+            quote itself, use two in a row: &quot;# o''clock&quot;. </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#att_url"><$res_url)$></a></h2>
+    <p>The URL path for accessing attachment.</p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#att_url2"><$res_url("width:int,height:int")$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+          <th>parameter</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>width</td>
+                <td>int</td>
+                <td>
+                    In case of -1 or dereference not in digital format, “width” will be automatically zoom up. Attention: att must be in lower case.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>height</td>
+                <td>int</td>
+                <td>
+                    In case of -1 or dereference not in digital format, “height” will be automatically zoom up. Attention: att must be in lower case.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Only valid for pictures in JPG、BMP、GIF、TIF format. Otherwise, the parameters
+      of width and height will be simultaneously neglected.</p>
+    <p>System will automatically zoom up pictures according to requirements of “width” and “height” and will return to picture’s URL. <br>
+    <$res_url("100,200")$>:New pictures whose width=100 and height=200 will be generated. It will return to the picture’s URL.
+    </p>
+  </div>
+
+  <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+  <div class="section">
+    <h2><a id="#att_url3"><$res_url(width:int,height:int)$></a></h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+          <th>parameter</th>
+                <th>type</th>
+                <th>meaning</th>
+            </tr>
+            <tr class="module">
+                <td>width</td>
+                <td>int</td>
+                <td>
+                    In case of -1 or dereference not in digital format, “width” will be automatically zoom up. Attention: att must be in lower case.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>height</td>
+                <td>int</td>
+                <td>
+                    In case of -1 or dereference not in digital format, “height” will be automatically zoom up. Attention: att must be in lower case.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Only valid for pictures in JPG、BMP、GIF、TIF format. Otherwise, the parameters
+      of width and height will be ignored.</p>
+    <p>System will automatically zoom up pictures according to requirements of “width” and “height” and will return the picture’s URL. <br>
+    <$res_url(100,200)$>: New picture whose width=100 and height=200 will be generated. It will return the picture’s URL.
+    </p>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+    <div class="section">
+        <h2><a id="#index"><$res_index$></a></h2>
+        <p>Attachment’s index in article, which is integer.</p>
+    </div>
+  </div>
+  <br><br><br><br><br><br><br><br>
+</div>
+</body>
+</html>

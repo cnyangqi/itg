@@ -1,0 +1,1 @@
+TOP_BULLETIN=<a href='/bulletin/bulletin_board.jsp'>Notice</a>

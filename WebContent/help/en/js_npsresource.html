@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsResource</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsResource class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsResource indicates resource object. </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    id<br>
+                    resource’s unique identification. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    name<br>
+                    title<br>
+                    caption<br>                    
+            resource’s name</td>
+            </tr>
+            <tr class="module">
+                <td>NpsSite</td>
+                <td>
+                    site<br>
+                    the site which resource located
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    type<br>
+                    type=0 means it is a picture<br>
+                    type=1 means it is a documentation<br>
+                    type=2 means it is an video<br>
+                    type=3 means it is a sound<br>
+                    type=4 means it is a flash file, and  type=5 mean it is other file.
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    suffix<br>
+                    suffix name, i.e.: .jpg. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    size<br>
+                    File length in bytes. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    file<br>
+                    The file is attached. Readonly.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    url<br>
+                    URL path. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    tags<br>
+                    mutiple tags will be seperated by '-'. Readonly
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    new(NpsSite site,NpsFile file)<br>
+                    Constructor. To create an resource located in "site" with the "file", the default title is the name of "file".
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ExtractFile(String file)<br>
+                    write attachment into file names which designated by "file".
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach</td>
+                <td>
+                    FitTo(int width,int height)<br>
+            convert pictures into attachment whose "width" and "height" are designated
+            and return to the converted object.<br />
+            width=-1: scaling width as self-defined.<br>
+			height=-1: scaling heigt as self-defined.</td>
+            </tr>
+            <tr class="module">
+                <td width="100">boolean</td>
+                <td>
+                    HasField(String name)<br>
+                    whether it contains field or not.<br>
+					“true”: yes  “false”: no
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>Object</td>
+                <td>
+                    GetFieldValue(String name)<br>
+                    return to the field value designated by “name”<br>
+                    Text content will return “string” object while others will return relevant digital type, character string type and date type according to database’s definition.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetFieldValueFormatted(String name,String format)<br>
+            Format and return the field value designated by “name” according to
+            the requirement of “format”.</td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetFieldValueLimitted(String name,int wordcount)<br>
+            return to the front “wordcount” value among field values designated
+            by “name”.<br>
+            Digits will not be truncated. <br>
+            “wordcount&lt;=0”: it will return to the whole field value. </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Save()<br>
+                    save to database
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateContent(String content)<br>
+                    Update memo for resource
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateContentByFile(NpsFile file)<br>
+                    Update memo by file
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    CopyTo(NpsSite site)<br>
+                    copy to other site
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    PublishTo(NpsTopic topic)<br>
+                    publish to topic, return the article created.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Delete()<br>
+                    delete this resource
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddTags(String tags)<br>
+                    add tags, mutiple tags should be seperated by '_'
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Clear()<br>
+                    clear all temp files
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

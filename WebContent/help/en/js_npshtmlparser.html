@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsHtmlParser</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsHtmlParser class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsHtmlParser is used to analyze web page,and get the fields in HTML.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">void</td>
+                <td>
+                    NpsHtmlparser(String url,String encoding)<br>
+                    Constructor.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>org.w3c.dom.Element</td>
+                <td>
+                    GetElementById(String id)<br>
+                    Get element by id
+                </td>
+            </tr>
+            <tr class="module">
+                <td>org.w3c.dom.Node[]</td>
+                <td>
+                    GetElementsByName(String name)<br>
+                    Get elements by name
+                </td>
+            </tr>
+            <tr class="module">
+                <td>org.w3c.dom.Node[]</td>
+                <td>
+                    GetElementsByTagName(String name)<br>
+                    Get elements by tag name such as input,select,etc.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>org.w3c.dom.Node[]</td>
+                <td>
+                    GetElementsByTagNameAndFilter(String name,String formula)<br>
+                    Get elements by tag name which result of formula is true.<br>
+                    See NpsFormula.All attributes will be added as symbol automatically.<br>
+                    e.g.GetElementsByTagNameAndFilter("input","type='hidden'") indicate to find hidden input elements
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetNodeValue(org.w3c.dom.Node obj)<br>
+                    Get the node value
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetAttributeValue(org.w3c.dom.Node obj,String attribute_name)<br>
+                    Get the attribute value
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    ExtractFileNameFromURL(String url)<br>
+                    return file name of URL<br>
+                    e.g. ExtractFileNameFromURL("http://www.sina.com.cn/news/1883.jpg") return "1883.jpg"
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetSuffixOfFileName(String filename)<br>
+                    Get the suffix of file
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>

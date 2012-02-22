@@ -1,0 +1,1071 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsZJEGRss</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsZJEGRss class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsZJEGRss用于生成符合《浙江省政府网站12类信息发布规范》要求的内容变更索引文件。</p>
+    <p>
+        　　使“中国浙江”政府门户网站的内容整合系统程序能及时、快捷、准确地获取子网站内容变更信息，并捕获变更内容的链接地址。
+        在子网站固定目录下，以小时为单位生成一个XML格式的索引文件，将网站在每一时间段内发布、删除、修改的内容页面的相关信息标注到对应的变更索引文件中。
+        <br>
+        　　每个变更索引文件中包含网站名称、主页URL、地区、部门等基本信息以及该时段内发生变更的每一个内容页面的标题、URL、描述、作者、分类、变更状态、变更时间、唯一标识、备注等信息。
+    </p>
+    <p>
+        　<b>内容变更索引文件的命名格式如下：</b>
+        <br>
+        　　ZJEG_RSSYYYYMMDDhh.xml。即ZJEG_RSS＋年(4位)+月(2位)+日(2位)+小时(2位)+.xml，如：ZJEG_RSS2005120214.xml。如该时间段没有发生信息变更情况，可以不生成索引文件。
+    </p>
+    <p>
+        　<b>内容变更索引文件的存放路径如下：</b>　
+        <br>
+        　　http://[HOSTNAME]/gb/zjeg_rss/ZJEG_RSSyyyymmddhh.xml。
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsZJEGRss</td>
+                <td>
+                    new(NpsSite site, String location, String department_id)<br>
+                    site:要生成的站点；<br>
+                    location: 表3中的地区代码；<br>
+                    department_id: 表4中的部门代码。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    Build(NpsTopic[] topics, String category, int hour_ago)<br>
+                    生成特定栏目列表最近几个小时内的更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                    category:表2中的信息内容代码；<br>
+                    hour_ago:为负数时表示最近hour_ago小时内的所有文章。-1=最近一个小时。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    Build2(NpsTopic[] topics, String category, Date begin_date, Date end_date)<br>
+                    生成特定栏目列表某个特定时间段内的更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                    category:表2中的信息内容代码；<br>
+                    begin_date:开始时间；<br>
+                    end_date:结束时间<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildExcept(NpsTopic[] topics, String category, int hour_ago)<br>
+                    生成除了指定topics外的所有栏目最近几个小时内的更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                    category:表2中的信息内容代码；<br>
+                    hour_ago:为负数时表示最近hour_ago小时内的所有文章。-1=最近一个小时。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildExcept2(NpsTopic[] topics, String category, Date begin_date, Date end_date)<br>
+                    生成除了指定topics外的所有栏目某个特定时间段内的更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                    category:表2中的信息内容代码；<br>
+                    begin_date:开始时间；<br>
+                    end_date:结束时间<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildJGZN(NpsTopic[] topics)<br>
+                    生成最近1小时内的“机构职能”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildJGZNExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“机构职能”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildLDXX(NpsTopic[] topics)<br>
+                    生成最近1小时内的“领导信息”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildLDXXExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“领导信息”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildGZGZ(NpsTopic[] topics)<br>
+                    生成最近1小时内的“工作规则”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildGZGZExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“工作规则”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildNSJG(NpsTopic[] topics)<br>
+                    生成最近1小时内的“内设机构”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildNSJGExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“内设机构”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildFGWJ(NpsTopic[] topics)<br>
+                    生成最近1小时内的“法规文件”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildFGWJExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“法规文件”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildJHWL(NpsTopic[] topics)<br>
+                    生成最近1小时内的“讲话文论”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildJHWLExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“讲话文论”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildGHGB(NpsTopic[] topics)<br>
+                    生成最近1小时内的“规划公报”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildGHGBExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“规划公报”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildRYRM(NpsTopic[] topics)<br>
+                    生成最近1小时内的“人员任免”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildRYRMExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“人员任免”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildDTXX(NpsTopic[] topics)<br>
+                    生成最近1小时内的“动态信息”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildDTXXExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“动态信息”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildGGGS(NpsTopic[] topics)<br>
+                    生成最近1小时内的“公告公示”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildGGGSExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“公告公示”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildXXCX(NpsTopic[] topics)<br>
+                    生成最近1小时内的“信息查询”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildXXCXExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“信息查询”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildBSZN(NpsTopic[] topics)<br>
+                    生成最近1小时内的“办事指南”更新清单。<br>
+                    topics:栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    BuildBSZNExcept(NpsTopic[] topics)<br>
+                    生成最近1小时内的“办事指南”更新清单。<br>
+                    topics:排除（不生成）的栏目列表。为null表示生成整个站点；<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>浙江省政府网站12类信息字典表</h2>
+        <div><b>表<span>2 信息内容分类代码</span></b></div>
+        <table border="1" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td valign="top" width="133">
+                    <div>机构职能</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>领导信息</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>工作规则</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>内设机构</div>
+                    </td>
+                    <td valign="top" width="131">
+                    <div>法规文件</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="133">
+                    <div>001</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>002</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>003</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>004</div>
+                    </td>
+                    <td valign="top" width="131">
+                    <div>005</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="133">
+                    <div>讲话文论</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>规划公报</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>人员任免</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>动态信息</div>
+                    </td>
+                    <td valign="top" width="131">
+                    <div>公告公示</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="133">
+                    <div>006</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>007</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>008</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>009</div>
+                    </td>
+                    <td valign="top" width="131">
+                    <div>010</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="133">
+                    <div>信息查询</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>办事指南</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td valign="top" width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="133">
+                    <div>012</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>013</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td valign="top" width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td valign="top" width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div><b>表<span>3 地区代码</span></b></div>
+        <div>注：本规范地区代码引用国家标准《中华人民共和国行政区划代码》（GB 2260-1995）。县级以下政府网站地区代码由各县、（市、区）政府按相关国家标准自行扩展。</div>
+        <table border="1" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td width="133">
+                    <div>浙江省</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330000</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>杭州市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330100</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>上城区<span>330102</span></div>
+                    </td>
+                    <td width="142">
+                    <div>下城区<span>330103</span></div>
+                    </td>
+                    <td width="142">
+                    <div>江干区<span>330104</span></div>
+                    </td>
+                    <td width="142">
+                    <div>拱墅区<span>330105</span></div>
+                    </td>
+                    <td width="131">
+                    <div>西湖区<span>330106</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>滨江区<span>330108</span></div>
+                    </td>
+                    <td width="142">
+                    <div>萧山区<span>330109</span></div>
+                    </td>
+                    <td width="142">
+                    <div>余杭区<span>330110</span></div>
+                    </td>
+                    <td width="142">
+                    <div>桐庐县<span>330122</span></div>
+                    </td>
+                    <td width="131">
+                    <div>淳安县<span>330127</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>建德市<span>330182</span></div>
+                    </td>
+                    <td width="142">
+                    <div>富阳市<span>330183</span></div>
+                    </td>
+                    <td width="142">
+                    <div>临安市<span>330185</span></div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>宁波市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330200</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>海曙区<span>330203</span></div>
+                    </td>
+                    <td width="142">
+                    <div>江东区<span>330204</span></div>
+                    </td>
+                    <td width="142">
+                    <div>江北区<span>330205</span></div>
+                    </td>
+                    <td width="142">
+                    <div>北仑区<span>330206</span></div>
+                    </td>
+                    <td width="131">
+                    <div>镇海区<span>330211</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>鄞州区<span>330212</span></div>
+                    </td>
+                    <td width="142">
+                    <div>象山县<span>330225</span></div>
+                    </td>
+                    <td width="142">
+                    <div>宁海县<span>330226</span></div>
+                    </td>
+                    <td width="142">
+                    <div>余姚市<span>330281</span></div>
+                    </td>
+                    <td width="131">
+                    <div>慈溪市<span>330282</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>奉化市<span>330283</span></div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>温州市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330300</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>鹿城区<span>330302</span></div>
+                    </td>
+                    <td width="142">
+                    <div>龙湾区<span>330303</span></div>
+                    </td>
+                    <td width="142">
+                    <div>瓯海区<span>330304</span></div>
+                    </td>
+                    <td width="142">
+                    <div>洞头县<span>330322</span></div>
+                    </td>
+                    <td width="131">
+                    <div>永嘉县<span>330324</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>平阳县<span>330326</span></div>
+                    </td>
+                    <td width="142">
+                    <div>苍南县<span>330327</span></div>
+                    </td>
+                    <td width="142">
+                    <div>文成县<span>330328</span></div>
+                    </td>
+                    <td width="142">
+                    <div>泰顺县<span>330329</span></div>
+                    </td>
+                    <td width="131">
+                    <div>瑞安市<span>330381</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>乐清市<span>330382</span></div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>嘉兴市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330400</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>南湖区<span>330402</span></div>
+                    </td>
+                    <td width="142">
+                    <div>秀洲区<span>3304011</span></div>
+                    </td>
+                    <td width="142">
+                    <div>嘉善县<span>330421</span></div>
+                    </td>
+                    <td width="142">
+                    <div>海盐县<span>330424</span></div>
+                    </td>
+                    <td width="131">
+                    <div>海宁市<span>330481</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>平湖市<span>330482</span></div>
+                    </td>
+                    <td width="142">
+                    <div>桐乡市<span>330483</span></div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>湖州市</div>
+                    </td>
+                    <td width="142">
+                    <div>330500</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>吴兴区<span>330502</span></div>
+                    </td>
+                    <td width="142">
+                    <div>南浔区<span>330503</span></div>
+                    </td>
+                    <td width="142">
+                    <div>德清县<span>330521</span></div>
+                    </td>
+                    <td width="142">
+                    <div>长兴县<span>330522</span></div>
+                    </td>
+                    <td width="131">
+                    <div>安吉县<span>330523</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>绍兴市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330600</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>越城区<span>330602</span></div>
+                    </td>
+                    <td width="142">
+                    <div>绍兴县<span>330621</span></div>
+                    </td>
+                    <td width="142">
+                    <div>新昌县<span>330624</span></div>
+                    </td>
+                    <td width="142">
+                    <div>诸暨市<span>330681</span></div>
+                    </td>
+                    <td width="131">
+                    <div>上虞市<span>330682</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>嵊州市<span>330683</span></div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>金华市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330700</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>婺城区<span>330702</span></div>
+                    </td>
+                    <td width="142">
+                    <div>金东区<span>330703</span></div>
+                    </td>
+                    <td width="142">
+                    <div>武义县<span>330723</span></div>
+                    </td>
+                    <td width="142">
+                    <div>浦江县<span>330726</span></div>
+                    </td>
+                    <td width="131">
+                    <div>磐安县<span>330727</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>兰溪市<span>330781</span></div>
+                    </td>
+                    <td width="142">
+                    <div>义乌市<span>330782</span></div>
+                    </td>
+                    <td width="142">
+                    <div>东阳市<span>330783</span></div>
+                    </td>
+                    <td width="142">
+                    <div>永康市<span>330784</span></div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>衢州市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330800</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>柯城区<span>330802</span></div>
+                    </td>
+                    <td width="142">
+                    <div>衢江区<span>330803</span></div>
+                    </td>
+                    <td width="142">
+                    <div>常山县<span>330822</span></div>
+                    </td>
+                    <td width="142">
+                    <div>开化县<span>330824</span></div>
+                    </td>
+                    <td width="131">
+                    <div>龙游县<span>330825</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>江山市<span>330881</span></div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="142">
+                    <div>&nbsp;</div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>舟山市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>330900</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>定海区<span>330902</span></div>
+                    </td>
+                    <td width="142">
+                    <div>普陀区<span>330903</span></div>
+                    </td>
+                    <td width="142">
+                    <div>岱山县<span>330921</span></div>
+                    </td>
+                    <td width="142">
+                    <div>嵊泗县<span>330922</span></div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>台州市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>331000</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>椒江区<span>331002</span></div>
+                    </td>
+                    <td width="142">
+                    <div>黄岩区<span>331003</span></div>
+                    </td>
+                    <td width="142">
+                    <div>路桥区<span>331004</span></div>
+                    </td>
+                    <td width="142">
+                    <div>玉环县<span>331021</span></div>
+                    </td>
+                    <td width="131">
+                    <div>三门县<span>331022</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>天台县<span>331023</span></div>
+                    </td>
+                    <td width="142">
+                    <div>仙居县<span>331024</span></div>
+                    </td>
+                    <td width="142">
+                    <div>温岭市<span>331081</span></div>
+                    </td>
+                    <td width="142">
+                    <div>临海市<span>331082</span></div>
+                    </td>
+                    <td width="131">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>丽水市</div>
+                    </td>
+                    <td width="557" colspan="4">
+                    <div>331100</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>莲都区<span>331102</span></div>
+                    </td>
+                    <td width="142">
+                    <div>青田县<span>331121</span></div>
+                    </td>
+                    <td width="142">
+                    <div>缙云县<span>331122</span></div>
+                    </td>
+                    <td width="142">
+                    <div>遂昌县<span>331123</span></div>
+                    </td>
+                    <td width="131">
+                    <div>松阳县<span>331124</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="133">
+                    <div>云和县<span>331125</span></div>
+                    </td>
+                    <td width="142">
+                    <div>庆元县<span>331126</span></div>
+                    </td>
+                    <td width="284" colspan="2">
+                    <div>景宁畲族自治县<span>331127</span></div>
+                    </td>
+                    <td width="131">
+                    <div>龙泉市<span>331181</span></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div><b>表<span>4 部门代码</span></b></div>
+        <div>注：省、市、县各级政府门户网站的部门代码为000，各市、县（区、县）政府的直属部门网站代码由各级政府在本规范基础上自行扩展。</div>
+        <table border="1" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td width="178">
+                    <div>省政府办公厅<span><span>&nbsp;&nbsp; 001</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省发改委<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 002</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省经贸委<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 003</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省教育厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 004</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省科技厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 005</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省民宗委<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 006</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省公安厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 007</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省监察厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 008</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省民政厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 009</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省司法厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 010</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省财政厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 011</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省人事厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 012</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省劳动保障厅<span><span>&nbsp;&nbsp; 013</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省国土资源厅<span> 014</span></div>
+                    </td>
+                    <td width="165">
+                    <div>省建设厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 015</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省交通厅 <span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;016</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省信息产业厅<span><span>&nbsp;&nbsp; 017</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省水利厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 018</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省农业厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 019</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省林业厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 020</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省外经贸厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 021</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省文化厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 022</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省卫生厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 023</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省人口计生委<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 024</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省审计厅<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 025</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省国资委<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 026</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省地税局<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 027</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省环保局<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 028</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省广电局<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 029</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省体育局<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 030</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省统计局<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 031</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省工商局<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 032</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省海洋与渔业局<span> 033</span></div>
+                    </td>
+                    <td width="162">
+                    <div>省新闻出版局<span> 034</span></div>
+                    </td>
+                    <td width="165">
+                    <div>省质量技监局<span> 035</span></div>
+                    </td>
+                    <td width="206">
+                    <div>省食品药品监管局<span>&nbsp;036</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省旅游局<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 037</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省粮食局<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 038</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省机关事务局<span> 039</span></div>
+                    </td>
+                    <td width="206">
+                    <div>省外办<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 040</span></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省侨办<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 041</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省法制办<span><span>&nbsp;&nbsp;&nbsp;&nbsp; 042</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省人防办<span><span>&nbsp;&nbsp; 043</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>省打私与海防口岸办<span>044</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="178">
+                    <div>省安监局<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 045</span></span></div>
+                    </td>
+                    <td width="162">
+                    <div>省残联<span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 046</span></span></div>
+                    </td>
+                    <td width="165">
+                    <div>省供销社<span><span>&nbsp;&nbsp; 047</span></span></div>
+                    </td>
+                    <td width="206">
+                    <div>&nbsp;</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+</div>
+
+</body>
+</html>

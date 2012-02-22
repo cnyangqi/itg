@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Principle and know-how of designing NPS template</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">Principle and know-how of designing NPS template</a></h1>
+        <div class="toplang"></div>
+        <p>
+		Mastering the know-how of making NPS template and enhancing template’s commonality could dramatically reduce the whole website’s template amount and promote website’s maintainability. Moreover, desirable plan could considerably accelerate the whole website’s access speed. For example: <a href="http://www.bookuu.com">the website of “bookuu bookstore”</a> has diverse and massive content, however, its template amount is less than ten.
+        <br>
+		<br>
+            As long as mastering reasonable method and confirming to the following designing principle, you can easily make and manage website template.
+        </p>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="#divcss">Use DIV+CSS layout as much as possible</a></li>
+    <li><img  src="/images/help/down.gif" /> <a href="#reuse">Increase reusability</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="divcss" id="divcss">Use DIV+CSS layout as much as possible</a></h2>
+     <p>
+        Comparing with table layout, DIV+CSS layout has less page code. Therefore, the loading speed get massively promoted, which is helpful for “spider” to crawl. Excessive page code could result in overtime crawling; hence spider would regard this page as unable to access. Embodiment and weighting will also affected.
+        <br><br>
+        The code length of table layout:
+        <img src="./images/div_table.gif" style="border:3px #D6C094 solid;"><br>
+        <br>
+        The code length of div+css layout:
+        <img src="./images/div_css.gif" style="border:3px #D6C094 solid;"><br>
+
+        <br> 
+        Though it hasn’t been officially confirmed by search engine authority, Search engine generally won’t grab nested tables which have more than three layers. According to what we already know, “spider” will skip the nested content or directly abandon whole page when it come across multiply nested table. In order to reach certain visual effect, sometimes we have to apply multiple tables for “table” layout. If the nested table has key content while “spider” skip this content and didn’t grab the core of the page, the page will be a similar page. Excessive similar pages existing in website will negatively influence the ranking of website and the credibility of domain name. 
+     </p>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="reuse" id="reuse">Increase reusability</a></h2>
+     <p>
+         The key of reusability is to design and plan page template. The template reusability should be applied in conjunction with SHTML’s SSI command or JSP’s INCLUDE command. Taking full advantage of these two functions could increase template’s reusability.
+         <br>
+     </p>
+
+     <dl>
+       <dt>Take advantage of SHTML page’s INCLUDE command</dt>
+       <dd>
+           Template is designed for content that full of change. The basically unchanged content can be directly placed into SHTML and uploaded by FTP. For example: it is unnecessary to make template files for page header and page footer because they are basically unchanged. On contrary, you can make a particular page file (i.e.: head.inc) which can be contained by other SHTML website page, thus page header and page footer can be massively modified if necessary.
+           <br>
+           &lt;!--#include virtual="/head.inc"--> <br> 
+           <br>
+           Below will take the two topics of “domestic news” and “international news” in news.sina.com.cn as example to specify. <br>
+           Generally, the two topics can be made into two page templates according to template partition plan. As showed below:<br>
+           <img src="./images/sina_gn.png"> <img src="./images/sina_gj.png">            
+           <br><br>
+           Actually, two page templates can be combined into one template. Below is the template partition plan: <br>
+           <img src="./images/sina_gn2.png"><br>
+           <br>
+           We eliminate titles and other redundant options, and then write them into “index.shtml” files of home page. Meanwhile, the middle text content will be written into template.
+       </dd>
+
+       <dt>Make full use of global tags</dt>
+       <dd>
+           Global tags can be employed when outputting files from page template. Applying tags of <$top_url$> or <$top_path$> reasonably could dramatically reduce quantity of work. <br><br>
+            Taking the two topics of “domestic news” and “international news” in news.sina.com.cn as example again, the output path of page template can be written as <$top_url$>/index_include.inc. Suppose these two topics are under top topic news (topic code is “new”) while the topic code for domestic news is “China” and for international news is “internation”, then it will generate “/news/china/index_include.inc” file and “/news/internation/index_include.inc” file. We just need to use “include” command in the relevant position of “index.shtml” to include it. For example: <br>
+           &lt;--#include virtual="/news/china/index_include.inc" --> <br>
+           &lt;--#include virtual="/news/internation/index_include.inc" --> <br>
+       </dd>
+
+       <dt>Sensibly use RS tags</dt>
+       <dd>
+           Generally, RS template tags are greatly used in page template. For RS tags, we advise to use less “topic” parameter so as to increase flexibility except reading particular topic. <br><br>
+           Taking &lt;rs id="rs1" topic="news.china"> as example,if it is modified as &lt;rs id="rs1"> and the page template is added under the topics of domestic news and international news,
+           then it will automatically read domestic news (news.china) or international news (news. internation) when publishing them.                       
+       </dd>
+     </dl>
+    </div>
+
+</div>
+</body>
+</html>

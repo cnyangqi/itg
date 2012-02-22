@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsRss</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsRss class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        RSS is a family of Web feed formats used to publish frequently updated content such as blog entries, news headlines, and podcasts in a standardized format.
+        NpsRss is used to read and create RSS.
+        <font color=red>
+            Note:Only the function of RSS creation are supported in the version of 1.2<br><br>
+        </font>
+        The sample code show how to create RSS with datas within 7 days.<br>
+    <table border="1" width="100%">
+        <tr><td>
+        var site = session.GetSite(); <br>
+        var rss = new NpsRss(site);   <br>
+        var date_before_week = new Date(new Date()-7*24*60*60*1000);<br>
+        var today = new Date();<br>
+        rss.GenerateSite(new NpsFile('/rss2.xml'),date_before_week,today);<br>
+        </td></tr>
+    </table>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsRss(NpsSite site)<br>
+                    Construction
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateSite(NpsFile file,Date begin_date,Date end_date) throws Exception<br>
+                    Generate the summary of articles in the web site from begin_date to end_date.<br>
+                    begin_date=null means " do not set start time "<br>
+                    end_date=null mean " do not set the end of time "
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateSiteLessThan(NpsFile file,int max)<br>
+                    Generate the summary of articles for the web site, total less than max
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateTopic(NpsTopic topic,NpsFile file,Date begin_date,Date end_date) throws Exception<br>
+                    Generate the summary of articles in the provided topic from begin_date to end_date.<br>
+                    begin_date=null means " do not set start time "<br>
+                    end_date=null mean " do not set the end of time "
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateTopicLessThan(NpsTopic topic,NpsFile file,int max)<br>
+                    Generate the summary of articles for the topic, total less than max
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateTopicByCode(String topic_code,NpsFile file,Date begin_date,Date end_date) throws Exception<br>
+                    Generate the summary of articles in the topic specified by topic_code from begin_date to end_date.<br>
+                    begin_date=null means " do not set start time "<br>
+                    end_date=null mean " do not set the end of time "
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br><br><br><br>
+</div>
+
+</div>
+</body>
+</html>

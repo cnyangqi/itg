@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Guide for Template Tag - NPS Version 1.x Documentation </title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="index-page">
+<div id="path"></div>
+<div id="page-content"> 
+  <h1>Guide for Template Tag - NPS Version 1.x Documentation</h1>
+    <p></p>
+    <p>
+	   There are 5 kinds of statement in template. They are RS statement, RESOURCE statment, ATTACH statement, MAP statement and JAVA statement.
+	   <br>
+	   1. RS statement is used for reading articles or ORACLE datas by SQL. All statements can be nested in RS statement.<br>
+       2. RESOURCE statement is used for reading attachments. All statements except ATTACH statement can be nested in RESOURCE statement.<br>
+       3. ATTACH statement is used for reading attaches of current article. None statement can be nested in ATTACH statement.<br>
+	   4. MAP statement is used for reading list of topic. All statements can be nested in MAP statement except ATTACH statement.<br>
+	   5. You can write java code in JAVA statement. Template tags can be used in java code and none statement can be nested in JAVA statement.
+	</p>
+    
+  <p> Also,there are 4 kinds of tag in template. They are article tag, attachment 
+    tag, global tag and RS tag.<br>
+	   1. Article tag must appears in article template or RS statement marked with topic or RESOURCE statement or ATTACH statement.<br>
+	   2. Attachment tag must appears in RESOURCE statement or ATTACH statement.<br>
+	   3. RS tag must appears in RS statement marked with sql.<br>
+	   4. Global tag can appears anywhere.
+	</p>
+    <p>The scopes of statements & tags are:<br>
+	1. All statements and tags are available for article template and page template.<br>
+	2. Global tags can be also quoted in the output pathname of page template.
+    <p></p>
+
+   <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th width="53%">tag name</th>
+              <th width="47%">URL</th>
+          </tr>
+          <tr class="module">
+              <td><a href="template_rs.html">RS Statement & RS Tag</a></td>
+              <td><a href="template_rs.html">template_rs.html</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="template_attach.html">ATTACH statement</a></td>
+              <td><a href="template_attach.html">template_attach.html</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="template_map.html">MAP Statement</a></td>
+              <td><a href="template_map.html">template_map.html</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="template_java.html">JAVA Statement</a></td>
+              <td><a href="template_java.html">template_java.html</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="template_res.html">RESOURCE Statement</a></td>
+              <td><a href="template_res.html">template_res.html</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="template_article.html">Article Tag</a></td>
+              <td><a href="template_article.html">template_article.html</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="template_resource.html">Attachment Tag</a></td>
+              <td><a href="template_resource.html">template_resource.html</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="template_env.html">Global Tag</a></td>
+              <td><a href="template_env.html">template_env.html</a></td>
+          </tr>
+       </tbody>
+     </table>
+     <br>     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>RESOURCE语句使用指南</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">RESOURCE语句使用说明</a></h1>
+    <div class="toplang"></div>
+    <p>RESOURCE语句用于读取指定栏目的附件。RESOURCE语句可以嵌套使用RS、RESOURCE、MAP和JAVA语句。</p>
+    <h1><font color="red">RESOURCE语法</font></h1>
+    <p>
+	 &lt;res id=(id:STRING) topic=(topic:STRING) type=(type:STRING) where=(where:string) orderby=(orderby:string) from=(from:int) rows=(rows:int) page=(page:int) style=(style:String)>  <br>
+		  &nbsp;&nbsp;&nbsp;&nbsp;--在此写入你的正文内容 <br>
+	 &lt;/res>
+    </p>
+   <p><font color=red>一旦topic出现，其必须在id之后，在type、from、rows、page、style、where、orderby之前。</font></p>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>参数名</th>
+              <th>类型</th>
+              <th>含义</th>
+          </tr>
+          <tr class="module">
+              <td>id</td>
+              <td>STRING</td>
+              <td>
+                  必须。该RES的唯一号。必须以字母或下划线开头。
+              </td>
+          </tr>
+          <tr class="module">
+              <td>topic</td>
+              <td>STRING</td>
+              <td>
+                  要查询的栏目代号，如果指定了栏目。在该RES段中可以引用附件标签，但注意要加上该RES段的ID号。<br>
+                  可选，如果topic没有指定，系统将取值为根据当前上下文计算的当前模板所在栏目。
+                  对于自定义数据源总是返回空结果集。                  
+                  <br>
+                  如果指定了topic=""，表示读取当前栏目所属站点的所有附件。<br>
+
+                  <br>
+                  例如有栏目名称为news，<br>
+                  &lt;res id ="r1" topic="news"> <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;    <$r1.res_title$>         <br>
+                  &lt;/res>                <br>
+              </td>
+          </tr>
+          <tr class="module">
+              <td>type</td>
+              <td>STRING</td>
+              <td>
+                  可选。表示附件类型，以附件后缀表示，多个类型以;或空格或tab键或,或|间隔，不区分大小写。
+      type不设置时表示取所有附件，等同于type="*.*"。
+                  <p>例如，".jpg;.gif"表示匹配jpg和gif格式的图片。</p>
+                  <p>    ".jpg|.bmp|.gif"     </p>
+                  <p>    "*.jpg|.bmp|*.gif"   </p>
+                  <p>    ".jpg;.bmp;.gif"     </p>
+                  <p>    "jpg|bmp|gif"
+                  <p>    "jpg bmp gif"       </p>
+              </td>
+          </tr>
+          <tr class="module">
+              <td>where</td>
+              <td>string</td>
+              <td>
+                  可选。where语句将出现在以下SQL语句红色标注的where_clause中。<br>
+                  SQL语句如下：<br>
+                  select c.*,d.name creator_cn,e.unit<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;  from article a, attach b,resources c,users d,dept e,topic f<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;  Where a.Id=b.artid And c.id=b.resid and c.creator=d.id and d.dept=e.id and a.topic=f.id <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           and (f.code='<$top_code$>' or f.code like '<$top_code$>.%') and f.siteid='<$site_id$>'<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           and (<font color=red>where_clause</font>) <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          order by <font color=red>orderby_statement</font>    <br>
+              </td>
+          </tr>
+          <tr class="module">
+              <td>orderby</td>
+              <td>string</td>
+              <td>
+                  可选，表示排序方法。SQL语句参加where子句说明。<br> 
+                  默认按文章重要度（降序）+ 发布日期（降序）＋创建时间（降序）＋文章ID（升序）＋附件显示次序（升序）排列。即orderby="a.important desc,a.publishdate desc,a.createdate desc,a.id,b.idx"。<br>
+              </td>
+          </tr>
+
+          <tr class="module">
+              <td>from</td>
+              <td>int</td>
+              <td>
+                  可选，从第X条开始读取数据。默认从0开始计数。
+              </td>
+          </tr>
+         <tr class="module">
+              <td>rows</td>
+              <td>int</td>
+              <td>
+                  可选，共取X条。不填读取剩余的所有数据。
+              </td>
+          </tr>
+        <tr class="module">
+              <td>page</td>
+              <td>int</td>
+              <td>
+                  可选，分页数。达到该条数后，系统将自动分页。
+              </td>
+          </tr>
+        <tr class="module">
+              <td>style</td>
+              <td>String</td>
+              <td>
+                  可选，分页导航条样式。只有在page设置时有效，取值如下。如果RESOURCE语句设置了page参数，缺省的style样式是modern。<br>
+                  css文件样例请参考/css/pagebreak.css进行定义，缺省的样例参看下图。
+                  <table border="1" width="100%">
+                      <tr>
+                          <th width="120">取值</th>
+                          <th>含义</th>
+                      </tr>
+                      <tr>
+                          <td>none</td>
+                          <td>不显示分页导航</td>
+                      </tr>
+                      <tr>
+                          <td>modern</td>
+                          <td>现代流行样式。RESOURCE语句的缺省样式。
+                              根据nps.conf中设置的当前位置locale参数，自动选择语言，即如果是中文，等同于moder_zh；其他等同于moder_en
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_zh</td>
+                          <td>现代流行样式，中文显示。效果如下：<br>
+                              <img src="../images/modern_cn.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_en</td>
+                          <td>现代流行样式，英文显示。效果如下：<br>
+                              <img src="../images/modern_en.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>modern_custom</td>
+                          <td>现代流行样式，但按手工设置的选项打印。参见样式定制说明。
+                          </td>
+                      </tr>
+
+                      <tr>
+                          <td>onebyone</td>
+                          <td>该样式将全部列出所有分页。文章分页(正文部分有分页符时文章模板将自动分页)的缺省样式。
+                              根据nps.conf中设置的当前位置locale参数，自动选择语言，即如果是中文，等同于onebyone_zh；其他等同于onebyone_en
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_zh</td>
+                          <td>该样式将全部列出所有分页，中文显示。效果如下：<br>
+                              <img src="../images/onebyone_cn.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_en</td>
+                          <td>该样式将全部列出所有分页，英文显示。效果如下：<br>
+                              <img src="../images/onebyone_en.jpg" border="0">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>onebyone_custom</td>
+                          <td>该样式将全部列出所有分页，但按手工设置的选项打印。参见样式定制说明。</td>
+                      </tr>
+                  </table>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <br><br>
+  <h1><font color="red">分页样式定制参数说明</font></h1>
+    <h2>样式定义方法</h2>
+    <p>
+        &nbsp;&nbsp;&nbsp;&nbsp;在模板需要定制的位置前（一般是RESOURCE语句前），嵌入JAVA语句。<br>
+        &nbsp;&nbsp;注意：<br>
+        <font color=red>
+        &nbsp;&nbsp;&nbsp;&nbsp;1.建议是一次定义整组变量，而不是一个。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;2.<u>%1$s</u>用于表示参数。%1$表示第一个，%2$表示第二个；s表示是字符串，d表示是数字。所以，%1$s表示第一个参数格式化为字符串显示，%1$d表示第一个参数格式化为数字显示。具体可以参照String.format()函数的说明。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;3.如果仅仅是调整CSS样式，请参见/css/pagebreak.css样例进行调整。<br>
+        </font>
+        <br>
+        例如,以下定义导航栏不清除样式，英文导航，并且显示当前链接，但是没有合计信息和下拉选择框导航。<br>
+        &lt;% <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_HEADER = "&lt;div class='pagebreak_modern'>"; <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_PREVPAGE = "&lt;span class='prevpage'>&lt;a href='%1$s'>Previous&lt;/a>&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_NEXTPAGE = "&lt;span class='nextpage'>&lt;a href='%1$s'>Next&lt;/a>&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_SKIP  = "&lt;span class='omit'>...&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_PAGE = "&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_CURRENTPAGE = "&lt;span class='currentpage'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span>";<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_TOTAL = null;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_SELECTBOX = null;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;PAGEBREAK_FOOTER = "&lt;/div>";<br>
+        %> <br>
+    </p>
+    <h2>modern样式的缺省定义</h2>
+    <table border="1" width="800" class="related" cellspacing="0" cellpadding="0" >
+        <tr>
+            <th width="200">变量</th>
+            <th width="120">含义</th>
+            <th>缺省值</th>
+            <th width="200">参数</th>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_HEADER</td>
+            <td>页眉</td>
+            <td>&lt;div class='clear'>&lt;/div>&lt;div class='pagebreak_modern'></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_PREVPAGE</td>
+            <td>前一页</td>
+            <td>&lt;span class='prevpage'>&lt;a href='%1$s'>上一页&lt;/a>&lt;/span></td>
+            <td>链接地址</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_NEXTPAGE</td>
+            <td>下一页</td>
+            <td>&lt;span class='nextpage'>&lt;a href='%1$s'>下一页&lt;/a>&lt;/span></td>
+            <td>链接地址</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_SKIP</td>
+            <td>省略符</td>
+            <td>&lt;span class='omit'>...&lt;/span></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_PAGE</td>
+            <td>页码</td>
+            <td>&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span></td>
+            <td>链接地址,页码(数字)</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_CURRENTPAGE</td>
+            <td>当前页</td>
+            <td>&lt;span class='currentpage'>%2$s&lt;/span></td>
+            <td>链接地址，页码(数字)</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_TOTAL</td>
+            <td>合计信息</td>
+            <td>&lt;span class='total'>共%2$d页&lt;/span></td>
+            <td>总记录数,总页数,每页条数,当前页码</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_SELECTBOX</td>
+            <td>下拉选择框</td>
+            <td>&lt;select class='page_select' onchange='javascript:window.location=this.value'></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr class="module">
+            <td>PAGEBREAK_FOOTER</td>
+            <td>页脚</td>
+            <td>&lt;/div></td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+    <br><br>
+    <h2>onebyone样式的缺省定义</h2>
+    <table border="1" width="800" class="related" cellspacing="0" cellpadding="0" >
+        <tr>
+            <th width="200">变量</th>
+            <th width="100">含义</th>
+            <th>缺省值</th>
+            <th width="200">参数</th>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_HEADER</td>
+            <td>页眉</td>
+            <td>&lt;div class='clear'>&lt;/div>&lt;div class='pagebreak_onebyone'></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_PREVPAGE</td>
+            <td>前一页</td>
+            <td>&lt;span class='prevpage'>&lt;a href='%1$s'>上一页&lt;/a>&lt;/span></td>
+            <td>链接地址</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_NEXTPAGE</td>
+            <td>下一页</td>
+            <td>&lt;span class='nextpage'>&lt;a href='%1$s'>下一页&lt;/a>&lt;/span></td>
+            <td>链接地址</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_SKIP</td>
+            <td>省略符</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_PAGE</td>
+            <td>页码</td>
+            <td>&lt;span class='page'>&lt;a href='%1$s'>%2$s&lt;/a>&lt;/span></td>
+            <td>链接地址,页码(数字)</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_CURRENTPAGE</td>
+            <td>当前页</td>
+            <td>&lt;span class='currentpage'>%2$s&lt;/span></td>
+            <td>链接地址，页码(数字)</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_TOTAL</td>
+            <td>合计信息</td>
+            <td>&nbsp;</td>
+            <td>总记录数,总页数,每页条数,当前页码</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_SELECTBOX</td>
+            <td>下拉选择框</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>PAGEBREAK_FOOTER</td>
+            <td>页脚</td>
+            <td>&lt;/div></td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+  <br><br>
+  <h1><font color="red">样例代码</font></h1>
+   <p>
+   以下代码演示了读取当前栏目下所有附件。<br>
+   &lt;res id="r1"> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$r1.res_title$> <br>
+   &lt;/res> <br>
+
+   <br>
+   以下代码作用同上，也是读取当前栏目下所有附件。<br>
+   &lt;res id="r1" topic=<$top_code$>> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$r1.res_title$> <br>
+   &lt;/res> <br>
+
+   <br>
+   以下代码演示了读取当前站点下的所有附件。<br>
+   &lt;res id="r1" topic=""> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$r1.res_title$> <br>
+   &lt;/res> <br>
+
+   <br>
+   以下代码演示了读取当前栏目下，重要度为非常重要的文章附件，并按发布时间升序排列。<br>
+   &lt;res id="r1" where="a.important=2" orderby="a.publishdate"> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$r1.res_title$> <br>
+   &lt;/res> <br>
+
+   <br>
+   以下代码演示了读取栏目代号为top1的栏目下20个附件。<br>
+   &lt;res id="r1" topic="top1" rows=20> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$r1.res_title$> <br>
+   &lt;/res> <br>
+
+   <br>
+   以下代码演示了读取当前栏目下所有附件，并以20条每页进行分页。<br>
+   &lt;res id="r1" page=20> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+	  <$r1.res_title$> <br>
+   &lt;/res> <br>
+   </p>
+</div>
+</div>
+</body>
+</html>

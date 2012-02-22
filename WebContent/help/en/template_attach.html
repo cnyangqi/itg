@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Guide for ATTACH statement</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble">
+    <h1><a id="#page-header">Guide for ATTACH statement</a></h1>
+    <div class="toplang"></div>
+	<p>
+	 ATTACH statement is used for reading attaches of current article. None statement can be nested in ATTACH statement.<br>
+	 1) In article template,ATTACH statement not nested by RS get the attachment list of current article.<br>
+	 2) In page template,ATTACH statement must be nested by RS statement.<br>
+	 3) ATTACH statement nested by RS get the list of attachment of nearest RS.
+	 And if this RS is marked with "sql",ATTACH statement  will be ignored. <br>
+     4) Please add "att." prefix before tags.
+    </p>
+	
+    <h1><font color="red">ATTACH grammar</font></h1>
+    <p> &lt;att type=(t:STRING) rows=(rows:int)> <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;--Input your template content here<br>
+      &lt;/att> 
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+        <tr> 
+          <th>parameter</th>
+          <th>type</th>
+          <th>meaning</th>
+        </tr>
+        <tr class="module"> 
+          <td>type</td>
+          <td>STRING</td>
+          <td> Optional. Indicate the type of attachment, expressed as attachment 
+            suffix. Multiple types can be separated by “;”, space, “tab”, “,” 
+            or “|” and is not case sensitive. If the type is not set, it means 
+            all attachment will be taken. It equals type="*.*". 
+            <p>For example, ".jpg;.gif" means pictures matching jpg and gif format.</p>
+            <p> ".jpg|.bmp|.gif" </p>
+            <p> "*.jpg|.bmp|*.gif" </p>
+            <p> ".jpg;.bmp;.gif" </p>
+            <p> "jpg|bmp|gif" </p>
+            <p> "jpg bmp gif" </p></td>
+        </tr>
+        <tr class="module"> 
+          <td>rows</td>
+          <td>int</td>
+          <td> Optional. Means the number of attachment which will be taken. <br />
+            Not filling or <=0 means all attachment will be taken. When applying 
+            together with type, it means to take minimum amount of TYPE format 
+            attachment. </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+ <br><br><br><br>
+</div>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsResultSet</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsResultSet class</a></h1>
+    <div class="toplang"></div>
+    <p> 表示数据库结果集的数据表，通过NpsPreparedStatement执行查询数据库的语句生成。
+        <br>
+        <font color=red>目前还不支持大对象（CLOB、BLOB、LONG)、数组。</font>
+        <br>
+        样例代码：<br>
+        var pstmt = session.PrepareStatement("select sysdate from dual");<br>
+        var rs = pstmt.ExecuteQuery();<br>
+        while(rs.Next()) <br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        out.Info(rs.GetDate(1));<br>
+        }
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">boolean</td>
+                <td>
+                    First() throws Exception<br>
+                    将指针移动到此 ResultSet 对象的第一行。<br>
+                    如果指针位于有效行，则返回 true；如果结果集中不存在任何行，则返回 false 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Last() throws Exception<br>
+                    将指针移动到此 ResultSet 对象的最后一行。<br>
+                    如果指针位于有效行，则返回 true；如果结果集中不存在任何行，则返回 false
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Previous() throws Exception<br>
+                    将指针移动到此 ResultSet 对象的上一行。<br>
+                    如果指针位于有效行上，则返回 true；如果它不在结果集中，则返回 false 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Next() throws Exception<br>
+                    将指针从当前位置下移一行。ResultSet 指针最初位于第一行之前；第一次调用 next 方法使第一行成为当前行；第二次调用使第二行成为当前行，依此类推。
+                    <br>
+                    如果新的当前行有效，则返回 true；如果不存在下一行，则返回 false
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Close()<br>
+                    立即释放此 ResultSet 对象的数据库资源。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    DeleteRow() throws Exception<br>
+                    从此 ResultSet 对象和底层数据库中删除当前行。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    InsertRow() throws Exception<br>
+                    将插入行的内容插入到此 ResultSet 对象和数据库中。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    GetInt(int columnIndex) throws Exception<br>
+                    获取指定列的int值。columnIndex从1开始计数。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    GetIntByName(String columnName) throws Exception<br>
+                    获取指定列名的int值。columnName为字段名。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetString(int columnIndex) throws Exception<br>
+                    获取指定列的String值。columnIndex从1开始计数。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetStringByName(String columnName) throws Exception<br>
+                    获取指定列名的String值。columnName为字段名。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    GetDouble(int columnIndex) throws Exception<br>
+                    获取指定列的double值。columnIndex从1开始计数。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    GetDoubleByName(String columnName) throws Exception<br>
+                    获取指定列名的double值。columnName为字段名。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    GetDate(int columnIndex) throws Exception<br>
+                    获取指定列的Date值。columnIndex从1开始计数。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    GetDateByName(String columnName) throws Exception<br>
+                    获取指定列名的Date值。columnName为字段名。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetClob(int columnIndex) throws Exception<br>
+                    获取指定列名的Clob值。columnIndex从1开始计数。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetClobByName(String columnName) throws Exception<br>
+                    获取指定列名的Clob值。columnName为字段名。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsFirst() throws Exception<br>
+                    当前是否位于第一行。<br>
+                    如果指针位于第一行，则返回 true；否则返回 false                     
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsLast() throws Exception<br>
+                    当前是否位于最后一行。<br>
+                    如果指针位于最后一行，则返回 true；否则返回 false
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsAfterLast() throws Exception<br>
+                    检索指针是否位于最后一行之后。<br>
+                    如果指针位于最后一行之后，则返回 true；如果指针位于任何其他位置或者结果集不包含任何行，则返回 false                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsBeforeFirst() throws Exception <br>
+                    检索指针是否位于此 ResultSet 对象的第一行之前。 <br>
+                    如果指针位于第一行之前，则返回 true；如果指针位于任何其他位置或者结果集不包含任何行，则返回 false                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateDate(int columnIndex, Object d) throws Exception<br>
+                    用 Date 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnIndex从1开始计数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateDateByName(String columnName, Object d) throws Exception<br>
+                    用 Date 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnName为字段名
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateDouble(int columnIndex, double x) throws Exception<br>
+                    用 double 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnIndex从1开始计数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateDoubleByName(String columnName, double x) throws Exception<br>
+                    用 double 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnName为字段名
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateInt(int columnIndex, int x) throws Exception<br>
+                    用 int 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnIndex从1开始计数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateIntByName(String columnName, int x) throws Exception<br>
+                    用 int 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnName为字段名
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateString(int columnIndex, String x) throws Exception<br>
+                    用 String 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnIndex从1开始计数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateStringByName(String columnName, String x) throws Exception<br>
+                    用 String 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnName为字段名
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateNull(int columnIndex) throws Exception<br>
+                    用 Null 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnIndex从1开始计数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateNullByName(String columnName) throws Exception<br>
+                    用 Null 值更新指定列。更新方法用于更新当前行或插入行中的列值，并不会更新底层数据库；更新数据库要调用 updateRow 或 insertRow 方法。 <br>
+                    columnName为字段名
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateRow() throws Exception<br>
+                    将当前行的新内容更新底层数据库。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    RowDeleted() throws Exception<br>
+                    检索是否已删除某行。<br>
+                    如果删除了行并且检测到删除，则返回 true；否则返回 false                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    RowInserted() throws Exception<br>
+                    检索当前行是否已有插入。<br>
+                    如果行已有插入并且检测到插入，则返回 true；否则返回 false 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    RowUpdated() throws Exception<br>
+                    检索是否已更新当前行。<br>
+                    如果 (1)所有者或其他人已对行进行可见更新 (2)可以检测到更新都成立，则返回 true                     
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetFetchDirection(int direction) throws Exception<br>
+                    设置此 ResultSet 对象中行的处理方向。获取方向可以在任何时间更改。 <br>
+                    1000表示前进方向，1001表示回退方向
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RefreshRow() throws Exception<br>
+                    用数据库中的最近值刷新当前行。<br
+                </td>
+            </tr>
+           
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

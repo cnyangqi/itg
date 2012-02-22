@@ -1,0 +1,6 @@
+SELTEMPLATE_HTMLTITLE=select template
+SELTEMPLATE_NAME=template name
+SELTEMPLATE_OUTPUTFILENAME=output file
+SELTEMPLATE_EMBEDDED_TEMPLATE=System Embedded Empty Template, NO article generated
+BUTTON_OK=OK
+BUTTON_SEARCH=Search

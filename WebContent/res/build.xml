@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="nps" basedir=".">
+    <dirname property="resource.home" file="${ant.file}"/>
+    <property name="jdk.home" value="C:/jdk1.5"/>
+    <target name="resources">
+       <native2ascii src="${resource.home}/native/" includes="jsp_siteinfo*.res" dest="${resource.home}/langs/"  ext=".properties"/>
+    </target>
+</project>

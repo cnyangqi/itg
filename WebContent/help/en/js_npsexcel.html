@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsExcel</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsExcel class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsExcel help to read/create/overwrite excel spreadsheets.<br></p>
+    <p>
+       <b>Sample code for reading excel spreadsheet:</b>
+       <br>
+       var excel = new NpsExcel(new NpsFile("myexcel.xls"),'r'); <br>
+       out.Info(excel.sheets); <br>
+       excel.currentsheet=0; <br>
+       out.Info(excel.sheetname); <br>
+       out.Info(excel.rows); <br>
+       out.Info(excel.columns); <br>
+       out.Info(excel.GetCell(0,0)); <br>
+       out.Info(excel.GetString(1,1));<br>
+       out.Info(excel.GetDouble(2,2));<br>
+       out.Info(excel.GetDate(3,3)); <br>
+       out.Info(excel.GetBoolean(4,4));  <br>
+       excel.Close();<br>
+        
+       <br><br>
+        <b>Sample code for creating excel spreadsheet:</b>
+        <br>
+        var format1 = new NpsExcelFormat("","");<br>
+        format1.SetFont("Arial",11,true,false,false,"black");<br>
+        format1.SetAlignment("centre");<br>
+        format1.SetVerticalAlignment("centre");<br>
+        format1.SetBorder("all","thin");<br>
+        format1.SetBackground("yellow");<br>
+        format1.SetOrientation("horizon");<br>
+
+        var excel = new NpsExcel(new NpsFile("new.xls"),'n');<br>
+        excel.CreateSheet("My sheet",0);<br>
+        excel.MergeCell(0,0,0,10);<br>
+        excel.AddString(0,0,"TITLE TEST",format1);<br>
+        excel.AddNumber(1,0,2.5,format1);<br>
+        excel.AddDate(2,0,new Date(),format1);<br>
+        excel.AddBoolean(3,0,true,format1);<br>
+        excel.AddFormula(4,0,"5*2",format1);<br>
+        excel.Write();<br>
+        excel.Close();
+
+       <br><br>
+       <b>Sample code for modifying excel spreadsheet:</b>
+       <br>
+       var excel = new NpsExcel(new NpsFile("old.xls"),'rw');<br>
+       excel.SetString(0,0,"MODIFY");<br>
+       excel.SetNumber(1,0,3.8);<br>
+       excel.SetString(1,0,"STRING");<br>
+       excel.SetDate(2,0,new Date(2005,7,20));<br>
+       excel.SetBoolean(3,0,false);<br>
+       excel.SetFormula(4,0,"10*2");<br>
+       excel.SetString(0,5,"STRING2");<br>
+       excel.Write();<br>
+       excel.Close();<br>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    sheets<br>
+                    Get the number of sheets in this workbook, readonly.
+                </td>
+            </tr>
+           <tr class="module">
+                <td>int</td>
+                <td>
+                    currentsheet<br>
+                    Set the current sheet, start from 0
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    sheetname<br>
+                    Get the current sheet name, readonly.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    rows<br>
+                    Get the number of rows in current sheet, readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    columns<br>
+                    Get the number of columns in current sheet, readonly
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>NpsExcel</td>
+                <td>
+                    new(NpsFile file,String mode)<br>
+                    Constructor. The file parameter indicates the 'file' to be opened in which way specified by 'mode'<br>
+                    1.mode=r, means readonly mode;<br>
+                    2.mode=n, means create/overwrite mode;<br>
+                    3.mode=rw, means open an existing file, if we failed to open the file or the file does not not exist, and an exception throwed.
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Open(NpsFile file,String mode)<br>
+                    Open an excel file. The mode parameter is same as constructor.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetCell(int col, int row)<br>
+                    Return the contents of this cell as a string
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetString(int col, int row)<br>
+                    Return the contents of this cell as a string<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    GetDouble(int col, int row)<br>
+                    Return the contents of this cell as a number<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    GetDate(int col, int row<br>
+                    Return the contents of this cell as a date
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    GetBoolean(int col, int row)<br>
+                    Return the contents of this cell as a boolean
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    CreateSheet(String name,int index)<br>
+                    Create a new sheet
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetName(String name)<br>
+                    Sets the name of current sheet
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetProtected(boolean b)<br>
+                    Indicates whether or not this workbook is protected
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetPassword(String pass)<br>
+                    Sets the password for this sheet
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDefaultColumnWidth(int width)<br>
+                    Sets the default column width 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDefaultRowHeight(int height)<br>
+                    Sets the default row height 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetRowView(int row,int height,boolean collapsed)<br>
+                    Sets the height of the specified row, as well as its collapse status 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetColumnView(int col,int width)<br>
+                    Sets the view for this column 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    InsertColumn(int col)<br>
+                    Inserts a blank column into this spreadsheet. If the column is out of range of the columns in the sheet, then no action is taken 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    InsertRow(int row)<br>
+                    Inserts a blank row into this spreadsheet. If the row is out of range of the rows in the sheet, then no action is taken
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveColumn(int col)<br>
+                    Removes a column from this spreadsheet. If the column is out of range of the columns in the sheet, then no action is taken 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveRow(int row)<br>
+                    Removes a row from this spreadsheet. If the row is out of range of the columns in the sheet, then no action is taken 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    MergeCell(int c1,int r1,int c2,int r2)<br>
+                    Merges the specified cells
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddString(int col,int row,String value,NpsExcelFormat format)<br>
+                    Adds a cell to this sheet
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddNumber(int col,int row,double value,NpsExcelFormat format)<br>
+                    Adds a cell to this sheet 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddDate(int col,int row,Object d,NpsExcelFormat format)<br>
+                    Adds a cell to this sheet
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddBoolean(int col,int row,boolean value,NpsExcelFormat format)<br>
+                    Adds a cell to this sheet 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddFormula(int col,int row,String formula,NpsExcelFormat format)<br>
+                    Adds a cell to this sheet 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetString(int col,int row,String value)<br>
+                    Modify the cell value
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetNumber(int col,int row,double value)<br>
+                    Modify the cell value
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDate(int col,int row,Object d)<br>
+                    Modify the cell value
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetBoolean(int col,int row,boolean value)<br>
+                    Modify the cell value
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetFormula(int col,int row,String formula)<br>
+                    Modify the cell value
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Write()<br>
+                    Writes out the data held in this workbook to file in Excel format 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Close()<br>
+                    Closes this workbook, and frees makes any memory allocated available for garbage collection 
+                </td>
+            </tr>                       
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

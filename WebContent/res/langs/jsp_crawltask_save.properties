@@ -1,0 +1,15 @@
+TASK_TAG_ART_TITLE=Article Title
+TASK_TAG_ART_SUBTITLE=Subtitle
+TASK_TAG_ART_ABTITLE=Abbreviated Title
+TASK_TAG_ART_TAG=Tags
+TASK_TAG_ART_AUTHOR=Author
+TASK_TAG_ART_IMPORTANT=Importance
+TASK_TAG_ART_VALIDDAYS=Valid days
+TASK_TAG_ART_SOURCE=Source
+TASK_TAG_ART_ABSTRACT=Abstract
+TASK_TAG_ART_CONTENT=Content
+TASK_HINT_DELETED= has been removed successfully.
+TASK_HINT_SCHEDULED=  has been scheduled successfully.
+TASK_HINT_PAUSED= has been suspended.
+TASK_HINT_RESUMED= resumed running.
+TASK_HINT_RUN= is running in the background.

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>工作流节点命令二次开发 - JavaScript编程指南 - NPS Version 2.x Documentation </title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="index-page">
+<div id="path"></div>
+<div id="page-content">
+  <h1>工作流节点命令二次开发 - JavaScript编程指南 - NPS Version 2.x Documentation</h1>
+    <p>工作流节点可以使用JavaScript、<a href="wf_command_java.html">DynamicJava</a>、<a href="wf_command_sql.html">SQL</a>三种语言进行业务编程。这里着重介绍如何使用JavaScript进行二次开发。</p>
+    <p><b>除了session、out、user外，还可以使用以下全局变量：</b></p>
+    <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr>
+                <th>变量名</th>
+                <th>类型</th>
+                <th>含义</th>
+            </tr>
+            <tr class="module">
+                <td>app_id</td>
+                <td>String</td>
+                <td>常量，申请表ID#</td>
+            </tr>
+            <tr class="module">
+                <td>app_title</td>
+                <td>String</td>
+                <td>常量，申请表标题</td>
+            </tr>
+            <tr class="module">
+                <td>app_emergency</td>
+                <td>int</td>
+                <td>常量，紧急程度。 0普通 5紧急 9特急</td>
+            </tr>
+            <tr class="module">
+                <td>app_businesstype</td>
+                <td>String</td>
+                <td>常量，业务类型ID#</td>
+            </tr>
+            <tr class="module">
+                <td>app_businessname</td>
+                <td>String</td>
+                <td>常量，业务名称</td>
+            </tr>
+            <tr class="module">
+                <td>app_process</td>
+                <td>String</td>
+                <td>常量，流程ID#</td>
+            </tr>
+            <tr class="module">
+                <td>attorney</td>
+                <td>JSON对象</td>
+                <td>常量。attorney表示委托用户信息。attorney.id是委托用户ID#，attorney.name是委托用户名。
+                <br>
+                如果attorney==null，则表示不是代办用户。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>app</td>
+                <td>JSON对象</td>
+                <td>常量。app表示业务数据流，app==null表示没有任何业务数据。<br>
+                    业务流由IApp接口函数toJSONString()定义，业务数据通过app.进行引用。例如有字段money，则使用app.money>5000表示金额大于5000时返回true。
+                    </td>
+            </tr>
+            <tr class="module">
+                <td>action</td>
+                <td>String</td>
+                <td>常量，操作类型。<br>
+                    agree=同意<br>
+                    reject=驳回<br>
+                    return=退回之前的某个环节重新审批<br>
+                    revoke=审批通过后撤销
+                </td>
+            </tr>
+            <tr class="module">
+                <td>suggest</td>
+                <td>String</td>
+                <td>常量，审批意见。</td>
+            </tr>
+            <tr class="module">
+                <td>participants</td>
+                <td>Array</td>
+                <td>常量，下一环节审批人，定义为[{id:"",name:""},{id:"",name:""}]，id是用户ID#，name是用户名。
+                    <br>participants==null表示没有审批人。</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="padding-top:150px"></p>
+</div>
+</body>
+</html>

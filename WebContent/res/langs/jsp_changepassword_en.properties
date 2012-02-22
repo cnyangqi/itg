@@ -1,0 +1,8 @@
+PASSWORD_SUCCESS=change password success
+PASSWORD_OLD_PASSWORD_IS_NULL=please input old password
+PASSWORD_NEW_PASSWORD_IS_NULL=please input new password
+PASSWORD_NEW_PASSWORD_NOT_EQUAL=reinput new password
+PASSWORD_BUTTON_CHANGE=Change Password
+PASSWORD_INPUT_OLD_PASSWORD=old password:
+PASSWORD_INPUT_NEW_PASSWORD=new password:
+PASSWORD_INPUT_NEW_PASSWORD_AGAIN=Repeat new password:

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsPop3</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsPop3 class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsPop3 is used to retrieve email via POP3 protocol.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsPop3</td>
+                <td>
+                    NpsPop3(String host,int port)<br>
+                    Constructor.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Connect(String user,String passwd)<br>
+                    Connect to the pop3 server for authentication using identified user and password.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ConnectSSL(String user,String passwd)<br>
+                    Connect to the pop3 server using SSL for authentication.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    PostTo(NpsTopic topic,String prefix_subject,boolean delete_mail)<br>
+                    Retrieve all unread messages and post them to identified topic.<br>
+                    If prefix_subject is assigned, then only these mails which subject starts with this prefix will be handled.<br>
+                    prefix_subject=null or prefix_subject="" means all unread messages will be handled. <br>
+                    delete_mail=true means delete the mail after submitting the article successfully.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Close()<br>
+                    关闭连接，并更新邮箱。
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

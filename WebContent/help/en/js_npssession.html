@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsSession</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsSession class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsSession records current context. It can be directly quoted through the global variable of <b>session</b>.</p>
+    <p> <font color=red>NpsSession can not be operated by New.</font></p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsUser</td>
+                <td>
+                    GetCurrentUser()<br>
+            Return to currently running user.</td>
+            </tr>
+            <tr class="module">
+                <td>NpsSite</td>
+                <td>
+                    GetSite()<br>
+                    Return to recently opened website.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsSite</td>
+                <td>
+                    GetSite(String id)<br>
+                    Return to designated website
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsLog</td>
+                <td>
+                    GetDefaultLog()<br>
+            Obtain default logger. It will be written into the global nps.log 
+            file as default and be simultaneously output in the terminal of application 
+            server. For example: the default configuration of Tomcat will be simultaneously 
+            output into catalina.out.</td>
+            </tr>
+            <tr class="module">
+                <td>NpsLog</td>
+                <td>
+                    CreateLog(String filename)<br>
+                    Create your own logger then write it into file designated by filename. The Append mode should be used when writing files.
+					<br><br>
+                    filename will automatically mapped into the root path of currently in-use website. For example, if the root path of current website is c:\web, then the final results of all the three situations below will point to “c:\web\logs\mylog.txt” files:
+					<br>
+                    1.filename=c:\web\logs\mylog.txt<br>
+                    2.filename=c:\logs\mylog.txt<br>
+                    3.filename=/logs/mylog.txt                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsPreparedStatement</td>
+                <td>
+                    PrepareStatement(String sql) throws Exception<br>
+            Generate “NpsPreparedStatement” object. After binding variables, “ExecuteUpdate” 
+            and “ExecuteQuery” will be transferred to implement SQL statement. 
+            <br><br>
+                    “ExecuteQuery()” method will return to the object of “NpsResultSet” result set. It will obtain field value through the object of result set. <br>
+                    Note:<font color=red>Database connection will adopt the nps connection of DataSource defined in db.xml.</font>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Commit()<br>
+                    Commit all database changes
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Rollback()<br>
+                    Rollback all database changes
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetEnvironmentVar(Object key,Object value)<br>
+                    Set system environment variable
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Object</td>
+                <td>
+                    GetEnvironmentValue(Object key)<br>
+                    Obtain system environment variable
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetEnvironmentString(Object key)<br>
+                    Obtain system environment variable,return String
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveEnvironmentVar(Object key)<br>
+                    Remove system environment variable
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDebugEnabled()<br>
+                    Enter into Debug mode
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsDebugEnabled()<br>
+                    Judge if it is in debug mode. true for yes, false for no
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetServerName()<br>
+                    Return to currently in-use server based on “hostname(ip address)” format.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    GetLastrun()<br>
+                    The last runtime
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    GetLastExitStatus()<br>
+                    The last exit status. ”0” means exit properly. “1” means abnormal. 
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

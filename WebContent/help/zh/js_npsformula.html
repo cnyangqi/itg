@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsFormula</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsFormula class</a></h1>
+    <div class="toplang"></div>
+    <p>NpsFormula用于+-*/四则运算和公式,NpsFormula全部基于BigDecimal进行高精度运算。 <br>
+        目前内嵌的公式有：sum、average、max、min、abs、mod、int、round、trunc、cos、sin、tan、acos、asin、atan。
+        还支持if、or、and关系运算。<br>
+        NpsFormula还支持自定义变量。内置的变量有PI、E.
+    </p>
+</div>
+
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td></td>
+                <td>
+                    NpsFormula(String expression)<br>
+                    构造函数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetExpression(String expression)<br>
+                    设定表达式
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddSymbol(String symbol,Object value)<br>
+                    添加自定义变量
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveSymbol(String symbol)<br>
+                    删除变量
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    Evaluate()<br>
+                    返回以String表示的运算结果
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2>Formula Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>SUM</td>
+                <td>
+                    返回所有数字之和。<br>
+                    SUM(number1,number2, ...)<br>
+                    Number1, number2, ...   为 1 到 n 个需要求和的参数。如果Number是Vector或数组Symbol，将自动累加Symbol内的所有值。<br>
+                    =SUM(3, 2) 将 3 和 2 相加 (5) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>average</td>
+                <td>
+                    返回参数的平均值（算术平均值）。<br>
+                    AVERAGE(number1,number2,...) <br>
+                    Number1, number2, ...   为 1 到 n 个需要计算平均值的参数。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =AVERAGE(10,7,9,27,2) 上面数字的平均值 (11) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>max</td>
+                <td>
+                    返回一组值中的最大值。<br>
+                    MAX(number1,number2,...) <br>
+                    Number1, number2, ...   为 1 到 n 个需要计算最大值的参数。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =MAX(10,7,9,27,2) 最大值为27 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>min</td>
+                <td>返回一组值中的最小值。<br>
+                    MIN(number1,number2,...) <br>
+                    Number1, number2, ...   为 1 到 n 个需要计算最小值的参数。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =MIN(10,7,9,27,2) 最小值为2
+                </td>
+            </tr>
+            <tr class="module">
+                <td>abs</td>
+                <td>
+                    返回数字的绝对值。<br>
+                    ABS(number)  <br>
+                    Number   需要计算其绝对值的实数。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =ABS(-2) -2 的绝对值（2） 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>mod</td>
+                <td>
+                    返回两数相除的余数。结果的正负号与除数相同。<br>
+                    MOD(number,divisor) <br>
+                    Number   为被除数。 <br>
+                    Divisor   为除数。<br>
+                    =MOD(3, 2) 3/2 的余数 (1)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    将数字向下舍入到最接近的整数。<br>
+                    INT(number)  <br>
+                    Number   需要进行向下舍入取整的实数。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =INT(8.9) 将 8.9 向下舍入到最接近的整数 (8) <br>
+                    =INT(-8.9) 将 -8.9 向下舍入到最接近的整数 (-9) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>round</td>
+                <td>
+                    返回某个数字按指定位数取整后的数字。<br>
+                    ROUND(number,num_digits) <br>
+                    Number   需要进行四舍五入的数字。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    Num_digits   指定的位数，按此位数进行四舍五入。<br>
+                    =ROUND(2.15, 1) 将 2.15 四舍五入到一个小数位 (2.2) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>trunc</td>
+                <td>
+                    将数字的小数部分截去，返回整数。 <br>
+                    TRUNC(number,num_digits)<br>
+                    Number   需要截尾取整的数字。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    Num_digits   用于指定取整精度的数字。Num_digits 的默认值为 0。 <br>
+                    =TRUNC(8.9) 8.9 的整数部分 (8) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>cos</td>
+                <td>
+                    返回给定角度的余弦值。 <br>
+                    COS(number) <br>
+                    Number 为需要求余弦的角度，以弧度表示。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =COS(60*PI()/180) 60 度的余弦值 (0.5) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>sin</td>
+                <td>
+                    返回给定角度的正弦值。<br>
+                    SIN(number)
+                    Number   为需要求正弦的角度，以弧度表示。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =SIN(PI()/2) pi/2 弧度的正弦值 (1) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>tan</td>
+                <td>
+                    返回给定角度的正切值。<br>
+                    TAN(number) <br>
+                    Number 为要求正切的角度，以弧度表示。如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =TAN(45*PI()/180) 45 度的正切值 (1) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>acos</td>
+                <td>
+                    返回数字的反余弦值。反余弦值是角度，它的余弦值为数字。返回的角度值以弧度表示，范围是 0 到 pi。<br>
+                    ACOS(number) <br>
+                    Number   角度的余弦值，必须介于 -1 到 1 之间。 如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =ACOS(-0.5)*180/PI() 以度表示 -0.5 的反余弦值 (120) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>asin</td>
+                <td>
+                    返回参数的反正弦值。反正弦值为一个角度，该角度的正弦值即等于此函数的 number 参数。返回的角度值将以弧度表示，范围为 -pi/2 到 pi/2。<br>
+                    ASIN(number) <br>
+                    Number   角度的正弦值，必须介于 -1 到 1 之间。 如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =ASIN(-0.5)*180/PI() 以度表示 -0.5 的反正弦值 (-30)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>atan</td>
+                <td>
+                    返回反正切值。反正切值为角度，其正切值即等于 number 参数值。返回的角度值将以弧度表示，范围为 -pi/2 到 pi/2。<br>
+                    ATAN (number) <br>
+                    Number   角度的正切值。 如果Number是Vector或数组Symbol，将同时计算Symbol内的所有值。<br>
+                    =ATAN(1)*180/PI() 以度表示 1 的反正切值 (45)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>if</td>
+                <td>
+                    执行真假值判断，根据逻辑计算的真假值，返回不同结果。<br>
+
+                    IF(logical_test,value_if_true,value_if_false)<br>
+                    Logical_test    表示计算结果为 TRUE 或 FALSE 的任意值或表达式。本参数可使用任何比较运算符。<br>
+                    Value_if_true    logical_test 为 TRUE 时返回的值。Value_if_true 也可以是其他公式。<br>
+                    Value_if_false    logical_test 为 FALSE 时返回的值。Value_if_false 也可以是其他公式。 <br>
+
+                    =IF(BUDGET<=100,"Within budget","Over budget") 将根据变量BUDGETDE值判断是否超出预算
+                </td>
+            </tr>
+            <tr class="module">
+                <td>or</td>
+                <td>
+                    在其参数组中，任何一个参数逻辑值为 TRUE，即返回 TRUE；任何一个参数的逻辑值为 FALSE，即返回 FALSE。<br>
+                    
+                    OR(logical1,logical2,...)  <br>
+
+                    Logical1,logical2,...   为需要进行检验的条件，分别为 TRUE 或 FALSE。 <br>
+
+                    =OR(1+1=1,2+2=5) 所有参数的逻辑值为 FALSE (FALSE) 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>and</td>
+                <td>
+                    所有参数的逻辑值为真时，返回 TRUE；只要一个参数的逻辑值为假，即返回 FALSE。<br>
+                    AND(logical1,logical2, ...) <br>
+
+                    Logical1, logical2, ...   表示待检测的条件值，各条件值可为 TRUE 或 FALSE。<br>
+
+                    =AND(TRUE, FALSE) 一个参数的逻辑值为假 (FALSE)
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Symbol Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>PI</td>
+                <td>
+                    返回数字 3.1415926535897931，即数学常量 pi，精确到小数点后 16 位。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>E</td>
+                <td>
+                    返回数字 2.7182818284590451，即科学计数法E，精确到小数点后 16 位。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

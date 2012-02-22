@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsHtmlFetcher</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsHtmlFetcher class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsHtmlFetcher is used for fetch a web html,also images from a remote server.
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">void</td>
+                <td>
+                    AddNameValuePair(String name,String value)<br>
+                    Set parameters for login."name" is the parameter name,"value" is the parameter value.e.g.<br>
+                    AddNameValuePair("username","system");<br>
+                    AddNameValuePair("password","manager");<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Login(String url)<br>
+                    Login
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsHtmlParser</td>
+                <td>
+                    GetHtmlParser(String url,String encoding) throws Exception<br>
+                    Retrieve the web page from url,and build into NpsHtmlParser Object
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SaveHtml2File(String url,NpsFile output) throws IOException<br>
+                    Retrieve the web page from url,and save to file
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GetBinary(String url,NpsFile output) throws IOException<br>
+                    Retrieve binary datas from url(for example,image),and save to file
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ScaleTo(NpsFile src,NpsFile dest,int width,int height) throws Exception<br>
+                    Scale the image and save to other file<br>
+                    width=-1 indicate to geometric scale by height;height=-1 indicate to geometric scale by width
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>

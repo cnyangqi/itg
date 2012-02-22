@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsArticle</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsArticle class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsArticle indicates article object.</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    id<br>
+                    Article’s unique identification. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    title<br>
+            article’s title</td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    url<br>
+                    URL path. Setting external link for custom datasource is not supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic</td>
+                <td>
+                    topic<br>
+                    Master topic
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic[]</td>
+                <td>
+                    slavetopics<br>
+                    Slave topics' list. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach[]</td>
+                <td>
+                    attaches<br>
+            attachment list. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    state<br>
+                    article’s status. Readonly<br>
+					0: draft.<br>
+					1: submitted while verifying.<br>
+					2: verified while publishing.<br>
+					3: published.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    bPublished<br>
+                    To verify the article was published or not. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    createdate<br>
+            date of creation. Readonly</td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    publishdate<br>
+            date of publishing. Readonly</td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    subtitle<br>
+                    subtitle. Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    abtitle<br>
+                    abtitle. Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    keyword<br>
+                    tags. Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    source<br>
+                    source.  Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    author<br>
+                    author. Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    importance<br>
+                    重要度：0普通 1重要 2非常重要。可读写。不支持自定义数据源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    validdays<br>
+                    valid days.  Custom Datasource NOT supported. <br>
+                    =0 means valid forever
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    score<br>
+                    score.   Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    isExternalLink<br>
+                    Test if it is an external link. Readonly
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    sourceid<br>
+                    The id of article copied from.  Custom Datasource NOT supported.
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>&nbsp;</td>
+                <td>
+                    new(NpsTopic topic,String title)<br>
+                    Constructor.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddResource(NpsResource resource)<br>
+                    Attach resource to this article. Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsPublished()<br>
+                    whether it is already published or not.<br>
+					“true”: yes  “false”: no 
+                </td>
+            </tr>
+            <tr class="module">
+                <td width="100">boolean</td>
+                <td>
+                    HasField(String name)<br>
+                    whether it contains field or not.<br>
+					“true”: yes  “false”: no 
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>Object</td>
+                <td>
+                    GetFieldValue(String name)<br>
+                    return to the field value designated by “name”<br>
+                    Text content will return “string” object while others will return relevant digital type, character string type and date type according to database’s definition.                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetFieldValueFormatted(String name,String format)<br>
+            Format and return the field value designated by “name” according to 
+            the requirement of “format”.</td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetFieldValueLimitted(String name,int wordcount)<br>
+            return to the front “wordcount” value among field values designated 
+            by “name”.<br>
+            Digits will not be truncated. <br>
+            “wordcount&lt;=0”: it will return to the whole field value. </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetCustomField(String name,String value)<br>
+                    AddCustomField(String name,String value)<br>                    
+                    Set customized field value. If not exist, then create a new one.<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach[]</td>
+                <td>
+                    GetAttaches(String suffix,int max)<br>
+            return to the front “max” attachment of suffix-designated attachments.<br>
+            The format of “suffix” can be designated as &quot;.jpg *.bmp&quot;, 
+            and separated by “;”, “|”, space or TAB. &quot;*.*&quot; indicates 
+            it will return all attachments.<br>
+            “max&lt;=0”: indicates it will return to all attachments which can 
+            meet requirement. </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach</td>
+                <td>
+                    GetAttach(int i)<br>
+            return to the attachment of number “i”. </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach</td>
+                <td>
+                    GetAttachById(String id)<br>
+            return to the attachment whose “id” is designated. </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    CopyToTopic(NpsTopic topic) <br>
+                    CopyTo(NpsTopic topic) <br>                    
+                    copy article to designated topic of “topic” and return to the copied article. <br>
+                    It is not available for self-defined datasource.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddSlaveTopic(NpsTopic topic) <br>
+                    Add a slave topic.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Save() <br>
+                    save articles. Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateContent(String content) <br>
+                    update content
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateContentByFile(NpsFile file)<br>
+                    update conent by file
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Submit() <br>
+                    Submit this article to approve. Custom Datasource NOT supported.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Build() <br>
+                    publish article,but topic pages template not built.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    BuildAllTopics()<br>
+                    Build all related topics' page template.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Cancel(boolean bResetPublishdate) <br>
+                    cancel article. If bResetPublishdate is true, then empty the publish date field value.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Delete() <br>
+                    delete article
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Index(int mode) <br>
+                    Submit/Remove index to Solr.mode=0 means to add or update;mode=1 means to remove index from solr.<br>
+                    <font color=red>ATTENTION:Before indexing to solr,you must set SOLR's url in nps.conf and check the "Building a full-text index for the web" option on for this site.</font>
+                    Method such as Build(),Cancel(),Delete() will submit/remove fulltext index to solr automatically.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Clear() <br>
+                    delete all temporary files.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

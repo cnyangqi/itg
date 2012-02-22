@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsSmtp</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsSmtp class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsSmtp用于发送电子邮件。以下样例代码演示了发送带附件的HTML邮件。</p>
+    <table border="1" width="100%">
+        <tr><td>
+            var f = new NpsFile('test.txt');<br>
+            f.OpenWriter(false);<br>
+            f.WriteString('hello from npsfile');<br>
+            f.Close();<br><br>
+            var client = new NpsSmtp("smtp.gmail.com",25);<br>
+            client.Connect("xjwebstar@gmail.com","mypassword");<br>
+            client.SetCharset('UTF-8');<br>
+            client.SetFrom('xjwebstar@gmail.com');<br>
+            client.AddTo('jialin@jwebstar.com');<br>
+            client.AddCc('support@jwebstar.com');<br>
+            client.AddBcc('service@jwebstar.com');<br>
+            client.SetSubject('test from npsemail');<br>
+            client.SetHtmlMsg('&lt;font color=red>hello from npsemail&lt;/font>');<br>
+            client.AddAttach(f);<br>
+            client.Send();<br>
+        </td></tr>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsSmtp</td>
+                <td>
+                    NpsSmtp(String host,int port)<br>
+                    构造函数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Connect(String user,String passwd)<br>
+                    使用给定的邮件帐号进行SMTP认证。一般来说，该帐号为发件人帐号。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ConnectSSL(String user,String passwd)<br>
+                    使用SSL连接进行SMTP认证。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetFrom(String from)<br>
+                    设置发件人，from必须为合法的电子邮件地址。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetSubject(String subject)<br>
+                    设置邮件主题。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddTo(String to)<br>
+                    添加抄送，to必须为合法的电子邮件地址。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddBcc(String bcc)<br>
+                    添加暗送，bcc必须为合法的电子邮件地址。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetCharset(String charset)<br>
+                    设置字符集。例如GBK、UTF-8、ISO8859-1。默认为ISO8859-1编码，建议设置为UTF-8编码。
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetTextMsg(String msg)<br>
+                    设置邮件正文部分为TEXT文本。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetHtmlMsg(String msg)<br>
+                    设置邮件正文部分为HTML文本。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddAttach(NpsFile file)<br>
+                    添加附件。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Send()<br>
+                    发送电子邮件。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

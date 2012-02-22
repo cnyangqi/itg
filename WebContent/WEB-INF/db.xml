@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+	<DataSource name="nps">	
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<url>jdbc:oracle:thin:@61.164.51.234:1522:nps</url>
+		<user>nps</user>
+		<password>nps</password>
+	</DataSource>
+	<DataSource name="nfwl"> 
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<url>jdbc:oracle:thin:@61.164.51.234:1522:nps</url>
+		<user>nps</user>
+		<password>nps</password>
+	</DataSource>
+	<!-- 
+		  <DataSource name="nps"> 
+			<driver>oracle.jdbc.driver.OracleDriver</driver>
+			<url>jdbc:oracle:thin:@127.0.0.1:1521:nps</url>
+			<user>nps</user>
+			<password>nps</password>
+		  </DataSource>
+		  <DataSource name="nfwl"> 
+			<driver>oracle.jdbc.driver.OracleDriver</driver>
+			<url>jdbc:oracle:thin:@127.0.0.1:1521:nps</url>
+			<user>nfwl</user>
+			<password>nfwl</password>
+		  </DataSource>
+		   -->
+	<!-- 
+		   <DataSource name="nps"> 
+			<driver>oracle.jdbc.driver.OracleDriver</driver>
+			<url>jdbc:oracle:thin:@www.zjhy.net.cn:1521:hyyb2</url>
+			<user>nps</user>
+			<password>nps</password>
+		  </DataSource>
+		  <DataSource name="nfwl"> 
+			<driver>oracle.jdbc.driver.OracleDriver</driver>
+			<url>jdbc:oracle:thin:@www.zjhy.net.cn:1521:hyyb2</url>
+			<user>nps</user>
+			<password>nps</password>
+		  </DataSource>
+		 -->  
+</root>

@@ -1,0 +1,450 @@
+From: <ÓÉ Windows Internet Explorer 7 ±£´æ>
+Subject: EditArea documentation
+Date: Thu, 27 Dec 2007 21:04:47 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0000_01C848CC.1CDF8CC0"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_01C848CC.1CDF8CC0
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.cdolivet.net/editarea/editarea/docs/configuration.html
+
+=EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML xml:lang=3D"en" =
+xmlns=3D"http://www.w3.org/1999/xhtml"><HEAD><TITLE>EditArea =
+documentation</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dutf-8"><LINK=20
+href=3D"http://www.cdolivet.net/editarea/editarea/docs/doc_style.css"=20
+type=3Dtext/css rel=3Dstylesheet>
+<META content=3D"MSHTML 6.00.6000.16587" name=3DGENERATOR></HEAD>
+<BODY>
+<DIV class=3Dheader>
+<H1>Configuration reference</H1></DIV>
+<DIV class=3Dcontent>
+<P>This document is the index/reference page for all available core=20
+configuration options in EditArea.</P>
+<DIV class=3Dseparator></DIV>
+<H2>Configuration options</H2>
+<P>All configuration options below is to be placed within the init =
+JavaScript=20
+call.<BR>
+<UL class=3Doptionlist>
+  <LI><STRONG>Needed option</STRONG>=20
+  <UL>
+    <LI><STRONG>id</STRONG>: should contain the id of the textarea that =
+should=20
+    be converted into an editor <BR><SPAN class=3Dunderline>Type</SPAN>: =
+String=20
+    <BR><SPAN class=3Dunderline>Default</SPAN>: null </LI></UL><BR>
+  <LI><STRONG>General</STRONG>=20
+  <UL>
+    <LI><STRONG>language</STRONG>: should contain a code of the language =
+pack to=20
+    be used for translation. If EditArea doesn't have a language pack =
+for your=20
+    language you could always write your own and contribute this back to =
+this=20
+    project by uploading it as a Patch at <A=20
+    href=3D"http://sourceforge.net/projects/editarea/">SourceForge</A>. =
+<BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: "en"=20
+    <LI><STRONG>syntax</STRONG>: should contain a code of the syntax =
+definition=20
+    file that must be used for the highlight mode. <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>start_highlight</STRONG>: set if the editor should start =
+with=20
+    highlighted syntax displayed. <BR><SPAN =
+class=3Dunderline>Type</SPAN>: Boolean=20
+    <BR><SPAN class=3Dunderline>Default</SPAN>: false=20
+    <LI><STRONG>is_multi_files</STRONG>: determine if the editor load =
+the=20
+    content of the textarea (false) or if it wait for an openFile() call =
+for=20
+    allowing file editing. <BR><SPAN class=3Dunderline>Type</SPAN>: =
+Boolean=20
+    <BR><SPAN class=3Dunderline>Default</SPAN>: false=20
+    <LI><STRONG>min_width</STRONG>: define the minimum width of the =
+editor=20
+    <BR><SPAN class=3Dunderline>Type</SPAN>: Integer <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: 400=20
+    <LI><STRONG>min_height</STRONG>: define the minimum height of the =
+editor=20
+    <BR><SPAN class=3Dunderline>Type</SPAN>: Integer <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: 100=20
+    <LI><STRONG>allow_resize</STRONG>: define one with axis the editor =
+can be=20
+    resized by the user. <BR><SPAN class=3Dunderline>Type</SPAN>: String =
+("no" (no=20
+    resize allowed), "both" (x and y axis), "x", "y") <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: "both"=20
+    <LI><STRONG>allow_toggle</STRONG>: define if a toggle button must be =
+added=20
+    under the editor in order to allow to toggle between the editor and =
+the=20
+    orginal textarea. <BR><SPAN class=3Dunderline>Type</SPAN>: Boolean =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: true=20
+    <LI><STRONG>plugins</STRONG>: a comma separated list of plugins to =
+load.=20
+    <BR><SPAN class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>browsers</STRONG>: define if the editor must be loaded =
+only when=20
+    the user navigotr is known to be a working one, or if it will be =
+loaded for=20
+    all navigators. <BR><SPAN class=3Dunderline>Type</SPAN>: String =
+("all" or=20
+    "known") <BR><SPAN class=3Dunderline>Default</SPAN>: "known"=20
+    <LI><STRONG>display</STRONG>: specify when the textarea will be =
+converted=20
+    into an editor. If set to "later", the toogle button will be =
+displayed to=20
+    allow later conversion. <BR><SPAN class=3Dunderline>Type</SPAN>: =
+String=20
+    ("onload" or "later") <BR><SPAN class=3Dunderline>Default</SPAN>: =
+"onload"=20
+    <LI><STRONG>toolbar</STRONG>: define the toolbar that will be =
+displayed,=20
+    each element being separated by a ",". <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String (combinaison of: "|", "*", =
+"search",=20
+    "go_to_line", "undo", "redo", "change_smooth_selection", =
+"reset_highlight",=20
+    "highlight", "help", "save", "load", "new_document", =
+"syntax_selection")=20
+    <BR>"|" or "separator" make appears a separator in the toolbar. =
+<BR>"*" or=20
+    "return" make appears a line-break in the toolbar <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: "search, go_to_line, fullscreen, =
+|, undo,=20
+    redo, |, select_font,|, change_smooth_selection, highlight, =
+reset_highlight,=20
+    |, help"=20
+    <LI><STRONG>begin_toolbar</STRONG>: toolbar button list to add =
+before the=20
+    toolbar defined by the "toolbar" option. <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String (cf. "toolbar" option) =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>end_toolbar</STRONG>: toolbar button list to add after =
+the=20
+    toolbar defined by the "toolbar" option. <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String (cf. "toolbar" option) =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>font_size</STRONG>: define the font-size used to display =
+the=20
+    text in the editor. <BR><SPAN class=3Dunderline>Type</SPAN>: Integer =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: 10=20
+    <LI><STRONG>font_family</STRONG>: define the font-familly used to =
+display=20
+    the text in the editor. (eg: "monospace" or "verdana,monospace"). =
+Opera will=20
+    always use "monospace". <BR><SPAN class=3Dunderline>Type</SPAN>: =
+String=20
+    <BR><SPAN class=3Dunderline>Default</SPAN>: "monospace"=20
+    <LI><STRONG>gecko_spellcheck</STRONG>: allow to disable/enable the =
+Firefox 2=20
+    spellchecker <BR><SPAN class=3Dunderline>Type</SPAN>: Boolean =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: false=20
+    <LI><STRONG>max_undo</STRONG>: number of undo action allowed =
+<BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: Integer <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: 20=20
+    <LI><STRONG>fullscreen</STRONG>: determine if EditArea start in =
+fullscreen=20
+    mode or not <BR><SPAN class=3Dunderline>Type</SPAN>: Boolean =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: false=20
+    <LI><STRONG>replace_tab_by_spaces</STRONG>: define the number of =
+spaces that=20
+    will replace tabulations (\t) in text. If tabulation should stay =
+tabulation,=20
+    set this option to false. <BR><SPAN class=3Dunderline>Type</SPAN>: =
+Integer (or=20
+    false) <BR><SPAN class=3Dunderline>Default</SPAN>: false=20
+    <LI><STRONG>debug</STRONG>: used to display some debug information =
+into a=20
+    newly created textarea. Can be usefull to display trace info in it =
+if you=20
+    want to modify the code. <BR><SPAN class=3Dunderline>Type</SPAN>: =
+Boolean=20
+    <BR><SPAN class=3Dunderline>Default</SPAN>: false </LI></UL><BR>
+  <LI><STRONG>Callback</STRONG>=20
+  <UL>
+    <LI><STRONG>load_callback</STRONG>: the function name that will be =
+called=20
+    when the user will press the "load" button in the toolbar. This =
+function=20
+    will reveice one parameter that will be the id of the textarea. You =
+can=20
+    update the content of the textarea by using =
+"editAreaLoader.setValue(the_id,=20
+    new_value);". <BR><SPAN class=3Dunderline>Type</SPAN>: String =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>save_callback</STRONG>: the function name that will be =
+called=20
+    when the user will press the "save" button in the toolbar. This =
+function=20
+    will reveice two parameters, the first being the id of the textarea =
+and the=20
+    second containing the content of the textarea. <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>change_callback</STRONG>: the function name that will be =
+called=20
+    when the onchange event of the textarea of EditArea will be =
+triggered. This=20
+    function will reveice one parameter that will be the id of the =
+textarea.=20
+    Will be triggered only is EditArea is displayed. <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>submit_callback</STRONG>: the function name that will be =
+called=20
+    when the form containing the EditArea will be submitted. This =
+function will=20
+    reveice one parameter that will be the id of the textarea. Will be =
+triggered=20
+    regardless the state of EditArea (displayed or not). <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_init_callback</STRONG>: the function name that will =
+be called=20
+    just after the editAreaLoader.init() function, once EditAreaLoader =
+will be=20
+    initalized but still not displayed. This function will reveice one =
+parameter=20
+    that will be the id of the textarea. <BR><SPAN =
+class=3Dunderline>Type</SPAN>:=20
+    String <BR><SPAN class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_delete_callback</STRONG>: the function name that will =
+be=20
+    called when EditArea will be destroyed regardless the fact that it =
+has been=20
+    displayed or not. This function will reveice one parameter that will =
+be the=20
+    id of the textarea. <BR><SPAN class=3Dunderline>Type</SPAN>: String =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_toggle_on_callback</STRONG>: the function name that =
+will be=20
+    called when EditArea will be toogled on for. This function will =
+reveice one=20
+    parameter that will be the id of the textarea. <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_toggle_off_callback</STRONG>: the function name that =
+will be=20
+    called when EditArea will be toggled off. This function will reveice =
+one=20
+    parameter that will be the id of the textarea. <BR><SPAN=20
+    class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_load_callback</STRONG>: the function name that will =
+be called=20
+    when EditArea will be displayed for the first time. This function =
+will=20
+    reveice one parameter that will be the id of the textarea. <BR><SPAN =
+
+    class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_unload_callback</STRONG>: the function name that will =
+be=20
+    called when EditArea will be destroyed (if it have been displayed at =
+least=20
+    one time). This function will reveice one parameter that will be the =
+id of=20
+    the textarea. <BR><SPAN class=3Dunderline>Type</SPAN>: String =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_file_switch_on_callback</STRONG>: the function name =
+that will=20
+    be called when the tabulation of the file will be selected. This =
+function=20
+    will reveice one parameter that will be an associative array =
+containing all=20
+    file's infos. <BR><SPAN class=3Dunderline>Type</SPAN>: String =
+<BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_file_switch_off_callback</STRONG>: the function name =
+that=20
+    will be called when the tabulation of the file will be blur (the =
+file was=20
+    selected, and another file receive focus). This function will =
+reveice one=20
+    parameter that will be an associative array containing all file =
+infos.=20
+    <BR><SPAN class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: ""=20
+    <LI><STRONG>EA_file_close_callback</STRONG>: the function name that =
+will be=20
+    called when the tabulation of a file will be closed. This function =
+will=20
+    reveice one parameter that will be an associative array containing =
+all file=20
+    infos. <BR><SPAN class=3Dunderline>Type</SPAN>: String <BR><SPAN=20
+    class=3Dunderline>Default</SPAN>: "" </LI></UL><BR></LI></UL>
+<DIV class=3Dseparator></DIV>
+<H2>Initialization of EditArea</H2>
+<P>In order to initialize EditArea the following code must be placed =
+within HEAD=20
+element of a document. The following example is configurated to convert =
+the=20
+TEXTAREA element which has "textarea_1" as id into editor when the page =
+loads.=20
+The "id" option is the only obligatory option. <PRE>&lt;html&gt;
+&lt;head&gt;
+<STRONG>&lt;script language=3D"javascript" type=3D"text/javascript" =
+src=3D"/editarea/edit_area/edit_area_full.js"&gt;&lt;/script&gt;
+&lt;script language=3D"javascript" type=3D"text/javascript"&gt;
+editAreaLoader.init({
+	id : "textarea_1"		// textarea id
+	,syntax: "css"			// syntax to be uses for highgliting
+	,start_highlight: true		// to display with highlight mode on start-up
+});
+&lt;/script&gt;</STRONG>
+&lt;/head&gt;
+</PRE>
+<P></P>
+<P>See the <A=20
+href=3D"http://www.cdolivet.net/editarea/editarea/docs/include.html">incl=
+ude</A>=20
+document to learn more about the way to use the best script include. =
+</P>
+<P>If you want to convert several textarea on your webpage, just call =
+several=20
+time the init function with a different id parameter.</P></DIV>
+<DIV class=3Dfooter>
+<DIV class=3Dindexlink><A=20
+href=3D"http://www.cdolivet.net/editarea/editarea/docs/index.html">Index<=
+/A></DIV>
+<DIV class=3Dcopyright>EditArea - =C2=A9 Christophe Dolivet - =
+2007</DIV><BR=20
+style=3D"CLEAR: both"></DIV></BODY></HTML>
+
+------=_NextPart_000_0000_01C848CC.1CDF8CC0
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.cdolivet.net/editarea/editarea/docs/doc_style.css
+
+BODY {
+	FONT-SIZE: 12px; FONT-FAMILY: Verdana, Arial, helvetica, sans-serif; =
+BACKGROUND-COLOR: #ffffff
+}
+H1 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: =
+18px; PADDING-BOTTOM: 0px; MARGIN: 4px; PADDING-TOP: 0px
+}
+H2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: =
+14px; PADDING-BOTTOM: 0px; MARGIN: 4px 0px; PADDING-TOP: 0px
+}
+H3 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: =
+11px; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 3px; PADDING-TOP: 0px
+}
+H4 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+H5 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+H6 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+PRE {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; BACKGROUND-COLOR: #e6ebf1
+}
+CODE {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; BACKGROUND-COLOR: #e6ebf1
+}
+A:hover {
+	COLOR: #666666; TEXT-DECORATION: underline
+}
+A {
+	COLOR: #666666; TEXT-DECORATION: underline
+}
+UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 3px =
+0px 3px 10px; PADDING-TOP: 0px
+}
+OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 3px =
+0px 3px 10px; PADDING-TOP: 0px
+}
+LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 3px =
+0px 3px 10px; PADDING-TOP: 0px
+}
+LI LI {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+MARGIN-LEFT: 30px; PADDING-TOP: 0px
+}
+TABLE {
+	BORDER-COLLAPSE: collapse
+}
+TD {
+	BORDER-RIGHT: #000000 2px groove; PADDING-RIGHT: 4px; BORDER-TOP: =
+#000000 2px groove; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: =
+#000000 2px groove; PADDING-TOP: 4px; BORDER-BOTTOM: #000000 2px groove
+}
+TH {
+	BORDER-RIGHT: #000000 2px groove; PADDING-RIGHT: 4px; BORDER-TOP: =
+#000000 2px groove; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: =
+#000000 2px groove; PADDING-TOP: 4px; BORDER-BOTTOM: #000000 2px groove
+}
+THEAD {
+	BACKGROUND-COLOR: #e6ebf1
+}
+.header {
+	BORDER-RIGHT: #e0e0e0 1px solid; BORDER-TOP: #e0e0e0 1px solid; =
+BORDER-LEFT: #e0e0e0 1px solid; BORDER-BOTTOM: #e0e0e0 1px solid
+}
+.footer {
+	BORDER-RIGHT: #e0e0e0 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: =
+#e0e0e0 1px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: =
+#e0e0e0 1px solid; PADDING-TOP: 2px; BORDER-BOTTOM: #e0e0e0 1px solid; =
+HEIGHT: 1.3em
+}
+.content {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; =
+PADDING-TOP: 10px
+}
+.indexlink {
+	FLOAT: right
+}
+.separator {
+	MARGIN-TOP: 10px; MARGIN-BOTTOM: 10px; BORDER-BOTTOM: #e6ebf1 1px solid
+}
+.optionlist LI LI {
+	PADDING-LEFT: 15px; TEXT-INDENT: -15px; LINE-HEIGHT: 1.3em
+}
+.optionlist .underline {
+	BORDER-BOTTOM: #000000 1px dashed; BACKGROUND-COLOR: #e6ebf1
+}
+.marked {
+	FONT-WEIGHT: bold; COLOR: #ff0000
+}
+
+------=_NextPart_000_0000_01C848CC.1CDF8CC0--

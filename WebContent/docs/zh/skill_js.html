@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NPS JavaScript对象使用技巧</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">NPS JavaScript对象使用技巧</a></h1>
+        <div class="toplang"></div>
+        <p>
+            内置的JavaScript对象可以进行站点功能高级开发与管理。
+        </p>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="skill_js.html#customdata">自动发布自定义数据源</a></li>
+      <li><img  src="/images/help/down.gif" /> <a href="skill_js.html#dailynewdata">每日最新文章清单</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="skill_js.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="customdata" id="customdata">自动发布自定义数据源</a></h2>
+     <p>
+         下表演示了将表A新建的数据写入A_prop表，对应站点ID为testsite，栏目代号CODE为news.A，并进行发布。
+         <table border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    var pstmt = null; <br>
+                    var sql = null;<br>
+                    try  <br>
+                    {    <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var site = session.GetSite("testsite");  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var topic = site.GetTopicByCode("news.A"); <br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        //将A中有的但A_prop表中还没有的数据写入A_prop表<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        //state=2表示审核通过待发布  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        sql = "insert into A_prop(id,title,siteid,topic,state) select id,name,?,?,2 from A where not exists(select id from A_prop where A.id=A_PROP.id)"; <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt = session.PrepareStatement(sql);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt.SetString(1,site.id);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt.SetString(2,topic.id);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt.ExecuteUpdate();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        session.Commit();//提交事务处理<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        pstmt.Close();//关闭游标<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        //发布栏目news.A的文章 <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        topic.Build(false);<br>                        
+                    }   <br>
+                    catch(e)  <br>
+                    {  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        //写入日志  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        out.Error(e);  <br>
+                    }  <br>
+                    finally   <br>
+                    {         <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp; 
+                        if(pstmt!=null) pstmt.Close();  <br>
+                    }   <br>
+                </td>
+            </tr>
+         </table>
+     </p>
+    </div>
+
+    <div class="top"><a href="skill_js.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="dailynewdata" id="dailynewdata">每日最新文章清单</a></h2>
+     <p>
+         下表演示通过全文检索接口将每天发布的文章生成特定XML文件。站点ID为testsite。
+         <table border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    var xmlfile = null;<br> 
+                    try  <br>
+                    {    <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        xmlfile = new NpsFile("/xml/my.xml"); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        xmlfile.OpenWriter(false);//覆盖写入  <br><br>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var site = session.GetSite("testsite");  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var query = "publishdate:[NOW/DAY-1DAY TO NOW/DAY"; //昨天0点到今天0点的数据
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        var arts = site.FTSearch(query,0); <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        for(var i=0;i&lt;arts.count;i++) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        { <br>                                            
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             var art = arts.GetNthArticle(i); <br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;id>"); <br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString(art.id);<br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;/id>"); <br><br>
+
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;title>"); <br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString(art.title);<br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;/title>"); <br><br>
+
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;url>"); <br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString(art.url);<br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             xmlfile.WriteString("&lt;/url>"); <br><br>
+
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             art.Clear();//清除临时环境<br>
+                         &nbsp;&nbsp;&nbsp;&nbsp;
+                        } <br>
+                    }   <br>
+                    catch(e)  <br>
+                    {  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        //写入日志  <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        out.Error(e);  <br>
+                    }  <br>
+                    finally   <br>
+                    {         <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        if(xmlfile!=null) xmlfile.Close();  <br>
+                    }   <br>
+                </td>
+            </tr>
+         </table>
+     </p>
+    </div>
+</div>
+</body>
+</html>

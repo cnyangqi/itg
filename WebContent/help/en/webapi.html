@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Web API Reference</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">Web API Reference</a></h1>
+        <div class="toplang"></div>
+        <p>NPS provides a group of RESTful web api following these
+           <a href="http://www.ietf.org/rfc/rfc4287.txt" target="_blank">Atom Syndication Format</a> and <a href="http://www.ietf.org/rfc/rfc5023.txt" target="_blank">Atom Publising Protocol</a> standards.
+            And it is based on Apache Abdera.
+        </p>
+    </div>
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="divcss" id="divcss">Article Document Based on Atom</a></h2>
+     <p>
+        There are 4 extension elements added for article document. They are:
+        <br>
+       <b>
+        nps.subtitle --- the subtitle of this article<br>
+        nps.author --- the author of this article, but not creator<br>
+        nps.source --- the source of this article<br>
+        nps.tag --- the tags for  this article<br>
+       </b>
+       <br>
+       All attachments are created as link which type is <b>application/atom+xml</b>
+        <table border="1">
+        <tr>
+            <td>
+&lt;?xml version='1.0' encoding='UTF-8'?><br>
+&lt;entry xmlns="http://www.w3.org/2005/Atom" xmlns:nps="http://www.jwebstar.com/schemas/NPS"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id>urn:uuid:{$article id$}&lt;/id><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;title type="text">{$article title$}&lt;/title><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;    &lt;name>{$aritcle creator$}&lt;/name><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;/author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;updated>{$article update time$}&lt;/updated><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;published>{$article published time$}&lt;/published><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:subtitle>{$article subtitle$}&lt;/nps:subtitle><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:author>{$article author$}&lt;/nps:author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:source>{$article source$}&lt;/nps:source><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:tag>{$article tag$}&lt;/nps:tag><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;summary type="text">{$article abstract$}&lt;/summary><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;content type="text">{$article content$}&lt;/content><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;link href="/webapi/attachment/{$resource id$}" rel="enclosure" type="application/atom+xml" title="{$resource title$}" hreflang="en-US" length="{$resource size$}" /><br>
+&lt;/entry><br>
+            </td>
+        </tr>
+        </table>
+     </p>
+    </div>
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="rescss" id="rescss">Resource Document Based on Atom</a></h2>
+     <p>
+         There is only 1 extension element added for resource document.<br>
+        <b>
+        nps.suffix --- means the suffix of file
+        </b>
+         <table border="1">
+        <tr>
+            <td>
+&lt;?xml version='1.0' encoding='UTF-8'?>
+&lt;entry xmlns="http://www.w3.org/2005/Atom" xmlns:nps="http://www.jwebstar.com/schemas/NPS"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id>urn:uuid:{$resource id$}&lt;/id><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;title type="text">{$resource title$}&lt;/title><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;    &lt;name>{$author$}&lt;/name><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;/author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;updated>{$create date$}&lt;/updated><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:suffix>{$suffix$}&lt;/nps:suffix><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;summary type="text">{$resource说明$}&lt;/summary><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;content type="application/octet-stream" src="{$resource url$}" /><br>
+&lt;/entry><br>
+            </td>
+        </tr>
+         </table>
+     </p>
+    </div>
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="reuse" id="reuse">Login API</a></h2>
+     <dl>
+       <dt><font color=red>POST /webapi/login/</font></dt>
+       <dd>
+           <table border="1" width="100%">
+               <tr>
+                   <td width=60><b>Parameters</b></td>
+                   <td>Attention pls: these parameters are required and must be submiited by form
+                       <table border="1" width="100%">
+                           <tr><td><b>Name</b></td><td><b>Means</b></td></tr>
+                           <tr><td>uid</td><td>user id</td></tr>
+                           <tr><td>pwd</td><td>password</td></tr>
+                       </table>
+                   </td>
+               </tr>
+           </table>
+       </dd>
+     </dl>
+    </div>
+
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="topic" id="topic">Topic API</a></h2>
+     <dl>
+    <dt><font color=red>GET /webapi/topics/</font></dt>
+     <dd>
+         <b>Fetch topic tree</b> <br><br>
+         Usage:<br>
+         1. <b>/webapi/topics/</b><br>
+         means list all sites and also it's topic tree.<br><br>
+         2. <b>/webapi/topics/{$site_id$}/</b><br>
+         means list only specified site and it's topic tree<br>
+         <br>
+         This call return result in xml. Belows shows as an example.<br>
+         <table border="1">
+             <tr><td>
+&lt;?xml version='1.0' encoding='UTF-8'?>   <br>
+&lt;root xmlns="http://www.jwebstar.com/schemas/topics"> <br>
+&nbsp;&nbsp;&lt;site> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id>jwebstar&lt;/id> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;url>http://www.jwebstar.com/&lt;/url> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;title>jwebstar&lt;/title> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;topic>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id>1761&lt;/id>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;code>news&lt;/code> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;title>News&lt;/title>   <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/topic>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;topic> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;parent>1761&lt;/parent>   <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;id>1001&lt;/id>   <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code>news.domestic&lt;/code>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title>domestic&lt;/title>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/topic>    <br>
+&nbsp;&nbsp;&lt;/site> <br>
+&lt;/root> <br>
+             </td></tr>
+         </table>
+     </dd>
+
+    <dt><font color=red>POST /webapi/topics/ Rebuild site, topic or article</font></dt>
+    <dd>
+         Usage:<br>
+         1. <b>/webapi/topics/{$site_id$></b> <br>
+            means build all files for site which id is {$site_id$}<br><br>
+         2. <b>/webapi/topics/{$site_id$}/{$topic_id$}</b><br>
+            means build all files for topic which id is {$topic_id$}<br>
+         Or, <b>/webapi/topics/{$site_id$}/{$topic_code$}</b><br>
+            means build all files for topic which code is {$topic_code$}<br><br>
+        3.<b>/webapi/topics/{$site_id$}/{$topic_id$}/{$article_id$}</b><br>
+         Or, <b>/webapi/topics/{$site_id$}/{$topic_code$}/{$article_id$}</b><br>
+            means build article which id is {$article_id$}
+     </dd>
+    </dl>
+   </div>
+
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="article" id="article">Article API</a></h2>
+    <dl>
+        <dt><font color=red>POST /webapi/post/</font></dt>
+         <dd>
+            <b>post an article.</b>  <br><br>
+            Usage:<br>
+            1.<b>/webapi/post/{$site_id$}/{$topic_id$}/</b><br>
+             post your article to specified topic. {$site_id$} is site id, and {$topic_id$} is topic id<br>
+                                                   <br>
+            2.<b>/webapi/post/{$site_id$}/{$topic_code$} </b>
+             post your article to specified topic. {$site_id$} is site id, and {$topic_code$} is topic code,and please replace . using / with topic code. <br>
+             for example, you want to post an article to the topic which code is news.domestic, just post to /webapi/post/jwebstar/news/domesitc/. <br>
+             <br><br>
+        </dd>
+
+       <dt><font color=red>GET /webapi/posts/</font></dt>
+       <dd>
+          <b>List all articles</b><br><br>
+          Usage:<br>
+          1. <b>/webapi/posts/{$site_id$}/</b><br>
+           Lists all articles of specified site, for example,<br>
+             /webapi/posts/jwebstar/ means list all articles in jwebstar<br><br>
+          2. <b>/webapi/posts/{$site_id$}/{$topic_id$}/</b> <br>
+           Lists all articles of specified topic, for example,<br>
+           We assume there's a topic named 'demostic' which id is 1001, <br>
+             /webapi/posts/jwebstar/1001/ means list all articles of this topic<br><br>
+          3. <b>/webapi/posts/{$site_id$}/{$topic_code$}/</b>
+           List all articles of specified topic, for example,<br>
+           We assume there's a topic named 'demostic' which code is news.domestic, <br>
+             /webapi/posts/jwebstar/news/demoestic also means list all articles of this topic<br>
+           <table border="1" width="100%">
+               <tr>
+                   <td><b>Return</b></td>
+                   <td>Feed including all articles</td>
+               </tr>
+               <tr>
+                   <td><b>Parameter</b></td>
+                   <td>
+                       You can add these parameters in the URL to limit the number of articles. For example,<br>
+                       1. /webapi/posts/jwebstar/?from=20091231&to=20100528<br>
+                       mean return all article of jwebstar between Dec 31th,2009 and May 28th,2010.<br><br>
+                       2. /webapi/posts/jwebstar/news/demoestic?from=20100218<br>
+                       means return all articles of the topic after Feb 18th, 2010 which code is news.demoestic in jwebstar.<br>
+
+                       <table border="1" width="100%">
+                           <tr><td><b>Parameter</b></td><td><b>Means</b></td></tr>
+                           <tr><td>from</td><td>Published Date greater than. Format: YYYYMMDD, for example, 20091231 means Dec 31th, 2009</td></tr>
+                           <tr><td>to</td><td>Published Date less than. Format:YYYYMMDD, for exampke, 20100528 means May 28th, 2010</td></tr>
+                       </table>
+                   </td>
+               </tr>
+           </table>
+       </dd>
+
+
+      <dt><font color=red>GET /webapi/post/{$art_id$}</font></dt>
+       <dd>
+           <b>Download specified article</b>  <br>
+       </dd>
+
+
+        <dt><font color=red>DELETE /webapi/post/{$art_id$}</font></dt>
+         <dd>
+             <b>Delete specified article</b>  <br>
+        </dd>
+
+
+    </dl>
+   </div>
+
+   <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+   <div class="section">
+   <h2><a name="resource" id="resource">Resource API</a></h2>
+   <dl>
+       <dt><font color=red>POST /webapi/attachment/</font></dt>
+        <dd>
+           <b>Post a new resource</b> <br>  <br>
+           Usage:<br>
+           1. <b>/webapi/attachment/{site_id}</b> <br>
+            means post a new resource to specified site<br>   <br>
+           2. <b>/webapi/attachment/{$site_id$}/{$topic_id$}/</b> <br>
+            means post a new resource and also create a new article and publish it to specified topic<br>
+            <br>
+           3.<b>/webapi/post/{$site_id$}/{$topic_code$}</b><br>
+            Topic code can be used too.
+
+            <br><br>
+       </dd>
+
+       <dt><font color=red>GET /webapi/attachments/{$site_id$}/</font></dt>
+        <dd>
+            <b>List all resources which located in specified site</b>
+            <table border="1" width="100%">
+                <tr>
+                    <td><b>Return</b></td>
+                    <td>Feed including all resources</td>
+                </tr>
+                <tr>
+                    <td><b>Parameters</b></td>
+                    <td>
+                        You can add these parameters in the URL to limit the number of resources. For example,<br>
+                        1. <b>/webapi/attachments/jwebstar/?type=0&from=20091231</b><br>
+                        mean return all pictures after Dec 31th,2009 located in jwebstar<br><br>
+                        2. <b>/webapi/attachments/jwebstar?suffix=.jpg|.bmp|.gif|.png</b><br>
+                        means return all pictures located in jwebstar and it's suffix is jpg or bmp or gif or png<br>
+                        <table border="1" width="100%">
+                            <tr><td><b>Parameter</b></td><td><b>Means</b></td></tr>
+                            <tr><td>type</td><td>Resource Type:0=Picture, 1=Documentation, 2=Videos, 3=Sounds, 4=Flash, 5=Others</td></tr>
+                            <tr><td>suffix</td><td>Resource' Suffix, for example, .jpg or jpg, mutiple words must be split by ',' or ';'</td></tr>
+                            <tr><td>from</td><td>Create date greater than, Format: YYYYMMDD</td></tr>
+                            <tr><td>to</td><td>Create date less than, Format: YYYYMMDD</td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </dd>
+
+
+      <dt><font color=red>GET /webapi/attachment/{$resource_id$}</font></dt>
+      <dd>
+          <b>Download resource</b> <br>
+      </dd>
+
+      <dt><font color=red>DELETE /webapi/attachment/{$resource_id$}</font></dt>
+       <dd>
+           <b>Delete resource</b> <br>
+      </dd>
+     </dl>
+    </div>
+
+</div>
+<br><br><br><br><br><br><br>
+</body>
+</html>

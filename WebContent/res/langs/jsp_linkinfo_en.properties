@@ -1,0 +1,21 @@
+LINK_HTMLTITLE=New Link
+LINK_BUTTON_SAVE=Save
+LINK_BUTTON_DELETE=Delete
+LINK_BUTTON_ATTACH_FILE=Upload Files From Local
+LINK_BUTTON_ATTACH_LIST=Attach Files From Database
+LINK_ALERT_DELETE=Are you sure to delete?
+LINK_TITLE=Title:
+LINK_VIEWSOURCE=Source
+LINK_TOPIC=Topic:
+LINK_URL=URL:
+LINK_ABSTRACT=Abstract
+LINK_HINT_ABSTRACT=<font color=red>Max Limit to 500 Characters. </font>
+LINK_CREATOR=Created By:
+LINK_PUBLISHDATE=Published At:
+LINK_STATE_0=Off
+LINK_STATE_1=Pending
+LINK_STATE_2=Waiting to publish
+LINK_STATE_3=Published
+LINK_IMAGE=Image URL:
+LINK_ALERT_NO_TITLE=Please input title
+LINK_ALERT_NO_URL=Please input URL

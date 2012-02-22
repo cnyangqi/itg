@@ -1,0 +1,119 @@
+*{margin:0;padding:0;border:0;}
+BODY {
+	width:100%;
+    height:100%;
+  font-size:12px;
+  
+  /* Firefox 3.6 */   
+  background-image: -moz-linear-gradient(top, #97c1f9, #e8f0fc);    
+  
+  /* Safari & Chrome */   
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #97c1f9),color-stop(1, #e8f0fc));    
+  
+  /* IE6 & IE7 */   
+	FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#97c1f9,endColorStr=#e8f0fc);
+
+   /* IE8 */   
+   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#97c1f9', endColorstr='#e8f0fc')"	
+  
+  
+}
+
+.userInfor {
+	CLEAR: both; PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 18px; PADDING-TOP: 18px; TEXT-ALIGN: center
+}
+.userInfor IMG {
+	MARGIN-RIGHT: 5px
+}
+.userInfor STRONG {
+	COLOR: black
+}
+
+#nav {
+	width:180px;
+  line-height: 24px;
+	list-style-type: none;
+	text-align:left;
+  FONT-SIZE: 12px;
+}
+
+#nav a {
+	width: 160px;
+	display: block;
+	padding-left:0;
+}
+
+#nav li {
+	border-bottom:#7ab3e5 1px solid;
+	float:left;
+  /*padding-left:15px;*/
+  text-indent:1.2em;
+  font-weight:bold;    
+}
+
+#nav li a{
+    color:#003666;
+    text-decoration: none
+}
+
+#nav li a.selected{
+    background:#0032b0 url('/images/top/arrow_right.jpg') no-repeat right top;
+    color:white;
+    font-weight:bold;
+}
+
+#nav li a:hover{
+    background-color: #0032b0; 
+    color:white;
+}
+
+
+#nav li ul {
+	list-style:none;
+	text-align:left;
+}
+#nav li ul li{
+  	border:0px;
+    text-indent:2.4em;
+    font-weight:normal;
+}
+
+#nav li ul li a{
+    width:159px;
+    color:black;    
+    text-decoration: underline
+}
+
+#nav li ul li a.selected{
+    background:#0032b0 url('/images/top/arrow_right.jpg') no-repeat right top;
+    /*background-color:#0032b0;*/
+    color:white;
+    font-weight:bold;
+}
+
+#nav li ul li a:hover {
+	text-decoration:none;
+	font-weight:normal;
+	background:#0032b0;
+	color:white;
+}
+
+/*==============================*/
+#nav li:hover ul {
+	left: auto;
+}
+#nav li.sfhover ul {
+	left: auto;
+}
+#content {
+	clear: left;
+}
+#nav ul.collapsed {
+	display: none;
+}
+-->
+
+#PARENT{
+	width:300px;
+	padding-left:0;
+}

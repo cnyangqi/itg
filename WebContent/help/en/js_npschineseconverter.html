@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsChineseConverter</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsChineseConverter class</a></h1>
+    <div class="toplang"></div>
+    <p>NpsChineseConverter is used for Traditional Chinese and Simplified Chinese Conversion. The dictionaries come from MediaWiki.</p>
+</div>
+
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">String</td>
+                <td>
+                    ToSimplified(String text,int synonym) throws Exception<br>
+                    Convert Traditional Chinese characters to Simplified Chinese characters.<br>
+                    synonym=1 indicate to use the dictionary for general purpose<br>
+                    synonym=3 indicate to use the dictionary for Mainland of China<br>
+                    synonym=7 indicate to use the dictionary for Singapore<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td width="100">String</td>
+                <td>
+                    ToTraditional(String text,int synonym) throws Exception<br>
+                    Convert Simplified Chinese characters to Traditional Chinese characters.<br>
+                    synonym=2 indicate to use the dictionary for general purpose<br>
+                    synonym=4 indicate to use the dictionary for TaiWan<br>
+                    synonym=5 indicate to use the dictionary for HongKong<br>
+                    synonym=6 indicate to use the dictionary for Macau<br>
+                    synonym=8 indicate to use the dictionary for Malaysia<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

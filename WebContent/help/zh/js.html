@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>JavaScript对象开发指南 - NPS Version 2.x Documentation </title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="index-page">
+<div id="path"></div>
+<div id="page-content">
+  <h1>JavaScript对象开发指南 - NPS Version 2.x Documentation</h1>
+    <p></p>
+    <p>全局变量有session、out、user，可以直接使用。在触发器中还有全局变量source。</p>
+    <p>session变量的对应类是NpsSession，记录了当前上下文情景。</p>
+    <p>out变量的对应类是NpsLog，日志写入全局文件nps.log。</p>
+    <p>user变量的对应类是NpsUser，记录当前运行账户。</p>
+    <p>source是指事件源。对于文章对应的类是NpsArticle，自己开发的不是从CustomArticle或Article类派生的JAVA类，参考该类自定义接口。</p>
+    <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>类</th>
+              <th>说明</th>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssession.html">NpsSession</a></td>
+              <td>记录了当前上下文情境，通过全局变量session引用。</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsuser.html">NpsUser</a></td>
+              <td><a href="js_npsuser.html">用户对象</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssite.html">NpsSite</a></td>
+              <td>站点对象，通过NpsSession的GetSite()系列方法获得</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npstopic.html">NpsTopic</a></td>
+              <td><a href="js_npstopic.html">栏目对象</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsarticle.html">NpsArticle</a></td>
+              <td><a href="js_npsarticle.html">文章对象</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsattach.html">NpsAttach</a></td>
+              <td><a href="js_npsattach.html">附件对象</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsresource.html">NpsResource</a></td>
+              <td><a href="js_npsresource.html">资源对象</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsarticlecollection.html">NpsArticleCollection</a></td>
+              <td>文章集，调用NpsSite的GetAllArticles()和Search()方法都将返回结果集对象</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsresourcecollection.html">NpsResourceCollection</a></td>
+              <td>资源集，调用NpsSite的GetResourcesByType()和GetResourcesByTopic()方法都将返回结果集对象</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npspreparedstatement.html">NpsPreparedStatement</a></td>
+              <td>PreparedStatement对象，通过NpsSession的PreparedStatement()获得</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsresultset.html">NpsResultSet</a></td>
+              <td>ResultSet对象，调用NpsPreparedStatement的ExecuteQuery()获得</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsfile.html">NpsFile</a></td>
+              <td>文件对象，通过javascript的new NpsFile(String filename)创建</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npslog.html">NpsLog</a></td>
+              <td>日志记录对象，调用NpsSession的GetDefaultLog()获得系统缺省的日志对象。调用CreateLog()方法获得自定义文件日志输出。</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npstemplate.html">NpsTemplate</a></td>
+              <td>自定义模板对象，调用生成自定义的邮件、短信等模板。</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssolr.html">NpsSolr</a></td>
+              <td>Solr集成，用于自定义全文索引</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssmtp.html">NpsSmtp</a></td>
+              <td>SMTP协议发送电子邮件。</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npspop3.html">NpsPop3</a></td>
+              <td>POP3协议接收电子邮件</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsftp.html">NpsFtp</a></td>
+              <td>Ftp操作</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssitemap.html">NpsSitemap</a></td>
+              <td>Google Sitemap协议实现</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsrss.html">NpsRss</a></td>
+              <td>RSS数据源的获取、生成与发布</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsawstats.html">NpsAwstats</a></td>
+              <td>AWStats集成，用于站点日志分析、统计</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsformula.html">NpsFormula</a></td>
+              <td>+-*/四则运算和公式</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsmeter.html">NpsMeter</a></td>
+              <td>计量单位表达式的运算</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npshtmlfetcher.html">NpsHtmlFetcher</a></td>
+              <td>Html抓取工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npshtmlparser.html">NpsHtmlParser</a></td>
+              <td>Html字段分析工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npscurrencyconverter.html">NpsCurrencyConverter</a></td>
+              <td>汇率查询、转换工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npschineseconverter.html">NpsChineseConverter</a></td>
+              <td>中文简繁转换工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsipquery.html">NpsIPQuery</a></td>
+              <td>根据IP地址查询所在国家或地址</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npswebserviceclient.html">NpsWebServiceClient</a></td>
+              <td>WebService远程调用工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsexcelformat.html">NpsExcelFormat</a></td>
+              <td>Excel单元格样式</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsexcel.html">NpsExcel</a></td>
+              <td>Excel表格读写工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsbackup.html">NpsBackup</a></td>
+              <td>数据备份工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsatomclient.html">NpsAtomClient</a></td>
+              <td>Atom发布工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npswebcrawler.html">NpsWebCrawler</a></td>
+              <td>网站抓取工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npszjegrss.html">NpsZJEGRss</a></td>
+              <td>《浙江省政府网站12类信息发布规范》内容变更索引</td>
+          </tr>
+       </tbody>
+     </table>
+
+    <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>建议的代码结构</th>
+          </tr>
+          <tr class="module">
+            <td>
+              var site = session.GetSite(); <br>
+              var new_log = null;           <br>
+              try                           <br>
+              {                             <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    new_log = session.CreateLog('d:/a.txt');    <br>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    //do your things <br>
+                
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    new_log.Error('something error');                   <br>
+              }                                                 <br>
+              finally                                           <br>
+              {                                                 <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    if(new_log!=null) new_log.Close();          <br>
+              }     
+            </td>
+          </tr>          
+      </tbody>
+   </table>
+</div>
+</body>
+</html>

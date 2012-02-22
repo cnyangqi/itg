@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>工作流JavaScript二次开发手册 - NPS Version 2.x Documentation </title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="index-page">
+<div id="path"></div>
+<div id="page-content">
+  <h1>工作流JavaScript二次开发手册 - NPS Version 2.x Documentation</h1>
+    <p></p>
+    <p>全局变量有session、out、user，可以直接使用。</p>
+    <p>session变量的对应类是NpsSession，记录了当前上下文情景。</p>
+    <p>out变量的对应类是NpsLog，日志写入全局文件nps.log。</p>
+    <p>user变量的对应类是NpsUser，记录当前运行账户。</p>
+    <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>类</th>
+              <th>说明</th>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssession.html">NpsSession</a></td>
+              <td>记录了当前上下文情境，通过全局变量session引用。</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsuser.html">NpsUser</a></td>
+              <td>用户对象</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npspreparedstatement.html">NpsPreparedStatement</a></td>
+              <td>PreparedStatement对象，通过NpsSession的PreparedStatement()获得</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsresultset.html">NpsResultSet</a></td>
+              <td>ResultSet对象，调用NpsPreparedStatement的ExecuteQuery()获得</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsfile.html">NpsFile</a></td>
+              <td>文件对象，通过javascript的new NpsFile(String filename)创建</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npslog.html">NpsLog</a></td>
+              <td>日志记录对象，调用NpsSession的GetDefaultLog()获得系统缺省的日志对象。调用CreateLog()方法获得自定义文件日志输出。</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npstemplate.html">NpsTemplate</a></td>
+              <td>自定义模板支持，通过调用NPS内核用于生成自定义的邮件、短信等模板</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssmtp.html">NpsSmtp</a></td>
+              <td>SMTP协议发送电子邮件。</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npspop3.html">NpsPop3</a></td>
+              <td>POP3协议接收电子邮件</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsftp.html">NpsFtp</a></td>
+              <td>Ftp操作</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsformula.html">NpsFormula</a></td>
+              <td>+-*/四则运算和公式</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsmeter.html">NpsMeter</a></td>
+              <td>计量单位表达式的运算</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npscurrencyconverter.html">NpsCurrencyConverter</a></td>
+              <td>汇率查询、转换工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npschineseconverter.html">NpsChineseConverter</a></td>
+              <td>中文简繁转换工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsipquery.html">NpsIPQuery</a></td>
+              <td>根据IP地址查询所在国家或地址</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npswebserviceclient.html">NpsWebServiceClient</a></td>
+              <td>WebService远程调用工具</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsexcelformat.html">NpsExcelFormat</a></td>
+              <td>Excel单元格样式</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsexcel.html">NpsExcel</a></td>
+              <td>Excel表格读写工具</td>
+          </tr>
+       </tbody>
+     </table>
+    <p style="padding-top:150px"></p>
+</div>
+</body>
+</html>

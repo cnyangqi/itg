@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsExcelFormat</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsExcelFormat class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsExcelFormat is used to apply special formatting to Excel cells.<br></p>
+    <p> <b>Sample Code:</b><br>
+       var format1 = new NpsExcelFormat("",""); <br>
+       format1.SetFont("Arial",11,true,false,false,"black");   <br>
+       format1.SetAlignment("centre");<br>
+       format1.SetVerticalAlignment("centre");  <br>
+       format1.SetBorder("all","thin"); <br>
+       format1.SetBackground("yellow"); <br>
+       format1.SetOrientation("vertical");<br>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>NpsExcelFormat</td>
+                <td>
+                    new(String type,String format_str)<br>
+                    Constructor. <br>
+                    1.type=date, means a constructor which specifies a date format for cells which use this format object;<br>
+                    2.type=number, means a constructor which specifies a number format for cells which use this format object;<br>
+                    3.if any other value setted, format_str would be omitted.
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetFont(String font_name,int point_size,boolean bold,boolean italic,boolean underline,String color)<br>
+                    font_name: font name, such as 'Arial', 'Arial Black','Verdana', etc.<br>
+                    point_size: the point size of font<br>
+                    bold=true, means a bold font<br>
+                    italic=true, means a italic font<br>
+                    underline=true, means a underline font<br>
+                    Color can be set to 'red', 'blue', 'yellow', 'green', 'grey', 'white', 'black' only.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetAlignment(String align)<br>
+                    Sets the horizontal alignment for this format.
+                    left: Data cells with this alignment will appear at the left hand edge of the cell<br>
+                    right: Data in cells with this alignment will be right aligned<br>
+                    centre: Data in cells with this alignment will be centred<br>
+                    justify: Data in cells with this alignment will be justified<br>
+                    fill: Data in cells with this alignment will fill the cell
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetVerticalAlignment(String align)<br>
+                    Sets the vertical alignment for this format<br>
+                    top: Cells with this specified vertical alignment will have their data aligned at the top<br>
+                    bottom: Cells with this specified vertical alignment will have their data aligned at the bottom<br>
+                    centre: Cells with this specified vertical alignment will have their data aligned centrally<br>
+                    justify: Cells with this specified vertical alignment will have their data justified
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetBorder(String border,String style)<br>
+                    Sets the specified border for this format<br>
+                    border: the border;<br>
+                    style: the border line style<br>
+                    The border parameter can be set to 'none','all','top','bottom','left' and 'right';<br>
+                    The style parameter can be set to 'none', 'thin', 'thick', 'dash_dot', 'dash_dot_dot', 'dashed', 'dotted',
+                    'double', 'hair', 'medium', 'medium_dash_dot', 'medium_dash_dot_dot', 'medium_dashed', 'SLANTED_DASH_DOT'<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetBackground(String color)<br>
+                    Sets the background colour for this cell format<br>
+                    The background could be 'red', 'blue', 'yellow', 'green', 'grey', 'white', 'black'.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetIndentation(int i)<br>
+                    Sets the indentation of the cell text
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetLocked(boolean b)<br>
+                    Sets whether or not this XF record locks the cell.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetOrientation(String orientation)<br>
+                    Sets the text orientation for this format. The orientation parameter could be 'vertical', 'horizontal';
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetShrinkToFit(boolean b)<br>
+                    Sets the shrink to fit flag
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetWrap(boolean wrap)<br>
+                    Sets the wrap indicator for this format.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

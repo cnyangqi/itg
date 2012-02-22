@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh_CN" lang="zh_CN">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Website Backup Guide</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">Website Backup Guide</a></h1>
+        <div class="toplang"></div>
+        <p>This manual is about exporting/importing website configurations and dumping website datas in Sqlite V3.6 format.</p>
+    </div>
+    <div id="quickview"><ul id="toc">
+    <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="#importexport">Export/Import site's Configurations</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="#dump">Dump datas</a></li>
+    </ul>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="importexport" id="importexport">Export/import site configuration</a></h2>
+       <p>Site configuration is including company information( but departments and users NOT included), site definition, topics, templates, tasks and triggers.
+          All articles NOT included.
+           <br><br>
+
+          All datas exported to a ZIP file. This file is usually for building sites from your test machine.
+       </p>
+    <dl>
+      <dt>Export site configuration</dt>
+      <dd>
+          System Administrator can export all sites' configuration, and site administrator can export site configuration who owned.
+          <br>
+          To export the site configuration, it's very easy, please just open the site configuration page, and click the <b>Export</b> button.
+      </dd>
+      <dt>Import site configuration</dt>
+      <dd>
+          Only system administrator can do an import.<br>
+          Something is very import, please check all items below and make sure before import.
+          <font color=red>
+         1.If your company configuration exist in database, the information in your ZIP file will be omitted duiring importing. So, you have to re-config the basic company information later if anything wrong with current set.<br>
+         2.Please check the site exist or not. The procedure will overwrite all informations including the site, template configuration and also merge the topic configuration.<br>
+         </font>
+
+          <br> 
+          Something you may need to do after after import:<br>
+          <font color=red>
+            1.You have to re-set owner for all topics<br>
+          </font>
+      </dd>
+    </dl>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="dump" id="dump">Dump Datas</a></h2>
+       <p>It helps to dump all datas into Sqlite V3.6 format, including basic tables of NPS and other customized table by yourself.</p>
+       <dl>
+          <dt>Dump Admin</dt>
+          <dd>
+              Only system administrator can set tables to dump.<br>
+              By default, all tables for NPS we called SYSTEM TABLE would be dumped.
+              These tables are including SITE、SITE_HOST、SITE_OWNER、SITE_VARS、TOPIC、TOPIC_OWNER、TOPIC_VARS、TOPIC_PTS、TEMPLATE、EVENT_TRIGGER、JOB、CONFIG_BACKUP、ARTICLE、ARTICLE_TOPICS、ATTACH、FCKTemplate、UNIT、DEPT、USERS、ROLE、USERROLE、USERROLE_GRANTABLE、BULLETIN and all tables created for customized data source (usually we called 'prop table').
+              <br><br>
+              If there're some other tables you need to dump, just click the 'Dump Admin' to config it. You only need to do is input an SELECT statment in SQL field and give a table name in Sqlite.
+              And then the dump procedure would dump all datas into the table you named before.
+              <br><br>
+              <font color=red>
+                  ATTETNION PLS: All types in ORACLE accepted except LONG and LONG RAW.
+              </font>
+          </dd>
+       </dl>
+       <dl>
+           <dt>Daily Dump Task</dt>
+           <dd>
+               Site administrator have to do this daily.<br>
+               The first way is to dump manually. Just click the '<b>Dump</b>' button in the site configuration page.
+               <br>
+               The second way is to dump automatically. In this way, you need to build a task by NpsBackup.
+               You can dump data and then save to local dirver, send an email to anyone, or ftp to other space.
+               <br><br>
+               Here's a sample showes how to dump datas and send an email to you automatically.<br>
+               var backup_agent = new NpsBackup();<br>
+
+               var dmp_file = null;   <br>
+               try <br>
+               {   <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   dmp_file = backup_agent.Dump(session.GetSite("your site id"));  <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   var email = new NpsEmail();<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetCharset('UTF-8');<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetHost("your smtp host");<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetAuthentication("your email address","your password");<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetFrom('youremail@email.com');<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.AddTo('youremail@email.com');<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetSubject('NPS Dump Data ' + new Date());<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.SetHtmlMsg('');<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.AddAttach(dmmp_file);<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   email.Send();<br>
+               }   <br>
+               catch(e) <br>
+               {        <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   out.Error(e); <br>
+               }  <br>
+               finally  <br>
+               { <br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;
+                   if(dmp_file!=null) dmp_file.Delete();   <br>
+               }  <br>
+           </dd>
+       </dl>
+    </div>
+</div>
+</body>
+</html>

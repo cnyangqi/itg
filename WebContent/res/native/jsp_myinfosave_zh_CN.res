@@ -1,0 +1,1 @@
+MYINFO_SUCCESS=个人信息修改成功。

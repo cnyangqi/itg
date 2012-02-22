@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsAwstats</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsAwstats class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsAwstats used to generate advanced graphical web statistics with AWStats.<br><br>
+        AWStats is a free powerful and featureful tool that generates advanced web, streaming, ftp or mail server statistics, graphically.
+        This log analyzer works as a CGI or from command line and shows you all possible information your log contains, in few graphical web pages.
+        click <a href="http://awstats.sourceforge.net">here</a> to visit AWStats official website. <br><br>
+
+        For smaller websites, we recommended to generate monthly or annual web statistics;
+        For medium and large sites, we recommended to generate daily or hourly web statistics.
+
+        <br><br>
+
+        <font color=red>
+        1.perl must be installed in NPS server,and can be found in PATH.<br><br>
+        </font>
+
+        2.Config "awstats_include.inc"<br>
+        <font color=red>
+        If Apache or Lotus Notes/Domino native combined log format are used for your web server config,No need to change anything.
+        </font>
+        <br>
+        <font color=red>
+        1.Edit the file:{$NPS_HOME}/awstats/conf/awstats_include.inc<br>
+        set LogFormat to your log format,it must match your web server config。
+        See AWStats setup instructions in documentation to know how to configure your web server to have the required log format.
+        <br>
+        2.Delete the file:{$TEMP_ROOTPATH}/awstats/conf/awstats_include.inc<br>    
+        </font>
+
+        <br>
+        3.Log format configuration for Apache httpd in httpd.conf:<br>
+            1)combined log format<br>
+        <font color=red>
+            CustomLog /logs/httpd/www.jwebstar.com_access_log combined <br>
+        </font>
+            2)common log format<br>
+        <font color=red>
+            CustomLog /logs/httpd/www.jwebstar.com_access_log common<br>
+        </font>
+        <br>
+        <font color=red>
+        4.You can also set LogFile in awstats_include.inc(See AWStats setup instructions in documentation).<br>
+        However,the set will lapse once called AddNpsFile() or AddFile() function.<br>
+        </font>
+
+        <br>
+        The sample code will generate all monthly web statistics.
+    <table border="1" width="100%">
+        <tr><td>
+            var site = session.GetSite('jwebstar');<br>
+            var awstats = new NpsAwstats(site,'en');<br>
+            awstats.AddFile('/weblogs/jwebstar%YY-24%MM-24%DD-24.log');<br><br>
+
+            var today = new Date();<br>
+            var year = today.getYear();<br>
+            if (year < 2000) year = year + 1900; <br>
+            var month = today.getMonth()+1;<br>
+            awstats.ReportAllByMonth(year,month);<br>
+        </td></tr>
+    </table>
+
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">NpsAwstats</td>
+                <td>
+                    NpsAwstats(NpsSite site,String lang)<br>
+                    construction.<br>
+                    The lang parameter specified the international language would be used for report.
+                    AWStats can make reports in 41 languages. This is a list of all of them, for last version,
+                    in alphabetical order (The code you can use for Lang parameter are the ISO−639−1 language codes).<br>
+                    <table border="1">
+                        <tr><td>
+                            Albanian=al, Bosnian=ba, Bulgarian=bg, Catalan=ca, Chinese (Taiwan)=tw, Chinese (Simpliefied)=cn, Croatian=hr,
+        Czech=cz, Danish=dk, Dutch=nl, English=en, Estonian=et, Euskara=eu, Finnish=fi, French=fr, Galician=gl,
+        German=de, Greek=gr, Hebrew=he, Hungarian=hu, Icelandic=is, Indonesian=id, Italian=it, Japanese=jp,
+        Korean=ko, Latvian=lv, Norwegian (Nynorsk)=nn, Norwegian (Bokmal)=nb, Polish=pl, Portuguese=pt, Portuguese
+        (Brazilian)=br, Romanian=ro, Russian=ru, Serbian=sr, Slovak=sk, Solvenian=si, Spanish=es, Swedish=se, Thai=th,
+        Turkish=tr, Ukrainian=ua, Welsh=cy                            
+                        </td></tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddNpsFile(NpsFile logfile)<br>
+                    Add a log file to analyze.<br>
+                    Multiple calls for a set of log file.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddFile(String logfile)<br>
+                    Add a log file to analyze. Possible values: A full path.<br>
+                    You can also use tags in this filename if you need a dynamic file name depending on date or time (Replacement is made by AWStats at the beginning of its execution). This is available tags :<br>
+                    #   %YYYY-n  is replaced with 4 digits year we were n hours ago<br>
+                    #   %YY-n    is replaced with 2 digits year we were n hours ago<br>
+                    #   %MM-n    is replaced with 2 digits month we were n hours ago<br>
+                    #   %MO-n    is replaced with 3 letters month we were n hours ago<br>
+                    #   %DD-n    is replaced with day we were n hours ago<br>
+                    #   %HH-n    is replaced with hour we were n hours ago<br>
+                    #   %NS-n    is replaced with number of seconds at 00:00 since 1970<br>
+                    #   %WM-n    is replaced with the week number in month (1-5)<br>
+                    #   %Wm-n    is replaced with the week number in month (0-4)<br>
+                    #   %WY-n    is replaced with the week number in year (01-52)<br>
+                    #   %Wy-n    is replaced with the week number in year (00-51)<br>
+                    #   %DW-n    is replaced with the day number in week (1-7, 1=sunday)<br>
+                    #                              use n=24 if you need (1-7, 1=monday)<br>
+                    #   %Dw-n    is replaced with the day number in week (0-6, 0=sunday)<br>
+                    #                              use n=24 if you need (0-6, 0=monday)<br><br>
+                    Example:"*.log"<br>
+                    Example:"/weblogs/jwebstar%YY-24%MM-24%DD-24.log"
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportByYear(int year,String output) throws Exception<br>
+                    Generate annual Report specified by output 
+                    <table border="1">
+                        <tr>
+                            <td>output</td>
+                            <td>meaning</td>
+                        </tr>
+                        <tr>
+                            <td>null</td>
+                            <td>Main Page</td>
+                        </tr>
+                        <tr>
+                            <td>alldomains</td>
+                            <td>Visitors domains/countries</td>
+                        </tr>
+                        <tr>
+                            <td>allhosts</td>
+                            <td>Hosts - full list</td>
+                        </tr>
+                        <tr>
+                            <td>lasthosts</td>
+                            <td>Host - Last visit</td>
+                        </tr>
+                        <tr>
+                            <td>unknownip</td>
+                            <td>Host - Unresolved IP Address</td>
+                        </tr>
+                        <tr>
+                            <td>alllogins</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>lastlogins</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>allrobots</td>
+                            <td>Robots/Spiders visitors</td>
+                        </tr>
+                        <tr>
+                            <td>lastrobots</td>
+                            <td>Robots/Spiders visitors - Last visit </td>
+                        </tr>
+                        <tr>
+                            <td>urldetail</td>
+                            <td>Pages-URL </td>
+                        </tr>
+                        <tr>
+                            <td>urlentry</td>
+                            <td>Entry</td>
+                        </tr>
+                        <tr>
+                            <td>urlexit</td>
+                            <td>Exit</td>
+                        </tr>
+                        <tr>
+                            <td>browserdetail</td>
+                            <td>Browsers</td>
+                        </tr>
+                        <tr>
+                            <td>osdetail</td>
+                            <td>Operating Systems </td>
+                        </tr>
+                        <tr>
+                            <td>unknownbrowser</td>
+                            <td>Unknown browsers </td>
+                        </tr>
+                        <tr>
+                            <td>unknownos</td>
+                            <td>Unknown OS </td>
+                        </tr>
+                        <tr>
+                            <td>refererse</td>
+                            <td>Links from an Internet Search Engine </td>
+                        </tr>
+                        <tr>
+                            <td>refererpages</td>
+                            <td>Links from an external page </td>
+                        </tr>
+                        <tr>
+                            <td>keyphrases</td>
+                            <td>Keyphrases used on search engines </td>
+                        </tr>
+                        <tr>
+                            <td>keywords</td>
+                            <td>Keywords used on search engines </td>
+                        </tr>
+                        <tr>
+                            <td>errors404</td>
+                            <td>Required but not found URLs (HTTP code 404)</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportAllByYear(int year) throws Exception<br>
+                    Generate all annual report.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportByMonth(int year,int month,String output) throws Exception<br>
+                    Generate monthly report specified by output 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportAllByMonth(int year,int month) throws Exception<br>
+                    Generate all monthly report.
+                </td>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportByDay(int year,int month,int day,String output) throws Exception<br>
+                    Generate daily report specified by output   
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportAllByDay(int year,int month,int day) throws Exception<br>
+                    Generate all daily report.    
+                </td>
+            </tr>            
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportByHour(int year,int month,int day,int hour,String output) throws Exception<br>
+                    Generate hourly report  specified by output
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ReportAllByHour(int year,int month,int day,int hour) throws Exception<br>
+                    Generate all hourly report.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<br><br><br><br><br><br><br>
+</div>
+
+</div>
+</body>
+</html>

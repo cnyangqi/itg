@@ -1,0 +1,67 @@
+<?xml version="1.0"?>   
+<project name="gnt Auto build" basedir="." default="build">   
+  
+    <!-- The CVSROOT value -->   
+    <property name="cvsroot" value=":pserver:tch@61.164.51.234:e:/cvsroot"/>   
+     
+    <property name="itg.dir" value="D:\workspace\ithinkgo"/>   
+    <property name="itg.tomcat" value="D:\tools\apache\tomcat6"/>
+    
+    <target name="prepare" >
+        <cvspass cvsroot="${cvsroot}" password="tch123" passfile="ant-cvs.cvspass"/>   
+    </target> 
+    
+    <!--<condition property="direxist">
+        <and>
+            <available file="${itg.dir}\webroot\WEB-INF\classes" type="dir"/>
+        </and>
+    </condition>-->
+    
+    <target name="makedir">
+        <mkdir dir="${itg.dir}\WebContent\WEB-INF\classes"/>
+        <echo message="created classes directory successed!"/>
+    </target>
+    
+    <target name="cleanclasses">   
+        <delete dir="${itg.dir}\WebContent\WEB-INF\classes"/>   
+    </target>
+    
+    <target name="update">
+      <cvs command="update -P -d "
+         cvsroot="${cvsroot}"
+         dest="${itg.dir}" passfile="ant-cvs.cvspass"/>
+      <echo message="update project directory successed!"/>
+    </target>
+    
+    <target name="build" depends="cleanclasses,update,makedir" >
+		  <javac srcdir="${itg.dir}\src" destdir="${itg.dir}\WebContent\WEB-INF\classes" includeantruntime="no" debug="true">
+		  	<compilerarg    line="-encoding UTF-8 "/>    
+		    <classpath>
+				  <pathelement path="${classpath}"/>
+				  <fileset dir="${itg.dir}\WebContent\WEB-INF\lib">
+				    <include name="**/*.jar"/>
+				  </fileset>
+				  <filelist>
+				  <file name="${itg.tomcat}\lib\servlet-api.jar"/>
+				  <file name="${itg.tomcat}\lib\jsp-api.jar"/>
+				  </filelist>
+				</classpath>
+		  </javac>
+		</target>
+		
+		<target name="build-only"  >
+		  <javac srcdir="${itg.dir}\src" destdir="${itg.dir}\WebContent\WEB-INF\classes" includeantruntime="no" debug="true">
+		  	<compilerarg    line="-encoding UTF-8 "/>    
+		    <classpath>
+				  <pathelement path="${classpath}"/>
+				  <fileset dir="${itg.dir}\WebContent\WEB-INF\lib">
+				    <include name="**/*.jar"/>
+				  </fileset>
+				  <filelist>
+				  <file name="${itg.tomcat}\lib\servlet-api.jar"/>
+				  <file name="${itg.tomcat}\lib\jsp-api.jar"/>
+				  </filelist>
+				</classpath>
+		  </javac>
+		</target>
+</project>

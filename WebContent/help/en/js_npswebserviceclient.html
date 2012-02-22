@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsWebServiceClient</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsWebServiceClient class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsWebServiceClient helps to access your webservice with javascript<br><br>
+        Below shows how to invoke <u>Login</u> method located at <u>http://www.jwebstar.com/admin/WebService.jws?wsdl</u>. This method need two arguments,one for email and another for password.
+    </p>
+    <table border="1" width="100%">
+        <tr><td>
+            var client = new NpsWebServiceClient("http://www.jwebstar.com/admin/WebService.jws?wsdl");<br>
+            var args = new Array();<br>
+            args[0]="your email";<br>
+            args[1]="your password";<br>
+            var result = client.Invoke("Login",args);<br>
+            out.Error(result[0]);<br>
+        </td></tr>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    <b>NpsWebServiceClient(String url)</b><br>
+                    Constructor. url is the URL of your WSDL.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    <b>void HTTPAuth(String username,String password)</b><br>
+                    HTTP authentication is one of the most straightforward ways to secure your service. In this way, client would send an HTTP username/password.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    <b>void SetProperty(String name,Object value) throws Exception</b><br>
+                    Set property for XFire Client.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    <b>Object[] Invoke(String method_name,Object[] args) throws Exception</b><br>
+                    To invoke the method. <u>args</u> is the arguments passed to method, and always it is an array.<br>
+                    1.If no arguments needed at all, just simple to set args to null. For example:<br>
+                    var result = client.Invoke("Function_No_Arg",null);<br><br>
+                    2.If only one argument needed, args could be this argument or an array contains this argument only. For example:<br>
+                      var result = client.Invoke("Query","query_string");<br>
+                    <font color=red>Or</font><br>
+                      var args = new Array();<br>
+                      args[0] = "query_string";<br>
+                      var result = client.Invoke("Query",args);<br><br>
+                    3.If more than one argument needed, args must be an array.<br>
+
+                    <br><br>
+                    The method would return an array. <br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br><br>
+</div>
+</div>
+</body>
+</html>

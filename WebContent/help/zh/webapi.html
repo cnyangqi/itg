@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Web API使用指南</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">Web API使用指南</a></h1>
+        <div class="toplang"></div>
+        <p>NPS提供RESTful风格的Web API接口。该接口基于Apache Abdera实现，遵循<a href="http://www.ietf.org/rfc/rfc4287.txt" target="_blank">Atom Format 规范</a>， 采用<a href="http://www.ietf.org/rfc/rfc5023.txt" target="_blank">Atom发布协议</a>。 
+        </p>
+    </div>
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="divcss" id="divcss">文章对象的Atom文档扩展</a></h2>
+     <p>
+        如下表所示。NPS新增了扩展标签nps.subtitle,nps.author,nps.source,nps.tag。文章附件是link，类型是application/atom+xml
+        <br>
+       <b>
+        nps.subtitle - 副标题<br>
+        nps.author - 作者<br>
+        nps.source - 来源<br>
+        nps.tag - Tag <br>
+       </b>    
+        <table border="1">
+        <tr>
+            <td>
+&lt;?xml version='1.0' encoding='UTF-8'?><br>
+&lt;entry xmlns="http://www.w3.org/2005/Atom" xmlns:nps="http://www.jwebstar.com/schemas/NPS"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id>urn:uuid:{$article id$}&lt;/id><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;title type="text">{$article title$}&lt;/title><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;    &lt;name>{$aritcle creator$}&lt;/name><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;/author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;updated>{$article update time$}&lt;/updated><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;published>{$article published time$}&lt;/published><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:subtitle>{$article subtitle$}&lt;/nps:subtitle><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:author>{$article author$}&lt;/nps:author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:source>{$article source$}&lt;/nps:source><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:tag>{$article tag$}&lt;/nps:tag><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;summary type="text">{$article abstract$}&lt;/summary><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;content type="text">{$article content$}&lt;/content><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;link href="/webapi/attachment/{$resource id$}" rel="enclosure" type="application/atom+xml" title="{$resource title$}" hreflang="en-US" length="{$resource size$}" /><br>
+&lt;/entry><br>                
+            </td>
+        </tr>
+        </table>
+     </p>
+    </div>
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="rescss" id="rescss">资源对象的Atom文档扩展</a></h2>
+     <p>
+         如下表所示。NPS新增了扩展标签nps.suffix。<br>
+        <b> 
+        nps.suffix - 资源文件的后缀名
+        </b>
+         <table border="1">
+        <tr>
+            <td>
+&lt;?xml version='1.0' encoding='UTF-8'?>
+&lt;entry xmlns="http://www.w3.org/2005/Atom" xmlns:nps="http://www.jwebstar.com/schemas/NPS"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id>urn:uuid:{$resource id$}&lt;/id><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;title type="text">{$resource title$}&lt;/title><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;    &lt;name>{$author$}&lt;/name><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;/author><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;updated>{$create date$}&lt;/updated><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;nps:suffix>{$suffix$}&lt;/nps:suffix><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;summary type="text">{$resource说明$}&lt;/summary><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;content type="application/octet-stream" src="{$resource url$}" /><br>
+&lt;/entry><br>
+            </td>
+        </tr>
+         </table>
+     </p>
+    </div>
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="reuse" id="reuse">用户登录API</a></h2>
+     <dl>
+       <dt><font color=red>POST /webapi/login/ 用户登录</font></dt>
+       <dd>
+           <table border="1" width="100%">
+               <tr>
+                   <td width=60><b>参数</b></td>
+                   <td>通过Form方式提交
+                       <table border="1" width="100%">
+                           <tr><td><b>参数名</b></td><td><b>含义</b></td></tr>
+                           <tr><td>uid</td><td>用户名</td></tr>
+                           <tr><td>pwd</td><td>密码</td></tr>
+                       </table>
+                   </td>
+               </tr>
+           </table>
+       </dd>
+     </dl>
+    </div>
+
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="topic" id="topic">栏目API</a></h2>
+     <dl>
+    <dt><font color=red>GET /webapi/topics/ 列出所有可见站点和栏目</font></dt>
+     <dd>
+         两种用法：<br>
+         1. <b>/webapi/topics/ 表示列出当前用户可见的所有站点及其栏目</b><br>
+         2. <b>/webapi/topics/{$site_id$}/ 表示列出site_id下的所有栏目</b><br>
+         <br>
+         返回值是一个XML文本，参见下面表格中的范例说明。<br>
+         <table border="1">
+             <tr><td>
+&lt;?xml version='1.0' encoding='UTF-8'?>   <br>
+&lt;root xmlns="http://www.jwebstar.com/schemas/topics"> <br>
+&nbsp;&nbsp;&lt;site> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id>jwebstar&lt;/id> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;url>http://www.jwebstar.com/&lt;/url> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;title>jwebstar&lt;/title> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;topic>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;id>1761&lt;/id>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;code>news&lt;/code> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &lt;title>News&lt;/title>   <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/topic>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;topic> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;parent>1761&lt;/parent>   <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;id>1001&lt;/id>   <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code>news.domestic&lt;/code>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title>domestic&lt;/title>  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/topic>    <br>
+&nbsp;&nbsp;&lt;/site> <br>
+&lt;/root> <br> 
+             </td></tr>
+         </table>
+     </dd>
+
+    <dt><font color=red>POST /webapi/topics/ 重建站点、栏目或文章</font></dt>
+    <dd>
+         三种用法：<br>
+         1.<b>重建指定站点</b><br>
+          &nbsp;&nbsp;/webapi/topics/{$site_id$><br><br>
+         2.<b>重建指定栏目</b><br>
+          &nbsp;&nbsp;/webapi/topics/{$site_id$}/{$topic_id$}<br>
+         或<br>
+          &nbsp;&nbsp;/webapi/topics/{$site_id$}/{$topic_code$}<br><br>
+         3.<b>重建指定的文章</b><br>
+          &nbsp;&nbsp;/webapi/topics/{$site_id$}/{$topic_id$}/{$article_id$}<br>
+        或<br>
+          &nbsp;&nbsp;/webapi/topics/{$site_id$}/{$topic_code$}/{$article_id$}
+     </dd>
+    </dl>
+   </div>
+
+
+    <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="article" id="article">文章API</a></h2>
+    <dl>
+        <dt><font color=red>POST /webapi/post/ 提交一篇新的文章</font></dt>
+         <dd>
+            两种用法：<br>
+            1./webapi/post/{$site_id$}/{$topic_id$}/ 你可以使用topic id#提交到该栏目<br>
+            或者使用topic code<br>
+            2./webapi/post/{$site_id$}/{$topic_code$}
+             <br><br>
+        </dd>
+
+       <dt><font color=red>GET /webapi/posts/ 列出所有文章</font></dt>
+       <dd>
+          三种用法：<br>           
+          1. <b>/webapi/posts/{$site_id$}/ 表示列出site_id该站点下的所有文章</b><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;例如
+             /webapi/posts/jwebstar/表示列出jwebstar下面的所有文章<br><br>
+          2. <b>/webapi/posts/{$site_id$}/{$topic_id$}/ 表示列出site_id下topic_id代表的栏目的所有文章</b><br>
+           &nbsp;&nbsp;&nbsp;&nbsp;例如假设国内新闻栏目的栏目id号是1001，<br>则
+             /webapi/posts/jwebstar/1001/表示列出国内新闻栏目的所有文章<br><br>
+          3. <b>/webapi/posts/{$site_id$}/{$topic_code$}/ 表示列出site_id下topic_code表示的栏目的所有文章</b><br>
+           &nbsp;&nbsp;&nbsp;&nbsp;同样假设国内新闻栏目的栏目的topic code是news.domestic，<br>则
+             /webapi/posts/jwebstar/news/demoestic同样列出国内新闻栏目的所有文章<br>
+
+
+           <table border="1" width="100%">
+               <tr>
+                   <td><b>返回值</b></td>
+                   <td>Feed中包含了所有文章链接和标题</td>
+               </tr>
+               <tr>
+                   <td><b>参数</b></td>
+                   <td>你还可以在以上的URL路径中添加参数对结果集进行限制。例如<br>
+                       1. /webapi/posts/jwebstar/?from=20091231&to=20100528<br>
+                       表示返回在2009年12月31日和2010年05月28日之间发布的站点site_id下的所有文章列表；<br><br>
+                       2. /webapi/posts/jwebstar/news/demoestic?from=20100218<br>
+                       表示返回2010年02月18日以后发布的所有国内新闻栏目下的所有文章。<br>
+                       
+                       <table border="1" width="100%">
+                           <tr><td><b>参数名</b></td><td><b>含义</b></td></tr>
+                           <tr><td>from</td><td>发布时间从from开始。以YYYYMMDD格式填写，例如20091231表示2009年12月31日</td></tr>
+                           <tr><td>to</td><td>发布时间在to之前，以YYYYMMDD格式填写，例如20100528表示2010年05月28日</td></tr>
+                       </table>
+                   </td>
+               </tr>
+           </table>
+       </dd>
+
+
+      <dt><font color=red>GET /webapi/post/{$art_id$} 下载文章</font></dt>
+       <dd>
+           {$art_id$}为文章ID号
+           <br><br>
+       </dd>
+
+
+        <dt><font color=red>DELETE /webapi/post/{$art_id$} 删除文章</font></dt>
+         <dd>
+             {$art_id$}为文章ID号
+             <br><br>
+        </dd>
+
+
+    </dl>
+   </div>
+
+   <div class="top"><a href="webapi.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+   <div class="section">
+   <h2><a name="resource" id="resource">资源API</a></h2>
+   <dl>
+       <dt><font color=red>POST /webapi/attachment/ 提交一个新的资源</font></dt>
+        <dd>
+           三种用法：<br>
+           1. /webapi/attachment/{site_id} 表示提交一个新的资源 <br>
+           2. /webapi/attachment/{$site_id$}/{$topic_id$}/ 表示提交资源，然后生成新的文章并发布到指定栏目<br>
+           或者使用topic code<br>
+           3./webapi/post/{$site_id$}/{$topic_code$}  也是表示提交资源并发布到指定栏目
+            <br><br>
+       </dd>
+
+       <dt><font color=red>GET /webapi/attachments/{$site_id$}/ 列出宿主站点site_id下的所有资源</font></dt>
+        <dd>
+            <table border="1" width="100%">
+                <tr>
+                    <td><b>返回值</b></td>
+                    <td>Feed中包含了所有资源的链接和标题</td>
+                </tr>
+                <tr>
+                    <td><b>参数</b></td>
+                    <td>
+                        你还可以在URL路径中添加参数对结果集进行限制。例如<br>
+                        1. /webapi/attachments/jwebstar/?type=0&from=20091231<br>
+                        表示返回在2009年12月31日之后创建的宿主站点jwebstar下的所有图片；<br><br>
+                        2. /webapi/attachments/jwebstar?suffix=.jpg|.bmp|.gif|.png<br>
+                        表示返回宿主站点jwebstar下后缀名为jpg或bmp或gif或png格式的所有资源文件<br>
+                        <table border="1" width="100%">
+                            <tr><td><b>参数名</b></td><td><b>含义</b></td></tr>
+                            <tr><td>type</td><td>类型，0图片 1文档 2视频 3音频 4Flash 5其他</td></tr>
+                            <tr><td>suffix</td><td>后缀，例如.jpg 或者 jpg，多个以,;间隔</td></tr>
+                            <tr><td>from</td><td>创建时间从from开始，以YYYYMMDD格式填写</td></tr>
+                            <tr><td>to</td><td>创建时间在to之前，以YYYYMMDD格式填写</td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </dd>
+
+
+      <dt><font color=red>GET /webapi/attachment/{$resource_id$} 下载资源</font></dt>
+      <dd>
+          {$resource_id$}为资源ID号
+          <br><br>
+      </dd>
+
+      <dt><font color=red>DELETE /webapi/attachment/{$resource_id$} 删除资源</font></dt>
+       <dd>
+           {$resource_id$}为资源ID号
+           <br><br>
+      </dd>
+     </dl>
+    </div>
+
+</div>
+<br><br><br><br><br><br><br>
+</body>
+</html>

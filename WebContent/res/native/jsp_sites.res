@@ -1,0 +1,11 @@
+SITES_HTMLTITLE=Site Admin
+SITES_HINT_REBUILD=Are you sure to rebuild the site?
+SITES_BUILD_INPROGRESS=Building site in progress...
+SITES_BUILD_SUCCESS=Site rebuild successfully.
+SITES_HINTS_CHOOSE_IMPORTFILE=Please select the package file to import:
+SITES_HINTS_IMPORT=Please check current site settings. This site would be merged including site settings, topic settings, and all templates data if it exist!
+SITES_BUTTON_SUBMIT=Submit
+SITES_BUTTON_ADD=New
+SITES_BUTTON_IMPORT=Import
+SITES_BUTTON_REBUILD=Rebuild
+SITES_SITENAME=Site Name

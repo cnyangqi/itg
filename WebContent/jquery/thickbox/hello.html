@@ -1,0 +1,37 @@
+<html>
+
+<head><title></title>
+<link rel="stylesheet" href="/thickbox/thickbox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/jquery/jquery-1.6.js"></script>
+<script type="text/javascript" src="/thickbox/thickbox.js"></script>
+<script type="text/javascript" src="/thickbox/option.js"></script>
+
+<script>
+
+function returnVal(){
+
+var value=$("#mytxt").val();
+
+//设置test.html里 id为demo的值
+
+parent.$("#demo").val(value);
+
+parent.TB_remove();
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<input type="text" id="mytxt"  value="hello"/ ><a href="#" onclick="returnVal();">返回值</a> 
+
+</body>
+
+</html>
+
+
+
+本文来自CSDN博客，转载请标明出处：http://blog.csdn.net/evil_ghost/archive/2010/01/30/5273057.aspx

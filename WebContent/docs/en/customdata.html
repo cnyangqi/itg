@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Customizing and Developing self-defined datasource</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">Customizing and Developing self-defined datasource</a></h1>
+        <div class="toplang"></div>
+        
+    <p>Once input self-defined datasource table in topic's basic info, system 
+      will automatically generate a table named as <font color=red>“the name of the self-defined 
+      datasource table"_prop</font>, which we called “prop table”. This table can 
+      be used to manage the status of self-defined datasource. Its structure is 
+      showed as below: </p>
+        <table align=center>
+            <tr>
+                <td>
+            CREATE TABLE <font color=red>"the name of the self-defined datasource table"</font>_prop (ID VARCHAR2(50) NOT NULL,   <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;         TITLE VARCHAR2(1000) NOT NULL,  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          SITEID VARCHAR2(10)  NOT NULL,  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          TOPIC VARCHAR2(10) NOT NULL,   <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          STATE NUMBER,   <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          CREATEDATE DATE DEFAULT SYSDATE NOT NULL,  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;          PUBLISHDATE DATE,  <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;         CONSTRAINT PK_<font color=red>"the name of the self-defined datasource table"</font>_prop PRIMARY KEY (ID,TOPIC)  <br>
+                                              ); <br>
+
+            COMMENT ON COLUMN <font color=red>"the name of the self-defined datasource table"</font>_prop.TITLE IS ''title'; <br>
+            COMMENT ON COLUMN <font color=red>"the name of the self-defined datasource table"</font>_prop.SITEID IS 'site id';  <br>
+            COMMENT ON COLUMN <font color=red>"the name of the self-defined datasource table"</font>_prop.TOPIC IS 'topic id'; <br>
+            COMMENT ON COLUMN <font color=red>"the name of the self-defined datasource table"</font>_prop.STATE IS 'status';  <br>
+            COMMENT ON COLUMN <font color=red>"the name of the self-defined datasource table"</font>_prop.CREATEDATE IS 'create date';  <br>
+            COMMENT ON COLUMN <font color=red>"the name of the self-defined datasource table"</font>_prop.PUBLISHDATE IS 'publish date';  <br>            
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="customdata.html#CustomArticle">Class CustomArticle</a></li>
+      <li><img  src="/images/help/down.gif" /> <a href="customdata.html#attach">Class Attach</a></li>
+
+      <li><img  src="/images/help/down.gif" /> <a href="customdata.html#customxml">custom.xml configuration</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="customdata.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="CustomArticle" id="CustomArticle">Class CustomArticle</a></h2>
+     
+    <p> All categories of self-defined datasource must be derived from CustomArticle. 
+      CustomArticle can realize self-defined datasource under default situation. 
+      Below are its features: <br>
+      1.Fields will be stored as TagRS format except “id”, “title”, “createdate” 
+      and “publishdate”. TagRS is similar to “Hashtable”, which take datasource’s 
+      capitalized field name as index.<br><br>
+      2.Operations on attachment are unavailable. All operating values for attachment tag are null.<br><br>
+      3.It provides default support for serial NpsEvent. All these events will 
+      solely respond to events launched by current topic.<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;1)default response for InsertEvent: insert data into prop table which designated by topic. If Topic designates “publishing” as its default status, it should be published.<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;2)default response for UpdateEvent: update the “title” value which is in “prop” table. If the status of current article is “published” or “to publish”, it should be re-published.<br>
+         &nbsp;&nbsp;&nbsp;&nbsp;3)default response for DeleteEvent:  if the article is already published, all static pages, SOLR index and “prop” table record should be deleted.<br> 
+         &nbsp;&nbsp;&nbsp;&nbsp;4)default response for Ready2PublishEvent:  publish the article, and automatically generate “PublishEvent” notice. <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;5)default response for PublishEvent: deliver to SOLR for fulltext index.<br>
+		 <br>
+         4.Not provide front-end management interface. If you need to manage self-defined datasource in NPS, you should re-develop it. 
+     </p>
+     <dl>
+         <dt>Constructor</dt>
+         <dd>
+             public CustomArticle(NpsContext inCtxt,Topic top,ResultSet rs) throws Exception
+             <br>
+             Configure “CustomArticle” according to database’s result set. Note: the result set which is automatically loaded during the system publishing period can only include the field of “prop” table and of self-defined datasource major table.
+             <br>
+             <br>
+             Product example code：
+             <table>
+                 <tr>
+                     <td>
+                        public Product(NpsContext inCtxt,Topic top,ResultSet rs) throws Exception <br>
+                        {                                                                         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;   super(inCtxt,rs.getString("id"),rs.getString("title"),top);           <br>
+                                                                                                  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //load main information                                                          <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    LoadMainInfo(rs,0);                                                   <br>
+                                                                                                  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //load local information                                                          <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    LoadLocalInfos();                                                     <br>
+                                                                                                  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //load picture                                                             <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    LoadAttaches();                                                       <br>
+                                                                                                  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    //load notified user                                                          <br>
+&nbsp;&nbsp;&nbsp;&nbsp;    LoadNotifyInfo();                                                     <br>
+                        }                                                                         <br>
+                     </td>
+                 </tr>
+             </table>
+         </dd>
+
+         
+      <dt>override methods for IPublishable</dt>
+         <dd>
+             public boolean HasFiled(String fieldName) <br>
+             Judge whether the field has been named as “fieldName” or not. If yes, it will return “true”, otherwise, it will return “false”.
+             <br>
+             <br>
+             public Object GetField(String fieldName) throws NpsException <br>
+             Obtain the field value which is named as “fieldName”. Return the specific “Object”. CLOB type will return “Reader” object. 
+             
+             <br>
+             <br>
+             Product example code:
+             <table>
+                 <tr>
+                     <td>
+                                public boolean HasFiled(String fieldName)<br>
+                                {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(fieldName==null || fieldName.length()==0) return false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            String key = fieldName.trim();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.length()==0) return false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            key = key.toUpperCase();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("name")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("code")) return true;//产品代码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("category")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("origin")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("producer")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("exporter")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("brand")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("material")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("product_size")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("product_weight")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("carton")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("carton_weight")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("purchase_price")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("price")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("fob")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("package_quantity")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("lead_time")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("moq")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("MinimumMoney")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("product_spec")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(key.equalsIgnoreCase("package_spec")) return true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            if(fields==null) return false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;            return fields.HasField(key);<br>
+                                }<br>
+<br>
+                                public Object GetField(String fieldName) throws NpsException<br>
+                                {           <br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(fieldName==null || fieldName.length()==0) return null;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           String key = fieldName.trim();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.length()==0) return null;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           key = key.toUpperCase();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("name")) return name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("code")) return code;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("category")) return category;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("origin")) return origin;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("producer")) return producer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("exporter")) return exporter;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("brand")) return brand;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("material")) return material;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("product_size")) return product_size;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("product_weight")) return product_weight;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("carton")) return carton;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("carton_weight")) return carton_weight;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("purchase_price")) return purchase_price;//进价<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("price")) return purchase_price;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("fob")) return fob;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("package_quantity")) return package_quantity;//包装数量<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("lead_time")) return lead_time; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("moq")) return moq;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("MinimumMoney")) return GetMinimumMoney();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("product_spec")) return product_spec;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(key.equalsIgnoreCase("package_spec")) return package_spec;<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           if(fields==null) return null;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;           return fields.GetField(key);<br>
+                                }
+                     </td>
+                 </tr>
+             </table>
+         </dd>
+
+         <dt>Fire Event</dt>
+         <dd>Publish event notice through “Fire” serial methods of “EventIssue”. 
+		 Note: the “key” value of “Fire” method should be taken according to the table name of self-defined datasource (in uppercase). 
+		 <br>
+         "Product" example code: 
+            <table>
+                <tr>
+                    <td>
+               //publish the ready-to-publish information, prepare each topic  <br>
+               public void Publish() throws NpsException  <br>
+               {  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  //Fire Event  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;  EventIssue.GetIssue().FireReady2PublishEvent(this,"FT_PRODUCT");  <br>
+               }  <br>
+                    </td>
+                </tr>
+            </table>
+        </dd>
+         
+         <dt>NpsEvent handler</dt>
+         <dd>
+             If the default event handler can not meet specific requirement, you should overload the “NpsEvent” processing function.<br>
+             public void Insert(Object observer, InsertEvent event)  <br>
+             The response function for “InsertEvent”<br>
+             <br>
+             public void Update(Object observer, UpdateEvent event)  <br>
+             The response function for “UpdateEvent”<br>
+             <br>
+             public void Delete(Object observer, DeleteEvent event)  <br>
+             The response function for “DeleteEvent”<br>
+             <br>
+             public void Ready(Object observer, Ready2PublishEvent event) <br>
+             The response function for “Ready2PublishEvent”<br>
+             <br>
+             public void Publish(Object observer, PublishEvent event)  <br>
+             The response function for “PublishEvent”<br>
+             <br>
+             "Product" example code:<br>
+             <table>
+                 <tr>
+                     <td>
+                            //The topic is concerned on its own product <br>
+                            public void Insert(Object observer, InsertEvent event)<br>
+                            {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        if(observer instanceof Topic)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            Topic t = (Topic)observer;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            if(!unit_id.equals(t.GetSite().GetUnit().GetId())) return;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            super.Insert(t,event);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        }<br>
+                            }                         
+                     </td>
+                 </tr>
+             </table>
+         </dd>
+     </dl>
+    </div>
+
+    <div class="top"><a href="customdata.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="attach" id="attach">Class Attach</a></h2>
+     <p>
+         “Attach” class is the base class of all attachment class. “Article” class is responsible for managing “Attach” collection.
+     </p>
+     <dl>
+        <dt>IPublishable implementation</dt>
+        <dd>
+            public String GetURL()<br>
+            Return the “URL” path of published “Attach”.
+            <br>
+            <br>
+            public File GetOutputFile()<br>
+            Return the location of temporary files.
+            <br>
+            <br>
+            
+            "Product" example code:<br>
+            <table>
+                <tr>
+                    <td>
+                            public String GetURL()<br>
+                            {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        return PRODUCT_ATTACH_URL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;               + Utils.FormateDate( art.GetCreateDate() , "yyyy/MM/dd")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;               + "/"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;               + id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;               + (suffix==null?"":suffix);<br>
+                            }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                            public File GetOutputFile()<br>
+                            {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        String temp_filepath = Utils.FormateDate(art.GetCreateDate(),"yyyy/MM/dd") +"/";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        temp_filepath = temp_filepath.replaceAll("//","/");<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        if(temp_filepath.startsWith("/"))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            temp_filepath = temp_filepath.substring(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        File temp_file = new File( PRODUCT_ATTACH_PATH,temp_filepath);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        temp_file.mkdirs();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        return new File(temp_file, id + (suffix==null?"":suffix));<br>
+                            }                        
+                    </td>
+                </tr>
+            </table>
+         </dd>
+
+        <dt>Cloneable implementation </dt>
+        <dd>
+            public Object clone() throws CloneNotSupportedException <br>
+            Provide the implementation of “clone” object. Below is the default implementation:
+            <table>
+                <tr>
+                    <td>
+                            public Object clone() throws CloneNotSupportedException<br>
+                            {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;        return super.clone();<br>
+                           }
+                    </td>
+                </tr>
+            </table>
+        </dd> 
+    </dl>
+    </div>
+
+    <div class="top"><a href="customdata.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="customxml" id="customxml">custom.xml configuration</a></h2>
+     
+    <p>After developing Java class, you should configure “custom.xml” to realize 
+      automatic load.</p>
+     <dl>
+         <dt>Store location</dt>
+         <dd>“custom.xml” can be stored under the same directory of “nps.conf”, namely the “WEB-INF” directory.</dd>
+         <dt>Configuration guide</dt>
+         <dd>
+             <table>
+                 <tr>
+                     <td>
+&lt;?xml version="1.0" encoding="UTF-8"?><br>
+&lt;root><br>
+             <font color=red>
+&nbsp;&nbsp;&nbsp;&nbsp;#Each kind of self-defined datasource should be independently put under one “CustomArticle” node. There could be multiple “CustomArticle” ports under “root” node.<br> 
+             </font>
+&nbsp;&nbsp;&nbsp;&nbsp;	&lt;CustomArticle>	<br>
+                         <font color=red>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #Each “CustomArticle” node must have one “table” and “class” node, otherwise, it will be neglected when loading.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #“table” means the table name of self-defined datasource that need to be applied. It should be capitalized.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #“class” means the re-developed self-defined datasource name that need to be loaded. We advise to use fully qualified class name. The class must be put under “common/lib”、“WEB-INF/classes” and “WEB-INF/lib”.<br>
+                         </font>
+                                         
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&lt;table>FT_PRODUCT&lt;/table><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&lt;class>nps.extra.trade.Product&lt;/class>	<br>
+
+                         <br>
+                         <font color=red>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     # “property” node is not necessary unless for self-defined configuration. “property” can be globally shared. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     # the name of “property” lower-level node is “property” variable name. Its value is variable’s dereference. Note: the value is the result of “trim”.<br>
+                         </font>                             
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&lt;property><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		   &lt;PRODUCT_ATTACH_PATH>c:\\web\\products\\&lt;/PRODUCT_ATTACH_PATH><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		   &lt;PRODUCT_ATTACH_URL>/products/&lt;/PRODUCT_ATTACH_URL><br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property><br>
+&nbsp;&nbsp;&nbsp;&nbsp;	&lt;/CustomArticle><br>
+
+                         <br>
+                         <font color=red>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #“event” node is not necessary unless for processing self-defined event. With regard to the “NpsEvent” processing method which is overloaded by “CustomArticle” derived class, it is not necessary to configure it; the system will automatically load it when the system gets started. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #There can only be four kinds of node (“insert”、“update”、“delete”、“ready” and “publish”) that under “event”. They should respectively match along with the “InsertEvent”、“UpdateEvent”、 “DeleteEvent”、“Ready2PublishEvent”、“PublishEvent”.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #“key” value is the same as the “KEY” value which publish event notice in self-defined datasource. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     #The “Product” example below can be applied to automatically send customers e-mail when products get published.<br>                             
+                         </font>
+                         
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;event><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		  &lt;publish key="FT_PRODUCT">nps.extra.trade.ProductManager&lt;/publish><br>
+&nbsp;&nbsp;&nbsp;&nbsp;  &lt;/event><br>
+&lt;/root>                   
+                     </td>
+                 </tr>
+             </table>
+         </dd>
+     </dl>
+    </div>
+</div>
+</body>
+</html>

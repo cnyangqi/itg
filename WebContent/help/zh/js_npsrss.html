@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsRss</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsRss class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        RSS(Really Simple Syndication)是一种描述和同步网站内容的格式，是种让网站制作内容摘要（如新闻摘要）的方法，使摘要能以不同方式阅览。
+        NpsRss用于RSS数据的读取、生成与发布。
+        <font color=red>
+            在V1.2版本中，NpsRSS仅支持RSS2.0规范的数据生成。<br><br>
+        </font>
+        以下代码生成站点7天内的最新新闻到rss2.xml文件中：<br>
+    <table border="1" width="100%">
+        <tr><td>
+        var site = session.GetSite(); <br>
+        var rss = new NpsRss(site);   <br>
+        var date_before_week = new Date(new Date()-7*24*60*60*1000);<br>
+        var today = new Date();<br>
+        rss.GenerateSite(new NpsFile('/rss2.xml'),date_before_week,today);<br>
+        </td></tr>
+    </table>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsRss(NpsSite site)<br>
+                    构造函数。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateSite(NpsFile file,Date begin_date,Date end_date)<br>
+                    将站点内从begin_date至end_date段内文章信息生成RSS文件，并写入指定的file文件中。<br>
+                    begin_date=null表示不设置开始时间，end_date=null表示不设置结束时间。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateSiteLessThan(NpsFile file,int max)<br>
+                    为整个站点生成RSS文件，该文件包含最新发布的max条文章
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateTopic(NpsTopic topic,NpsFile file,Date begin_date,Date end_date)<br>
+                    将指定栏目topic下的从begin_date至end_date段内的所有文章信息生成RSS文件，并写入指定的file文件中。
+                    begin_date=null表示不设置开始时间，end_date=null表示不设置结束时间。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateTopicLessThan(NpsTopic topic,NpsFile file,int max)<br>
+                    为指定栏目生成最新发布的max条文章。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GenerateTopicByCode(String topic_code,NpsFile file,Date begin_date,Date end_date)<br>
+                    将代号为topic_code的指定栏目下的从begin_date至end_date段内的所有文章信息生成RSS文件，并写入指定的file文件中。
+                    begin_date=null表示不设置开始时间，end_date=null表示不设置结束时间。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br><br><br><br>
+</div>
+
+</div>
+</body>
+</html>

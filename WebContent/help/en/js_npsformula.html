@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsFormula</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsFormula class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsFormula is a library for evaluating various mathematical expressions.
+    </p>
+</div>
+
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td></td>
+                <td>
+                    NpsFormula(String expression)<br>
+                    Constructor
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetExpression(String expression)<br>
+                    Set expression to evaluate
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddSymbol(String symbol,Object value)<br>
+                    Add variable
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveSymbol(String symbol)<br>
+                    Remove variable
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    Evaluate()<br>
+                    Evaluate
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <h2>Formula Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>SUM</td>
+                <td>
+                    Adds all the numbers in a range of cells.<br>
+                    SUM(number1,number2, ...)<br>
+                    Number1, number2, ...  are arguments for which you want the total value or sum.<br>
+                    =SUM(3, 2) Adds 3 and 2 (5)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>average</td>
+                <td>
+                    Returns the average (arithmetic mean) of the arguments.<br>
+                    AVERAGE(number1,number2,...) <br>
+                    Number1, number2, ...  are arguments for which you want the average.<br>
+                    =AVERAGE(10,7,9,27,2)  Average of the numbers above (11)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>max</td>
+                <td>
+                    Returns the largest value in a set of values.<br>
+                    MAX(number1,number2,...) <br>
+                    Number1, number2, ...  are numbers for which you want to find the maximum <br>
+                    =MAX(10,7,9,27,2) Largest of the numbers above (27)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>min</td>
+                <td>Returns the smallest number in a set of values.<br>
+                    MIN(number1,number2,...) <br>
+                    Number1, number2, ...  are numbers for which you want to find the minimum <br>
+                    =MIN(10,7,9,27,2) Smallest of the numbers above (2)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>abs</td>
+                <td>
+                    Returns the absolute value of a number. The absolute value of a number is the number without its sign.<br>
+                    ABS(number)  <br>
+                    Number   is the real number of which you want the absolute value.<br>
+                    =ABS(-2)  Absolute value of -2 (2)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>mod</td>
+                <td>
+                    Returns the remainder after number is divided by divisor. The result has the same sign as divisor.<br>
+                    MOD(number,divisor) <br>
+                    Number   is the number for which you want to find the remainder.<br>
+                    Divisor   is the number by which you want to divide number.<br>
+                    =MOD(3, 2) Remainder of 3/2 (1)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    Rounds a number down to the nearest integer.<br>
+                    INT(number)  <br>
+                    Number  is the real number you want to round down to an integer.<br>
+                    =INT(8.9) Rounds 8.9 down (8) <br>
+                    =INT(-8.9) Rounds -8.9 down (-9)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>round</td>
+                <td>
+                    Rounds a number to a specified number of digits.<br>
+                    ROUND(number,num_digits) <br>
+                    Number is the number you want to round.<br>
+                    Num_digits specifies the number of digits to which you want to round number.<br>
+                    =ROUND(2.15, 1) Rounds 2.15 to one decimal place (2.2)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>trunc</td>
+                <td>
+                    Truncates a number to an integer by removing the fractional part of the number.<br>
+                    TRUNC(number,num_digits)<br>
+                    Number is the number you want to truncate.<br>
+                    Num_digits   is a number specifying the precision of the truncation. The default value for num_digits is 0 (zero). <br>
+                    =TRUNC(8.9) Integer part of 8.9 (8)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>cos</td>
+                <td>
+                    Returns the cosine of the given angle.<br>
+                    COS(number) <br>
+                    Number   is the angle in radians for which you want the cosine.<br>
+                    =COS(60*PI()/180) Cosine of 60 degrees (0.5)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>sin</td>
+                <td>
+                    Returns the sine of the given angle.<br>
+                    SIN(number)
+                    Number   is the angle in radians for which you want the sine.<br>
+                    =SIN(PI()/2) Sine of pi/2 radians (1)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>tan</td>
+                <td>
+                    Returns the tangent of the given angle.<br>
+                    TAN(number) <br>
+                    Number  is the angle in radians for which you want the tangent.<br>
+                    =TAN(45*PI()/180)  Tangent of 45 degrees (1)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>acos</td>
+                <td>
+                    Returns the arccosine, or inverse cosine, of a number. The arccosine is the angle whose cosine is number. The returned angle is given in radians in the range 0 (zero) to pi.<br>
+                    ACOS(number) <br>
+                    Number   is the cosine of the angle you want and must be from -1 to 1.<br>
+                    =ACOS(-0.5)*180/PI() Arccosine of -0.5 in degrees (120)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>asin</td>
+                <td>
+                    Returns the arcsine, or inverse sine, of a number. The arcsine is the angle whose sine is number. The returned angle is given in radians in the range -pi/2 to pi/2.<br>
+                    ASIN(number) <br>
+                    Number is the sine of the angle you want and must be from -1 to 1.<br>
+                    =ASIN(-0.5)*180/PI()  Arcsine of -0.5 in degrees (-30)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>atan</td>
+                <td>
+                    Returns the arctangent, or inverse tangent, of a number. The arctangent is the angle whose tangent is number. The returned angle is given in radians in the range -pi/2 to pi/2.<br>
+                    ATAN (number) <br>
+                    Number is the tangent of the angle you want.<br>
+                    =ATAN(1)*180/PI()  Arctangent of 1 in degrees (45)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>if</td>
+                <td>
+                    Returns one value if a condition you specify evaluates to TRUE and another value if it evaluates to FALSE.
+
+                    <br>
+
+                    IF(logical_test,value_if_true,value_if_false)<br>
+                    Logical_test   is any value or expression that can be evaluated to TRUE or FALSE. This argument can use any comparison calculation operator.<br>
+                    Value_if_true   is the value that is returned if logical_test is TRUE. Value_if_true can be another formula.<br>
+                    Value_if_false  is the value that is returned if logical_test is FALSE. Value_if_false can be another formula.<br>
+
+                    =IF(BUDGET<=100,"Within budget","Over budget") If the variable "BUGDGET" is less than or equal to 100, then the formula displays "Within budget". Otherwise, the function displays "Over budget" (Within budget)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>or</td>
+                <td>
+                    Returns TRUE if any argument is TRUE; returns FALSE if all arguments are FALSE.
+
+                    <br>
+
+                    OR(logical1,logical2,...)  <br>
+
+                    Logical1,logical2,...  are conditions you want to test that can be either TRUE or FALSE.<br>
+
+                    =OR(1+1=1,2+2=5) All arguments evaluate to FALSE (FALSE)
+                </td>
+            </tr>
+            <tr class="module">
+                <td>and</td>
+                <td>
+                    Returns TRUE if all its arguments are TRUE; returns FALSE if one or more argument is FALSE.
+
+                    <br>
+                    AND(logical1,logical2, ...) <br>
+
+                    Logical1, logical2, ...    are conditions you want to test that can be either TRUE or FALSE.
+                    <br>
+
+                    =AND(TRUE, FALSE) One argument is FALSE (FALSE)
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Symbol Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>PI</td>
+                <td>
+                    Returns the number 3.1415926535897931, the mathematical constant pi, accurate to 16 digits.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>E</td>
+                <td>
+                    Returns the number 2.7182818284590451, the mathematical constant E, accurate to 16 digits.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

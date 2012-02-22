@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsAtomClient</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsAtomClient class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsAtomClient is used to exchange data with others via Atom Publishing Protocol.<br>
+        Below shows how to download articles from nps.myserver.com and publish to the 'news' topic at 'testsite' site.
+        and assume that NPS is deployed at nps.myserver.com.
+    </p>
+    <table border="1" width="100%">
+        <tr><td>
+            var site = session.GetSite("testsite");<br>
+            var topic = site.GetTopicByCode("news");<br>
+            var client = new NpsAtomClient("http://nps.jwebstar.com/");<br>
+            client.NpsLogin("/webapi/login","system","manager");<br>
+            var articles = client.List("/webapi/posts/testsite/");<br>
+            for(var i=0;i&lt;articles.length;i++)<br>
+            {  <br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               client.DownloadArticle(articles[i],topic);<br>
+            }<br>
+            client.Clear();<br>
+        </td></tr>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsAtomClient(String host)<br>
+                    Constructor. host is the root URL we try to connect, for example, http://nps.jwebstar.com:8080/
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    HttpBasicLogin(String uri,String uid,String pwd) throws Exception<br>
+                    Http Basic Authentication.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    GoogleLogin(String uri,String uid, String pwd, String service) throws Exception<br>
+                    Google Authentication.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    NpsLogin(String uri,String uid,String pwd) throws Exception<br>
+                    NPS Authentication. uri usually is '/webapi/login'.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    FormLogin(String uri,Object fieldnames,Object fieldvalues) throws Exception<br>
+                    Sign in via posting form. fieldnames and fieldvalues are two array indicate fields to post.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    DownloadArticle(String url,NpsTopic topic) throws Exception<br>
+                    Download article from url and submit to topic, and return the article submitted.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResource</td>
+                <td>
+                    DownloadResource(String url,NpsSite site) throws Exception<br>
+                    Download resource from url and save to site, and then return the resource.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResource</td>
+                <td>
+                    DownloadResourceAndPublishTo(String url,NpsTopic topic) throws Exception<br>
+                    Download resource from url and generate a new article and submit it to topic, and then return the resource.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Object</td>
+                <td>
+                    List(String url) throws Exception<br>
+                    Parsing all datas listed in url and return an array including all links
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    PostArticle(String url, NpsArticle nps_art) throws Exception<br>
+                    Post the article to url
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    PostResource(String url, NpsResource nps_resource) throws Exception<br>
+                    Post the resource to url
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Delete(String url) throws Exception<br>
+                    Delete article or resource
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Clear()<br>
+                    Disconnect from server
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br><br>
+</div>
+</div>
+</body>
+</html>

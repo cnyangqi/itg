@@ -1,0 +1,2 @@
+ACCOUNTCHECK_HINT_ALREADYEXIST=<font color=red>该代号已被使用，请另外选择</font>
+ACCOUNTCHECK_HINT_NOTEXIST=该代号可以使用。

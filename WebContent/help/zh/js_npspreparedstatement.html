@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsPreparedStatement</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsPreparedStatement class</a></h1>
+    <div class="toplang"></div>
+    <p> &nbsp;&nbsp;&nbsp;&nbsp;NpsPreparedStatement用于执行ORACLE预编译的SQL语句。
+        数据库连接将采用在db.xml中定义的DataSource名称为nps的连接。
+        默认下该数据库连接事务不是自动提交的。使用session.Commit()提交事务；使用session.Rollback()回滚事务。<br>
+        <br>
+        <font color=red>目前还不支持大对象（CLOB、BLOB、LONG)、数组。</font> 
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">void</td>
+                <td>
+                    SetInt(int parameterIndex,int x) throws Exception<br>
+                    将指定参数设置为给定int值。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDouble(int parameterIndex,double x) throws Exception<br>
+                    将指定参数设置为给定double值。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetString(int parameterIndex,String s) throws Exception<br>
+                    将指定参数设置为给定String值。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetDate(int parameterIndex, Date d) throws Exception<br>
+                    将指定参数设置为给定Date值。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetNull(int parameterIndex,int sqlType) throws Exception<br>
+                    将指定参数设置为NULL。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsResultSet</td>
+                <td>
+                    ExecuteQuery() throws Exception<br>
+                    执行SQL语句，返回结果集。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    ExecuteUpdate() throws Exception<br>
+                    执行Insert、Delete、Update语句，返回影响的行数。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    Close()<br>
+                    关闭本对象，释放数据库资源。<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

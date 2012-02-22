@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsTopic</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsTopic class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsTopic表示栏目对象。 </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    id<br>
+                    栏目唯一标识。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    name<br>
+                    栏目名称。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    alias<br>
+                    栏目别名。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    code<br>
+                    栏目代号。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    default_state<br>
+                    默认文章录入后状态。<br>
+                    0:草稿，1:提交待审核，2:审核通过待发布，3:已发布
+                </td>
+            </tr>
+            <tr class="module">
+                <td>float</td>
+                <td>
+                    score<br>
+                    文章默认分值。                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    table<br>
+                    自定义数据源表名                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsTopic</td>
+                <td>
+                    parent<br>
+                    上级栏目。null表示顶级栏目。                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    keywordlinks<br>
+                    热字。一行是一组热字。一组热字中，多个关键字必须以逗号(,)间隔，最后一个是URL链接。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    solr_enabled<br>
+                    是否启用solr。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    solrcore<br>
+                    solr core.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    sort_enabled<br>
+                    是否支持混排。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">boolean</td>
+                <td>
+                    IsNormal()<br>
+                    是否为通用新闻栏目。true:是，false:不是
+                </td>
+            </tr>
+            <tr class="module">
+                <td width="100">boolean</td>
+                <td>
+                    IsCustom()<br>
+                    是否为自定义数据源。true:是，false:不是
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Build(boolean rebuildall)<br>
+                    重建栏目，栏目页面模板默认按自底向上进行重建（效果同BuildPagesOnly）。<br>
+                    rebuildall=true，表明重建整个栏目。<br>
+                    rebuildall=false，表明发布待发布的文章。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    BuildPagesOnly()<br>
+                    按自底向上重建栏目页面模板。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    BuildPagesTopDown()<br>
+                    按自顶向下重建栏目页面模板。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    Sync()<br>
+                    同步自定义数据源数据，并发布
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Archive()<br>
+                    按栏目提供的归档方案归档。<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddKeywordLink(String keyword,String url)<br>
+                    增加热字<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddKeywordLinks(String line)<br>
+                    增加一组热字。多个关键以逗号(,)间隔，最后一个是链接。<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveKeywordLink(String keyword,String url)<br>
+                    删除热字<br>
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RemoveKeywordLinks(String url)<br>
+                    删除链接到url的一组热字<br>
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>工作流应用开发手册</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">工作流应用开发手册</a></h1>
+        <div class="toplang"></div>
+        <p>基于工作流交互式应用的开发要点是：<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;1. 后台JAVABEAN在处理自有逻辑基础上，实现IApp接口，工作流引擎通过IApp接口读取应用级数据；<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;2. 后台JAVABEAN或JSP可以通过Client类与工作流实现交互，例如提交作业等；<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;3. 为了获得更好的交互式体验，前台HTML页面可以通过AJAX类（类名是Workflow）与工作流引擎交互，可以实现提交、驳回、退回、撤销、重新开始、停止审批、撤销等操作。<br>
+        </p>
+        <p>推荐的数据流是：<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            JSP中内嵌AJAX类 <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -->终端用户点击发送按钮 <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -->AJAX类弹出工作流窗口进行交互<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -->终端用户选择发送对象、填写意见<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -->终端用户点击确定按钮<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -->AJAX类提交指定FORM<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -->你的JSP程序调用后台JAVABEAN处理业务逻辑<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -->后台JAVABEAN通过Client类向工作流提交作业<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            -->完成
+        </p>
+    </div>
+    <div id="quickview">
+        <ul id="toc">
+          <li><img  src="/images/help/down.gif" /> <a href="#iapp">Java Interface IApp</a></li>
+          <li><img src="/images/help/down.gif" /><a href="#client">Java Class Client</a></li>
+          <li><img src="/images/help/down.gif" /><a href="#jsp">JSP规范</a></li>
+          <li><img  src="/images/help/down.gif" /> <a href="#javascript">Javascript Class Workflow</a></li>
+        </ul>
+        <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="iapp" id="iapp">Java Interface IApp</a></h2>
+     <p>
+         所有交互式应用必须实现IApp接口。
+     </p>
+     <dl>
+            <dt>public String GetBusinessType()</dt>
+            <dd>返回业务类型ID#</dd>
+            <dt>public String GetAppId()</dt>
+            <dd>返回业务主键ID#</dd>
+            <dt>public String GetTitle()</dt>
+            <dd>返回主题</dd>
+            <dt>public int GetEmergency()</dt>
+            <dd>返回紧急程度。0=普通；5=紧急；9=特急</dd>
+            <dt>public JSONObject toJSON() throws JSONException</dt>
+            <dd>业务数据转换成JSON对象</dd>
+            <dt>public String toJSONString()</dt>
+            <dd>业务数据转换成JSON字符串</dd>
+         </dd>
+    </dl>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="client" id="client">Java Class Client</a></h2>
+     <p>
+         Client类用于快速实现与工作流的所有交互。
+     </p>
+     <dl>
+         <dt>构造函数</dt>
+         <dd>
+             public Client(Connection conn, User user, IApp app) throws NpsException,SQLException, JSONException
+             <br>
+             所有需要工作流支持的业务，必须实现IApp接口。
+         </dd>
+     </dl>
+
+     <p style="color:red;font-weight:900;font-size:16px;">
+        状态查询类
+     </p>
+      <dl>
+         <dt>boolean IsMyJob()</dt>
+         <dd>查询当前作业是否是我的工作</dd>
+
+         <dt>boolean IsNew()</dt>
+         <dd>是否是新建任务</dd>
+
+         <dt>boolean IsRunning()</dt>
+         <dd>是否在审批中</dd>
+
+         <dt>boolean IsCompleted()</dt>
+         <dd>是否审批通过</dd>
+
+         <dt>boolean IsTerminated()</dt>
+         <dd>是否被终止</dd>
+
+         <dt>boolean IsRevoked()</dt>
+         <dd>是否被撤销</dd>
+      </dl>
+
+      <p style="color:red;font-weight:900;font-size:16px;">
+         审批进度及意见查询类
+      </p>
+      <dl>
+         <dt>List&lt;Date> GetProgress()</dt>
+         <dd>查询审批批次。停止、重新开始、否决等都将自动生成一个新批次。</dd>
+
+         <dt>List&lt;Suggest> GetSuggest()</dt>
+         <dd>查询最近批次的审批进度、意见。</dd>
+
+         <dt>List&lt;Suggest> GetSuggest(Date start)</dt>
+         <dd>查询指定批次的审批进度、意见。</dd>
+      </dl>
+
+      <p style="color:red;font-weight:900;font-size:16px;">
+          任务交互类
+      </p>
+      <dl>
+         <dt>List&lt;WorkTransition> GetTransitions()</dt>
+         <dd>返回当前所有可选的连线</dd>
+
+         <dt>List&lt;WorkTransition> GetStartTransitions()</dt>
+         <dd>总是返回开始节点的所有连线</dd>
+
+         <dt>List&lt;String[]> GetParticipants(String transition_id)</dt>
+         <dd>返回某个连线方向可选的所有参与者列表。<br>
+             返回值：String[0]=UID；String[1]=用户名</dd>
+
+         <dt>void Send(String transition_id, List&lt;String[]> participants, String suggest)</dt>
+         <dd>提交作业。<br>
+             transition_id=连线ID<br>
+             participants=参与者；String[0]=UID,String[1]=用户名<br>
+             suggest=审批意见</dd>
+
+         <dt>void Reject(String suggest) throws NpsException</dt>
+         <dd>驳回作业。<br>
+             suggest=审批意见</dd>
+
+         <dt>List&lt;String[]> GetReturnJobs() throws NpsException</dt>
+         <dd>返回某个作业对应列表。<br>
+             返回值：String[0]=作业号；String[1]=作业所在节点名</dd>
+
+         <dt>List&lt;String[]> GetParticipantsByJob(String job_id) throws NpsException</dt>
+         <dd>返回某个作业对应的参与者<br>
+             返回值：String[0]=UID；String[1]=用户名
+         </dd>
+
+         <dt>void ReturnTo(String jobid,List&lt;String[]> participants, String suggest) throws NpsException</dt>
+         <dd>回退到某个节点重新审批。<br>
+             jobid=作业号<br>
+             participants=参与者,String[0]=UID，String[1]=用户名<br>
+             suggest=审批意见
+         </dd>
+
+         <dt>void Revoke(String suggest) throws NpsException</dt>
+         <dd>审批通过后撤销。<br>
+             suggest=撤销原因</dd>
+
+         <dt>void Stop(String suggest) throws NpsException</dt>
+         <dd>停止审批。<br>
+             suggest=停止原因</dd>
+
+         <dt>void Restart(String transition_id, List&lt;String[]> participants, String suggest) throws NpsException</dt>
+         <dd>重新开始审批，适用于周期性任务的重复审批或创建人撤销后重新申请。<br>
+             transition_id=连线ID<br>
+             participants=参与者,String[0]=UID，String[1]=用户名<br>
+             suggest=停止原因</dd>
+
+     </dl>
+
+        <h2><a name="suggest" id="suggest">Class Suggest</a></h2>
+        <p>Suggest类用户查询审批进程及审批意见。</p>
+        <dl>
+            <dt>public String GetJobId()</dt>
+            <dd>返回作业ID号</dd>
+
+            <dt>public String GetProcessId()</dt>
+            <dd>返回流程ID</dd>
+
+            <dt>public String GetActivityId()</dt>
+            <dd>返回工作流节点ID</dd>
+
+            <dt>public Date GetReadyDate()</dt>
+            <dd>返回当前作业受理时间</dd>
+
+            <dt>public Date GetFinishDate()</dt>
+            <dd>返回作业审批完成时间</dd>
+
+            <dt>public boolean IsRunning()</dt>
+            <dd>判断作业是否还正审批过程中</dd>
+
+            <dt>public boolean IsCompleted()</dt>
+            <dd>判断作业是否审批通过</dd>
+
+            <dt>public boolean IsTerminated()</dt>
+            <dd>判断作业是否被终止</dd>
+
+            <dt>public String GetTerminateBy()</dt>
+            <dd>返回当前作业终止人姓名</dd>
+
+            <dt>public String GetTerminateCause()</dt>
+            <dd>返回当前作业终止原因</dd>
+
+            <dt>public List&lt;Performer> GetPerformers()</dt>
+            <dd>返回作业审批人列表以及签批信息，按签批时间依次排列</dd>
+       </dl>
+
+       <h2><a name="performer" id="performer">Class Performer</a></h2>
+        <p>Performer记录签批人信息和签批意见。</p>
+        <dl>
+            <dt>public String GetUserName()</dt>
+            <dd>返回签批人姓名</dd>
+
+            <dt>public String GetAssignerName()</dt>
+            <dd>如果是代办的，返回代办人姓名</dd>
+
+            <dt>public int GetSuggestType()</dt>
+            <dd>返回审批类型，1=否决, 2=退回某个节点重新审批, 3=审批通过</dd>
+
+            <dt>public String GetSuggest()</dt>
+            <dd>具体审批意见</dd>
+        </dl>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="jsp" id="jsp">JSP规范</a></h2>
+     <p>为了方便我的工作（/workflow/todo.jsp）页面调用，统一要求JSP应读取以下参数：
+         <table width=400>
+           <tr>
+               <th>参数名</th><th>含义</th>
+           </tr>
+           <tr>
+               <td>business_type</td>
+               <td>业务类型ID#</td>
+           </tr>
+        <tr>
+            <td>app_id</td>
+            <td>应用ID#</td>
+        </tr>
+        <tr>
+            <td>job_id</td>
+            <td>作业ID#</td>
+        </tr>
+        </table>
+     </p>
+    </div>
+
+    <div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="javascript" id="javascript">Javascript Class Workflow</a></h2>
+     <p>Workflow类用于页面通过AJAX调用实现作业的提交、驳回、退回、撤销、重新开始、停止审批、撤销、查看意见等操作。<br><br>
+       <font color=red>
+         页面必须包含工作流样式文件： <br>
+         <b>&lt;LINK href="/css/workflow.css" type=text/css rel=stylesheet></b>
+         <br><br>
+         页面必须包含以下JS文件：<br>
+         <b>&lt;script language="javascript" src="/jscript/prototype.js">&lt;/script></b><br>
+         <b>&lt;script language="javascript" src="/jscript/workflow.js">&lt;/script></b><br>
+        </font>
+     </p>
+     <dl>
+         <dt>构造函数</dt>
+         <dd>Workflow(business_type, app_id, form_id)<br>
+             business_type=业务类型ID#，必须<br>
+             app_id=应用ID#，必须<br>
+             form_id=表单ID#，必须
+         </dd>
+
+         <dt>send(json_data)</dt>
+         <dd>显示提交作业框。窗口包括线、参与者、意见框和确定取消按钮。<br>
+             json_data=可选。如果后台流程需要根据前端某些字段动态计算的，请填写json类型业务数据
+             <br>例如 send({'money':$('money_field').value});
+         </dd>
+
+         <dt>reject()</dt>
+         <dd>显示驳回框。窗口包括意见框和确定取消按钮。
+         </dd>
+
+         <dt>returnTo()</dt>
+         <dd>显示退回到某个节点重新审批框。窗口包括回退节点、参与者、意见框和确定取消按钮。</dd>
+
+         <dt>revoke()</dt>
+         <dd>显示撤销框。窗口包括意见框和确定取消按钮。
+         </dd>
+
+         <dt>stop()</dt>
+         <dd>显示终止框。窗口包括意见框和确定取消按钮。
+         </dd>
+
+         <dt>restart()</dt>
+         <dd>显示重新审批框。窗口包括线、参与者、意见框和确定取消按钮。
+         </dd>
+
+         <dt>close()</dt>
+         <dd>关闭</dd>
+     </dl>
+
+     <br><br>
+     <p><b>样例代码</b></p>
+     <table width=100% border=1>
+         <tr><td>
+                &lt;html><br>
+                &lt;head><br>
+                &nbsp;&nbsp;    &lt;LINK href="/css/style.css" rel = stylesheet><br>
+                &nbsp;&nbsp;    &lt;LINK href="/css/workflow.css" type=text/css rel=stylesheet><br>
+                &nbsp;&nbsp;    &lt;script language="javascript" src="/jscript/prototype.js"></script><br>
+                &nbsp;&nbsp;    &lt;script language="javascript" src="/jscript/workflow.js"></script><br>
+                &nbsp;&nbsp;    &lt;script language="javascript"><br>
+                &nbsp;&nbsp;        function send()<br>
+                &nbsp;&nbsp;        {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;            var client = new Workflow("41","","frm1");<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;            client.send();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;       function restart()<br>
+                 &nbsp;&nbsp;       {<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           var client = new Workflow("41","","frm1");<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           client.restart();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;       function reject()<br>
+                 &nbsp;&nbsp;       {<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           var client = new Workflow("41","","frm1");<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           client.reject();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;       function stop()<br>
+                 &nbsp;&nbsp;       { <br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           var client = new Workflow("41","","frm1");<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           client.stop();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;       function returnto()<br>
+                 &nbsp;&nbsp;       {<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           var client = new Workflow("41","08eef7f2-4868-4c63-9940-9f416c75fa03","frm1");<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;           client.returnTo();<br>
+                 &nbsp;&nbsp;       }<br>
+                 &nbsp;&nbsp;   &lt;/script><br>
+                &lt;/head><br>
+                &lt;body><br>
+                &nbsp;&nbsp;   &lt;input type=button name=btn_send value="send" onclick="send()"><br>
+                &nbsp;&nbsp;   &lt;input type=button name=btn_restart value="restart" onclick="restart()"><br>
+                &nbsp;&nbsp;   &lt;input type=button name=btn_reject value="reject" onclick="reject()"><br>
+                &nbsp;&nbsp;  &lt;input type=button name=btn_stop value="stop" onclick="stop()"><br>
+                &nbsp;&nbsp;   &lt;input type=button name=btn_return value="return to" onclick="returnto()"><br>
+                &nbsp;&nbsp;   &lt;form id="frm1" name="frm1" method="post"><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;       标题:&lt;input type="text" name="title" id="title" value=""><br>
+                &nbsp;&nbsp;   &lt;/form><br>
+                &lt;/body><br>
+                &lt;/html><br>
+         </td></tr>
+     </table>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

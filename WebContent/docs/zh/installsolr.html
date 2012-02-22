@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>SOLR安装与配置</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">SOLR安装与配置手册Installation Guide</a></h1>
+        <div class="toplang"></div>
+        <p>本手册适用于SOLR 1.3的初次安装与配置。</p>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="installsolr.html#prepare">安装前准备</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="installsolr.html#tomcat">TOMCAT安装与配置</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="installsolr.html#solr">SOLR配置</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="installsolr.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="prepare" id="prepare">安装前准备</a></h2>
+        <p>
+           Java 1.5 或更高版本<br>
+           servlet 容器，如 Tomcat 5.5。<br>
+        </p>
+    </div>
+
+    <div class="top"><a href="installsolr.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="solrinstall" id="solrinstall">SOLR安装</a></h2>
+        <p>
+           &nbsp;&nbsp;&nbsp;&nbsp;
+           将SOLR发行包解压，复制dist/apache-solr-1.2.0.war到指定目录，例如/opt/apache-solr-1.2.0/dist/<br>
+        </p>
+    </div>
+
+    <div class="top"><a href="installsolr.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="tomcat" id="tomcat">TOMCAT配置</a></h2>
+        <p>
+           
+        </p>
+    <dl>
+      <dt>server.xml</dt>
+      <dd>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          在server.xml主要设置侦听端口。一般来说，SOLR常用端口为8983。你也可以使用自己喜欢的端口，例如80或8080。
+          同时，注意将URIEncoding设置为UTF-8。例如AJP等更多Native优化，参考TOMCAT优化方案。<br>
+          <table border="1" cellpadding="0" cellspacing="0">
+          <tr><td>
+          &lt;Connector port="<font color=red>8983</font>" maxHttpHeaderSize="8192" <br>
+                     maxThreads="150" minSpareThreads="25" maxSpareThreads="75" <br>
+                     enableLookups="false" redirectPort="8443" acceptCount="100" <br>
+                     connectionTimeout="20000" disableUploadTimeout="true" URIEncoding="<font color=red>UTF-8</font>" /&gt;
+          </td></tr>
+          </table>
+
+      </dd>        
+      <dt>solr.xml</dt>
+      <dd>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          新增solr.xml在{$TOMCAT}/conf/Catalina/localhost/下。TOMCAT在启动时将自动加载该CONTEXT。
+          docBase应设置为solr war包存放位置，例如/opt/apache-solor-1.3.0/dist/apache-solr-1.3.0.war <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          solr/home的值应设置为你规划存放的索引根路径，例如/web/solr/。该目录在以下将称为{$SOLR_HOME} <br>
+          <br>
+          <table border="1" cellpadding="0" cellspacing="0">
+          <tr><td>
+            &lt;Context docBase="<font color=red>/opt/apache-solr-1.3.0/dist/apache-solr-1.3.0.war</font>" debug="0" crossContext="true" &gt; <br>
+               &lt;Environment name="solr/home" type="java.lang.String" value="<font color=red>/web/solr</font>" override="true" /&gt; <br>
+            &lt;/Context&gt;
+          </td></tr>
+          </table>
+      </dd>
+    </dl>
+    </div>
+
+    <div class="top"><a href="installsolr.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="solr" id="solr">SOLR配置</a></h2>
+    <dl>
+      <dt>SOLR home设置</dt>
+      <dd>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          复制solr解压目录下的example/solr/bin目录和example/solr/conf目录到{$SOLR_HOME}。<br>          
+          复制将{$NPS_HOME}/solr/solr.xml复制到{$SOLR_HOME}。<br>
+          复制将{$NPS_HOME}/solr/npscore目录复制到{$SOLR_HOME}。<br>
+          solr.xml定义了Solr multi core，npscore下则是默认的core配置文件。
+      </dd>
+      <dt>庖丁分词包安装与设置</dt>
+      <dd> &nbsp;&nbsp;&nbsp;&nbsp; 1.将{$NPS_HOME}/solr/lib/*.jar复制到{$TOMCAT}/common/lib/下。<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          2.将{$NPS_HOME}/solr/dic/目录复制到{$SOLR_HOME}下（例如/web/solr/dic，当然也可以不放在SOLR HOME下）。<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          3.设置系统环境变量PAODING_DIC_HOME，指向以上dic路径。设置方法可以在操作系统级设置，也可以在catalina.sh或catalina.bat中设置。例如set PAODING_DIC_HOME=/web/solr/dic
+      </dd>
+      <dt>NPS设置</dt>
+      <dd>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          设置完成后不要忘了设置NPS服务器。打开NPS服务器上的nps.conf文件，设置SOLR_URL。例如SOLR_URL=http://192.168.1.2:8983/solr。
+      </dd>
+    </dl>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsResource</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsResource class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsResource表示资源对象。 </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    id<br>
+                    附件唯一标识。只读。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    name<br>
+                    title<br>
+                    caption<br>
+                    附件名称。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsSite</td>
+                <td>
+                    site<br>
+                    宿主站点。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    type<br>
+                    资源类型。0图片 1文档 2视频 3音频 4Flash 5其他
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    suffix<br>
+                    后缀名。例如.jpg。只读。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    tags<br>
+                    标签。多个标签之间以"_"间隔。只读。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    size<br>
+                    文件长度，以Byte为单位。只读。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsFile</td>
+                <td>
+                    file<br>
+                    物理文件。只读。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    url<br>
+                    发布后URL访问路径。只读。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    new(NpsSite site,NpsFile file)<br>
+                    构造函数。在宿主站点site上根据文件file新建资源。资源默认名称是file的文件名。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    ExtractFile(String file)<br>
+                    将资源文件写入file指定的文件名中。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsAttach</td>
+                <td>
+                    FitTo(int width,int height)<br>
+                    将图片转换成指定width,height大小的附件。返回转换后对象。<br>
+                    width=-1表示宽度自定义缩放。height=-1表示高度自定义缩放。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    HasField(String name)<br>
+                    是否包含字段。true:是，false:不是
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Object</td>
+                <td>
+                    GetFieldValue(String name)<br>
+                    返回name指定的字段值<br>
+                    正文内容返回String对象。其他根据数据库定义相应返回数字类型、字符串类型、日期类型等。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetFieldValueFormatted(String name,String format)<br>
+                    按format指定的要求格式化返回name指定的字段值
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetFieldValueLimitted(String name,int wordcount)<br>
+                    返回name指定的字段值中的前wordcount个值。<br>
+                    数字将不被截断<br>
+                    wordcount<=0时返回整个字段值。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Save()<br>
+                    保存
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateContent(String content)<br>
+                    更新资源说明
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateContentByFile(NpsFile file)<br>
+                    从文件中更新资源说明
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    CopyTo(NpsSite site)<br>
+                    复制到指定站点
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsArticle</td>
+                <td>
+                    PublishTo(NpsTopic topic)<br>
+                    发布到指定栏目，返回值为发布后的文章
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Delete()<br>
+                    删除资源
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    AddTags(String tags)<br>
+                    添加标签，多个标签以_间隔
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Clear()<br>
+                    清除临时文件
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</body>
+</html>

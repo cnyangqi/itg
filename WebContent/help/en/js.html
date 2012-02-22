@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Guide for JavaScript Class - NPS Version 1.0 Documentation </title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="index-page">
+<div id="path"></div>
+<div id="page-content">
+  <h1>Guide for JavaScript Class - NPS Version 1.0 Documentation</h1>
+    <p></p>
+    <p>The global variable of "session","out","user" can be directly applied."source" can be used in trigger.</p>
+    <p>The prototype of "session" variable is "NpsSession", which records current context.</p>
+    <p>The prototype of "out" variable is "NpsLog", logs will be written into "nps.log" global files. </p>
+    <p>The prototype of "user" variable is "NpsUser"</p>
+    <p>"source" is the source of event.For articles,it's prototype is NpsArticle.</p>
+  
+    <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>Class</th>
+              <th>Direction</th>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssession.html">NpsSession</a></td>
+              <td>Record current context, which can be quoted through the global variable of “session”.</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsuser.html">NpsUser</a></td>
+              <td><a href="js_npsuser.html">User Object</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssite.html">NpsSite</a></td>
+              <td>Website object, which can be acquired through NpsSession’s “GetSite()” serial methods.</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npstopic.html">NpsTopic</a></td>
+              <td><a href="js_npstopic.html">Topic Object</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsarticle.html">NpsArticle</a></td>
+              <td><a href="js_npsarticle.html">Article Object</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsattach.html">NpsAttach</a></td>
+              <td><a href="js_npsattach.html">Attachment Object</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsresource.html">NpsResource</a></td>
+              <td><a href="js_npsresource.html">Resource Object</a></td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsarticlecollection.html">NpsArticleCollection</a></td>
+              <td>Article collection. It will return to the result set by calling NpsSite’s “GetAllArticles()” and “Search()”.</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsresourcecollection.html">NpsResourceCollection</a></td>
+              <td>Resource collection，It will return the result set by calling NpsSite's GetResourcesByType() and GetResourcesByTopic()</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npspreparedstatement.html">NpsPreparedStatement</a></td>
+              <td>Database PreparedStatement object, which can be acquired through the “PreparedStatement()” of NpsSession.</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsresultset.html">NpsResultSet</a></td>
+              <td>Database ResultSet object, which can be acquired by transferring “ExecuteQuery()” of “NpsPreparedStatement”</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsfile.html">NpsFile</a></td>
+              <td>File object, which can be created through javascript’s “new NpsFile(String filename)”</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npslog.html">NpsLog</a></td>
+              <td>Log record object. The system defaulted log object can be acquired by transferring “GetDefaultLog()” of NpsSession. The self-defined file log can be acquired by transferring “CreateLog()” method.</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssmtp.html">NpsSmtp</a></td>
+              <td>Sending email via SMTP</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npspop3.html">NpsPop3</a></td>
+              <td>Retrieving email via POP3</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsftp.html">NpsFtp</a></td>
+              <td>Ftp Tool</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npssitemap.html">NpsSitemap</a></td>
+              <td>Google Sitemap Implementation</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsrss.html">NpsRss</a></td>
+              <td>RSS Implementation</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsawstats.html">NpsAwstats</a></td>
+              <td>Integrate with AWStats</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsformula.html">NpsFormula</a></td>
+              <td>A library for evaluating various mathematical expressions</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npshtmlfetcher.html">NpsHtmlFetcher</a></td>
+              <td>Web Fetch Tool</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npshtmlparser.html">NpsHtmlParser</a></td>
+              <td>Html Parser</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npscurrencyconverter.html">NpsCurrencyConverter</a></td>
+              <td>Currency Converter</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npschineseconverter.html">NpsChineseConverter</a></td>
+              <td>Chinese Converter</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsipquery.html">NpsIPQuery</a></td>
+              <td>IP query tools</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npswebserviceclient.html">NpsWebServiceClient</a></td>
+              <td>WebService Client</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsexcelformat.html">NpsExcelFormat</a></td>
+              <td>Apply special formatting to Excel cells</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsexcel.html">NpsExcel</a></td>
+              <td>Helps to create, read, modify Excel spreadsheet</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsbackup.html">NpsBackup</a></td>
+              <td>Dump all datas into Sqlite Database</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npsatomclient.html">NpsAtomClient</a></td>
+              <td>A tool implementing Atom Publishing Protocol</td>
+          </tr>
+          <tr class="module">
+              <td><a href="js_npswebcrawler.html">NpsWebCrawler</a></td>
+              <td>Web crawler</td>
+          </tr>
+       </tbody>
+     </table>
+
+    <table class="related"  width=60% cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+          <tr>
+              <th>Sample Code</th>
+          </tr>
+          <tr class="module">
+            <td>
+              var site = session.GetSite(); <br>
+              var new_log = null;           <br>
+              try                           <br>
+              {                             <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    new_log = session.CreateLog('d:/a.txt');    <br>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    //put your code here
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    new_log.Error('write error message to log'); <br>
+              }                                                 <br>
+              finally                                           <br>
+              {                                                 <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    if(new_log!=null) new_log.Close();          <br>
+              }     
+            </td>
+          </tr>          
+      </tbody>
+   </table>
+</div>
+</body>
+</html>

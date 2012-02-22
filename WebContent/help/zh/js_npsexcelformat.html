@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsExcelFormat</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsExcelFormat class</a></h1>
+    <div class="toplang"></div>
+    <p> NpsExcelFormat用于格式化Excel单元格样式。<br></p>
+    <p> <b>样例代码：</b><br>
+       var format1 = new NpsExcelFormat("",""); <br>
+       format1.SetFont("宋体",12,true,false,false,"black");   <br>
+       format1.SetAlignment("centre");<br>
+       format1.SetVerticalAlignment("centre");  <br>
+       format1.SetBorder("all","thin"); <br>
+       format1.SetBackground("yellow"); <br>
+       format1.SetOrientation("vertical");<br>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Property Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td>NpsExcelFormat</td>
+                <td>
+                    new(String type,String format_str)<br>
+                    构造函数。type表示format_str的类型：<br>
+                    1.type=date，表示format_str是格式日期参数；<br>
+                    2.type=number，表示format_str是格式数字参数；
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetFont(String font_name,int point_size,boolean bold,boolean italic,boolean underline,String color)<br>
+                    设置字体。<br>
+                    font_name:字体类型，例如宋体、楷体、Arial等等；<br>
+                    point_size:字体大小；<br>
+                    bold=true表示粗体；<br>
+                    italic=true表示斜体；<br>
+                    underline=true表示带下划线；<br>
+                    color是字体颜色，目前仅支持red,blue,yellow,green,grey,white,black；
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetAlignment(String align)<br>
+                    设置水平对齐方式。可以有以下取值：<br>
+                    left：居左；<br>
+                    right：居右；<br>
+                    centre：居中；<br>
+                    justify：两端对齐；<br>
+                    fill： 缩小字体填充
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetVerticalAlignment(String align)<br>
+                    设置垂直对齐方式。可以有以下取值：<br>
+                    top：靠上；<br>
+                    bottom：靠下；<br>
+                    centre：居中；<br>
+                    justify：两端对齐；
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetBorder(String border,String style)<br>
+                    设置单元格边框样式。<br>
+                    border表示是否有边框，有以下取值：<br>
+                    none:无<br>
+                    all:外边框<br>
+                    top:上<br>
+                    bottom:下<br>
+                    left:左<br>
+                    right:右<br>
+                    <br>
+
+                    style表示边框样式，有以下取值：<br>
+                    none<br>
+                    thin<br>
+                    thick<br>
+                    dash_dot<br>
+                    dash_dot_dot<br>
+                    dashed<br>
+                    dotted<br>
+                    double<br>
+                    hair<br>
+                    medium<br>
+                    medium_dash_dot<br>
+                    medium_dash_dot_dot<br>
+                    medium_dashed<br>
+                    SLANTED_DASH_DOT<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetBackground(String color)<br>
+                    设置单元格背景色。目前仅支持red,blue,yellow,green,grey,white,black。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetIndentation(int i)<br>
+                    设置缩进。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetLocked(boolean b)<br>
+                    设置是否加锁。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetOrientation(String orientation)<br>
+                    设置文字方向。<br>
+                    vertical:垂直；<br>
+                    horizontal:水平；
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetShrinkToFit(boolean b)<br>
+                    设置是否缩小字体填充。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetWrap(boolean wrap)<br>
+                    设置自动换行。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

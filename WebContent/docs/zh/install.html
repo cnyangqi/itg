@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NPS安装手册</title>
+    <link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+    <div id="preamble"><h1><a id="#page-header">NPS安装手册Installation Guide</a></h1>
+        <div class="toplang"></div>
+        <p>安装手册仅适用于初次安装。</p>
+    </div>
+    <div id="quickview"><ul id="toc">
+      <li><img src="/images/help/down.gif" alt="" width="11" height="11" /><a href="install.html#prepare">安装前检查</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="install.html#install">NPS下载与安装</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="install.html#oraclesetup">ORACLE配置</a></li>
+    <li><img alt="" src="/images/help/down.gif" /> <a href="install.html#npssetup">NPS配置</a></li>
+    </ul>
+      <h3>See also</h3>
+        <ul class="seealso">
+            <li></li>
+        </ul>
+    </div>
+
+    <div class="top"><a href="install.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+    <h2><a name="prepare" id="prepare">安装前检查</a></h2>
+        <p>NPS是一个WEB应用，运行在中心服务器上，是一整套基于java的信息发布管理、网站运行方案，用于帮助用户通过浏览器管理自己的网站。客户端支持IE6以上版本、FireFox2以上版本浏览器。</p>
+        
+    <dl>
+      <dt>硬件</dt>
+      <dd> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 试用或开发模板调试使用的，NPS运行在一台足够快的PC上（例如1.5+Ghz,512MB内存）就可以了。NPS的JAVA虚拟机建议分配128M内存。如果需要同时安装oracle数据库服务器，建议至少配置1G内存。 
+        可以很方便、快速地从试用环境迁移到生产环境中。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 生产环境所需的硬件依赖于数据规模、使用NPS的并发用户数。一般来说，生产环境应包括WEB服务器、应用服务器、NPS服务器、ORACLE数据库服务器。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WEB服务器建议运行Aapche或light 
+        http，用于静态页面服务。大规模应用应采用集群方案，例如DNS轮询。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 应用服务器建议运行TOMCAT等开源服务器或IBM 
+        WAS等商用服务器。应用服务器至少支持SERVLET 2.4标准。 如果使用TOMCAT，WEB服务器和应用服务器间可以采用mod_jk或mod_webapp进行通讯。 
+        对于超过2G内存的服务器，建议运行2个以上应用服务器，建议每个应用服务器JAVA虚拟机最大内存设置为768M以便获得最佳性能。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 小规模应用时，应用服务器可以和WEB服务器合并。如使用mod_jserv方式运行Tomcat服务器或同时运行TOMCAT和APACHE服务。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 大规模应用应采用集群方案。TOMCAT官方说明，一般支持的并发用户不超过200/CPU。商用服务器参见厂商关于集群的说明。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NPS服务器主要用于信息发布管理使用，主要面向内部用户，因此一般来说并发量不大。 
+        如果NPS管理的站点在10个以内，运行在一台1G内存的服务器上就足够了。 大规模应用的NPS服务器配置参考应用服务器配置方案。<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 为简化NPS的配置，建议为NPS服务器分配独立域名用于管理，例如nps.yourdomain.com。<br>  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ORACLE数据库服务器建议用户数据和NPS数据分开存放，即建立独立的tablespace和owner。 
+      </dd>
+      <dt>操作系统</dt>
+      <dd> NPS运行在任何支持JAVA的操作系统中。JWebStar所有服务器都运行LINUX。</dd>
+      <dt>JAVA</dt>
+      <dd> NPS至少要求JDK 1.5。Sun提供Windows、Solaris、Linux平台下32位和64位版本的JDK。</dd>
+      <dt>应用服务器</dt>
+      <dd> NPS是一个WEB应用，需要应用服务器支持。应用服务器必须支持SERVLET2.4。<br>
+        JWebStar的NPS服务器运行在Apache Tomcat5.5.26上。 </dd>
+      
+      <dt>数据库服务器</dt>
+      <dd>Oracle 9i以上版本。建议使用Oracle 10g（10.2以上版本）。</dd>
+    </dl>
+    </div>
+    <div class="top"><a href="install.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+      <h2><a name="install" id="install">NPS下载与安装</a></h2>
+      <p>将NPS解压到指定目录，例如/opt/nps/。该目录被称为NPS安装目录，使用{$NPS_HOME}表示。</p>
+      <p>Windows:使用winzip进行解压缩。</p>
+      <p>Linux:<br>
+           &nbsp;&nbsp;&nbsp;&nbsp;1.mkdir /opt/nps/ <br>
+           &nbsp;&nbsp;&nbsp;&nbsp;2.mv nps_1.0.zip /opt/nps/ <br>
+           &nbsp;&nbsp;&nbsp;&nbsp;3.unzip nps_1.0.zip  <br>
+      </p>
+    </div>
+    <div class="top"><a href="install.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+      <h2><a name="oraclesetup" id="oraclesetup">ORACLE配置</a></h2>
+      <p>推荐使用ORACLE 10g。NPS已经在Oracle 9.2和Oracle 10.2上测试通过。</p>
+      <p>
+            1.创建一个独立的表空间，例如T_NPS用于存放数据,I_NPS用于存放索引。<br>
+            2.创建一个数据库用户，例如NPS。该用户使用以上表空间。<br>
+            3.确认该用户具有connect和resources权限。<br>
+            4.使用SqLPlus或PL/SQL Developer等工具，执行db目录下的NPS_oracle.sql，系统将自动创建一个超级管理员，帐号为system，密码为manager。<br>
+            5.<font color=red>如果不是使用10.2版本，请使用oracle自带的jdbc驱动替换NPS默认带的10.2的驱动程序。方法如下：<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               1)删除{$NPS_HOME}/web/WEB-INF/lib/ojdbc14.jar文件；<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               2)将{$ORACLE_HOME}/jdbc/lib/ojdbc14.jar复制到{$NPS_HOME}/web/WEB-INF/lib/。<br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               3){$ORACLE_HOME}为oracle数据库服务器上安装目录，例如/u01/app/ora9i/  <br>
+               &nbsp;&nbsp;&nbsp;&nbsp;
+               4){$NPS_HOME}为NPS服务器上NPS安装目录，例如/opt/nps/  <br>
+             </font>
+      </p>
+     </div>
+    <div class="top"><a href="install.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+    <div class="section">
+      <h2><a name="tomcatsetup" id="tomcatsetup">TOMCAT配置</a></h2>
+         <dl>
+          <dt>1.确认web.xml</dt>        
+          <p>系统默认的web.xml是根据Tomcat5.5.x生成的。如果是其他版本，web.xml的格式可能有所不同，可以从Tomcat自带的Sample中复制一个web.xml，并将下列表格中内容增加到web-app段中。</p>
+          <dd>
+            <table border="1">
+                <tr>
+                    <td>
+                    &lt;servlet>   <br>
+                        &lt;servlet-name>Config&lt;/servlet-name> <br>
+                        &lt;servlet-class>nps.core.Config&lt;/servlet-class> <br>
+                        &lt;load-on-startup>5&lt;/load-on-startup> <br>
+                    &lt;/servlet>  <br>
+                    &lt;servlet-mapping> <br>
+                        &lt;servlet-name>Config&lt;/servlet-name>  <br>
+                        &lt;url-pattern>/servlet/Config&lt;/url-pattern>  <br>
+                    &lt;/servlet-mapping>  <br>
+                    &lt;filter>  <br>
+                        &lt;filter-name>Set Character Encoding&lt;/filter-name>  <br>
+                        &lt;filter-class>nps.util.SetCharacterEncodingFilter&lt;/filter-class>  <br>
+                        &lt;init-param>  <br>
+                            &lt;param-name>encoding&lt;/param-name>  <br>
+                            &lt;param-value>UTF-8&lt;/param-value>  <br>
+                        &lt;/init-param>  <br>
+                    &lt;/filter>  <br>
+                    &lt;filter-mapping> <br>
+                        &lt;filter-name>Set Character Encoding&lt;/filter-name> <br>
+                        &lt;url-pattern>/*&lt;/url-pattern> <br>
+                    &lt;/filter-mapping> <br>
+                    </td>
+                </tr>
+            </table>
+          </dd>
+         <dt>2.修改Tomcat的server.xml文件</dt>
+         <p>打开{$TOMCAT_HOME}/conf/server.xml文件，在你需要的Host段落中添加以下内容。<br>
+             注意：<font color=red>请将{$NPS_HOME}修改为上面的路径，例如/opt/nps。</font> <br>
+         </p>
+         <dd>
+            <table border="1">
+                <tr>
+                    <td>
+                        &lt;Context path="" docBase="{$NPS_HOME}/web" debug="0"/>
+                    </td>
+                </tr>
+            </table>
+         </dd>             
+        </dl>             
+     </div>
+     <div class="top"><a href="install.html#page-header"><img alt="top" src="/images/help/up.gif" /></a></div>
+     <div class="section">
+      <h2><a name="npssetup" id="npssetup">NPS配置</a></h2>
+         <dl>
+          <dt>1.数据库连接参数配置</dt>
+          <p>打开{$NPS_HOME}/web/WEB-INF/db.xml配置数据库连接。有三种配置方法。推荐使用第二种方法，即ORACLE自带的数据库连接池方法。</p>
+          <dd>1)不使用数据库连接池的配置方法：<br>
+              <table>
+                 <tr>
+                     <td>
+                         &lt;?xml version="1.0" encoding="UTF-8"?><br>
+                         &lt;root><br>
+                             &lt;DataSource name="nps"><br>
+                                 &lt;driver>oracle.jdbc.driver.OracleDriver&lt;/driver><br>
+                                 &lt;url>jdbc:oracle:thin:@<font color=red><a title="ORACLE IP地址">192.168.1.1</a></font>:1521:<font color=red><a title="ORACLE SID或服务名">pubdb</a></font>&lt;/url><br>
+                                 &lt;user><font color=red><a title="数据库用户名">nps</a></font>&lt;/user><br>
+                                 &lt;password><font color=red><a title="数据库用户密码">your password</a></font>&lt;/password><br>
+                             &lt;/DataSource> <br>
+                         &lt;/root>                         
+                     </td>
+                 </tr>
+              </table>
+          </dd>
+          <dd>
+              2)使用Oracle自带的数据库连接池的配置方法：<br>
+              <table>
+                 <tr>
+                     <td>
+                         &lt;?xml version="1.0" encoding="UTF-8"?><br>
+                         &lt;root><br>
+                             &lt;DataSource name="nps"><br>
+                                 &lt;driver>oracle.jdbc.driver.OracleDriver&lt;/driver><br>
+                                 &lt;url>jdbc:oracle:thin:@<font color=red><a title="ORACLE IP地址">192.168.1.1</a></font>:1521:<font color=red><a title="ORACLE SID或服务名">pubdb</a></font>&lt;/url><br>
+                                 &lt;user><font color=red><a title="数据库用户名">nps</a></font>&lt;/user><br>
+                                 &lt;password><font color=red><a title="数据库用户密码">your password</a></font>&lt;/password><br>
+                                 &lt;pool><br>
+                                   &nbsp;&nbsp;&nbsp;&nbsp;
+                                   &lt;min><font color=red><a title="启动时自动建立的最小连接数">5</a></font>&lt;/min>  <br>
+                                   &nbsp;&nbsp;&nbsp;&nbsp;
+                                   &lt;max><font color=red><a title="最大连接数">100</a></font>&lt;/max>       <br>
+                                 &lt;/pool>  <br>
+                             &lt;/DataSource> <br>
+                         &lt;/root>
+                     </td>
+                 </tr>
+              </table>
+           </dd>
+           <dd>
+               3)使用外部数据源的配置方法。<font color=red>这种方法要求在应用服务器连接池管理中增加名为nps的数据库连接池。JNDI地址为java:comp/env/jdbc/nps。</font><br>
+               <table>
+                  <tr>
+                      <td>
+                          &lt;?xml version="1.0" encoding="UTF-8"?><br>
+                          &lt;root><br>
+                              &lt;DataSource name="nps"><br>
+                              &lt;/DataSource> <br>
+                          &lt;/root>
+                      </td>
+                  </tr>
+               </table>
+            </dd>
+
+         <dt>2.核心配置</dt>
+            <p>打开{$NPS_HOME}/web/WEB-INF/nps.conf配置。</p>            
+         <dd>
+             <table>
+                 <tr>
+                     <td>
+                        #所有临时文件的根目录,必须填写 <br>
+                        <font color=red>
+                            为目录名，用于存储运行过程中上传的附件、产生的临时文件、日志文件等。一般建议设置独立分区，注意最后应加上/ <br>
+                        </font>
+                        TEMP_ROOTPATH=<font color=red>/NPSTEMP/</font>  <br><br>
+
+                        #编译路径，自动包含/WEB-INF/classes;/WEB-INF/lib;${TEMP_ROOTPATH}/classes  <br>
+                        #COMPILE_CLASSPATH=  <br><br>
+
+                        #是否缓存数据，对于集群模式，建议不缓存，默认为true，表示缓存  <br>
+                        #CACHE=true  <br><br>
+
+                        #Locale，默认为CHINA  <br>
+                        <font color=red>
+                        可以设置国家或地区，US、UK、TAIWAN、KOREA、JAPAN、ITALY、GERMANY、FRANCE、CHINA、CANADA、CANADA_FRENCH<br>
+                        也可以设置为语言：ENGLISH、FRENCH、GERMAN、ITALIAN、JAPANESE、KOREAN、CHINESE 、TRADITIONAL_CHINESE。<br>
+                        默认设置下(CHINA)，所有提示语使用中文。 <br>
+                        </font>
+                        #LOCALE=  <br><br>
+
+                        #FTP、索引等作业重试间隔时间（秒）,DEFAULT=600  <br>
+                        #SCHEDULE_INTERVAL=  <br><br>
+
+                        #SOLR的URL地址，默认为http://localhost/solr <br>
+                        <font color=red>
+                        SOLR索引服务器的URL根路径。一般来说，http://localhost/solr/update用于索引的更新服务；而
+                        http://localhost/solr/select用于索引的查询服务。<br>
+                        如果SOLR参数不设置任何值，那么全文索引服务将被关闭，包括更新和查询服务。<br>
+                        </font>
+                        SOLR=http://localhost/solr  <br><br>
+
+                        #MAIL服务器地址，默认为localhost  <br> 
+                        MAIL_SERVER=<font color=red>localhost</font> <br><br>
+
+                        #MAIL服务器SMTP端口，默认25 <br>
+                        MAIL_SMTPPORT=<font color=red>25</font> <br><br>
+
+                        ＃MAIL服务器POP3端口，默认110 <br>
+                        MAIL_POP3PORT＝<font color=red>110</font>        <br><br>
+
+                        #MAIL认证用户名，默认为NULL <br>
+                        MAIL_USER=<font color=red>你的邮件帐号</font> <br><br>
+
+                        #MAIL认证密码，默认为NULL <br>
+                        MAIL_PASSWORD=<font color=red>你的邮箱密码</font>  
+                     </td>
+                 </tr>
+             </table>
+         </dd>         
+          
+          <dt>3.系统日志配置</dt>
+             <p>NPS使用LOG4J记录日志。打开{$NPS_HOME}/web/WEB-INF/log4j.properties配置。
+             </p>
+          <dd>
+              <table>
+                  <tr>
+                      <td>
+                          log4j.rootLogger=nps     <br>
+                          log4j.addivity.org.apache=true <br>
+                          log4j.appender.nps=org.apache.log4j.RollingFileAppender <br>
+                          log4j.appender.nps.Threshold=ERROR <br>
+                          <font color=red>
+                          #日志文件名，默认存放在/NPSLOG/nps.log文件下，按100M每个文件自动分割。 <br>
+                          #鉴于日志较大，建议将/NPSLOG独立分区 <br>
+                          </font>
+                          log4j.appender.nps.File=<font color=red>/NPSLOG/nps.log</font> <br>
+                          log4j.appender.nps.Append=true <br>
+                          log4j.appender.nps.MaxFileSize=100MB  <br>
+                          log4j.appender.nps.MaxBackupIndex=1  <br>
+                          log4j.appender.nps.layout=org.apache.log4j.PatternLayout  <br>
+                          log4j.appender.nps.layout.ConversionPattern=[framework] %d - %c -%-4r [%t] %-5p %c %x - %m%n <br>
+
+                      </td>
+                  </tr>
+              </table>
+          </dd>
+
+          <dt>4.USERDIR配置</dt>
+             <p>USERDIR用于存放用户采编过程中上传的图片及附件（用于采编过程中预览使用），其目录是{$NPS_HOME}/web/userdir/。<br>
+                系统启动后该目录将被自动创建。对于该类数据较大的用户，在系统配置时建议手工创建该目录，并将该目录mount为独立分区。
+             </p>
+          <dd>
+
+
+         <dt>5.Quartz配置</dt>
+            <p>Quartz用于后台定时任务的执行，NPS默认自带的Quartz配置是基于Oracle实现集群调度的。<br>
+                打开{$NPS_HOME}/web/WEB-INF/quartz.properties配置Quartz。
+            </p>
+         <dd>
+              <table>
+                  <tr>
+                      <td>
+                          #============================================================================<br>
+                          # Configure Main Scheduler Properties          <br>
+                          #============================================================================   <br>
+
+                          org.quartz.scheduler.instanceName = MyClusteredScheduler      <br>
+                          org.quartz.scheduler.instanceId = AUTO                  <br>
+
+                          #============================================================================  <br>
+                          # Configure ThreadPool                                                   <br>
+                          #============================================================================  <br>
+
+                          org.quartz.threadPool.class = org.quartz.simpl.SimpleThreadPool               <br>
+                          <font color=red>
+                             NPS默认配置25个调度线程。<br>
+                          </font>
+                          org.quartz.threadPool.threadCount = <font color=red><a title="调度线程数">25</a></font>  <br>
+                          org.quartz.threadPool.threadPriority = 5                          <br>
+
+                          #============================================================================   <br>
+                          # Configure JobStore                                                           <br>
+                          #============================================================================  <br>
+
+                          org.quartz.jobStore.misfireThreshold = 60000                                      <br>
+
+                          org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX              <br>
+                          org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.oracle.OracleDelegate <br>
+                          org.quartz.jobStore.useProperties = false                               <br>
+                          org.quartz.jobStore.dataSource = myDS                               <br>
+                          org.quartz.jobStore.tablePrefix = QRTZ_                            <br>
+
+                          org.quartz.jobStore.isClustered = true                             <br>
+                          org.quartz.jobStore.clusterCheckinInterval = 20000                 <br>
+
+                          #============================================================================<br>
+                          # Configure Datasources                                                      <br>
+                          #============================================================================<br>
+                          <font color=red>
+                              设置数据库连接参数和最大连接数。<br>
+                          </font>
+                          org.quartz.dataSource.myDS.driver = oracle.jdbc.driver.OracleDriver          <br>
+                          org.quartz.dataSource.myDS.URL = jdbc:oracle:thin:@<font color=red><a title="ORACLE IP地址">192.168.1.1</a></font>:1521:<font color=red><a title="ORACLE SID或服务名">pubdb</a></font> <br>
+                          org.quartz.dataSource.myDS.user = <font color=red><a title="数据库用户名">nps</a></font>  <br>
+                          org.quartz.dataSource.myDS.password = <font color=red><a title="数据库用户密码">your password</a></font> <br>
+                          org.quartz.dataSource.myDS.maxConnections = <font color=red><a title="最大连接数">5</a></font>  <br>
+                          org.quartz.dataSource.myDS.validationQuery=select 0 from dual     <br>
+                      </td>
+                  </tr>
+              </table>
+         </dd>
+       </dl>      
+    </div>
+</div>
+</body>
+</html>

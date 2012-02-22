@@ -1,0 +1,148 @@
+body {
+	background-color: #edf4ff;
+	font-family: "宋体",Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	SCROLLBAR-FACE-COLOR:#DEE7FF;
+	SCROLLBAR-HIGHLIGHT-COLOR:#DEE7FF;
+	SCROLLBAR-SHADOW-COLOR:#DEE7FF;
+	SCROLLBAR-BASE-COLOR:#DEE7FF;
+	SCROLLBAR-DARK-SHADOW-COLOR:#DEE7FF;
+}
+
+td, th {
+	font-size: 9pt;
+  line-height: 120%; 
+}
+
+div
+{
+  padding-top: 2px;
+}
+
+a 
+{
+	TEXT-DECORATION:none;
+	color: #0000FF;
+	CURSOR: hand;
+}
+
+.PositionBar{
+  border-color:#eff8ff;
+  background-color:#eff8ff;
+	width:100%;
+	height:30px;
+	font-size:24px;
+	font-weight:bold;	
+	color:#000000;
+}
+
+.TitleBar{
+   height:25px;
+   background-color:#dfeafb;  
+   border-width:1px solider;
+   text-align:left;
+   text-valign:middle;
+   color:black;
+   font-size:12px;
+   font-weight:bold;
+}
+
+.DetailBar{
+	background-color:#ffffff;
+	border-color:#bccee8;	
+	color:#000000;
+	font-size:12px;
+	font-weight:normal;
+}
+
+.ScrollBar{
+    background-color:#eff8ff; 
+    color:black;
+	font-size:9px;
+	font-weight:bold;
+	width:100%;
+    height:28px;
+}
+
+
+.Toolbar{
+    BORDER:0;	
+    CURSOR: hand; 
+    border-color:#000000;
+   	background-color : #e8f2fe;
+    height:30px;
+    color:#FFFFFF;
+    FONT-SIZE:9pt;
+    FONT-WEIGHT:BOLD;  
+}
+
+
+.Title{
+	  FONT-SIZE: 12pt;
+    font-weight:bold;
+    text-align:center;
+    text-valign:middle;  	
+}
+
+.SubTitle{
+    FONT-SIZE: 10.5pt;
+    font-weight:bold;
+    text-align:center;
+    text-valign:middle;  	
+}
+
+.input {
+   BACKGROUND-COLOR: #e8f2fe;
+   COLOR: #000000;
+   FONT-SIZE: 9pt;
+}
+
+.inputfull {
+   BACKGROUND-COLOR: #e8f2fe;
+   COLOR:#000000;
+   FONT-SIZE: 9pt;
+   BORDER-RIGHT:0;
+   BORDER-TOP:0;
+   BORDER-LEFT:0;
+   BORDER-BOTTOM:0;
+   WIDTH: 100%;
+}
+
+.button {
+	height:22px;
+	FONT-SIZE: 9pt;
+	BORDER-RIGHT:1px solid #e8f2fe;
+	BORDER-TOP:1px solid #e8f2fe;
+	BORDER-LEFT:1px solid #e8f2fe;
+	BORDER-BOTTOM:1px solid #e8f2fe;
+	BORDER-COLOR:#000000;
+  PADDING-TOP:2px;
+  PADDING-BOTTOM:2px;
+  PADDING-LEFT:4px;
+  PADDING-RIGHT:4px;
+  color:#000000;   
+  cursor:HAND;	
+}
+
+.select{
+    FONT-SIZE: 9pt;
+}
+
+.checkbox{
+   FONT-SIZE: 9pt;
+   COLOR:#000000;   
+}
+
+.radio{
+   FONT-SIZE: 9pt;
+   COLOR:#000000;
+}
+
+.table { 
+  border-spacing: 1px; 
+  border-collapse: collapse; 
+} 

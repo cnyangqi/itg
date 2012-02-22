@@ -1,0 +1,464 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Guide for global tags</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">Guide for global tags</a></h1>
+    <div class="toplang"></div>
+    <p>This article is about global tag’s grammar, application and context of use.</p>
+    <p><font color=red>Changed in V1.5: Tags for company start with "org_" now.</font></p>
+</div>
+
+<div id="quickview">
+    <ul id="toc">
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#env_now"><$env_now$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#site_id"><$site_id$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#site_name"><$site_name$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#site_domain"><$site_domain$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#site_root"><$site_root$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#image_root"><$image_root$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#charset"><$charset$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_id"><$org_id$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_name"><$org_name$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_code"><$org_code$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_attachman"><$org_attachman$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_address"><$org_address$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_zipcode"><$org_zipcode$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_phonenum"><$org_phonenum$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_phone"><$org_phone$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_email"><$org_email$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#org_mobile"><$org_mobile$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_id"><$top_id$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_name"><$top_name$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_alias"><$top_alias$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_code"><$top_code$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_url"><$top_url$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_path"><$top_path$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_navigator"><$top_navigator$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_nav"><$top_nav$></a></li>		
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_parentid"><$top_parentid$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_parentname"><$top_parentname$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_parentalias"><$top_parentalias$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_parentcode"><$top_parentcode$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_parenturl"><$top_parenturl$></a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#top_parentpath"><$top_parentpath$></a></li>
+
+    </ul>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h1><font color=red>Environment Group</font></h1><br>
+    <h2><a id="#env_now"><$env_now(format:STRING)$></a></h2>
+    <p>Current system time. The default format is "yyyy-MM-dd"。 The format is showed a below.
+        <br>
+        
+    <table cellspacing="3" cellpadding="0" border="0">
+      <tbody>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><b><span style="font-size: 12pt">Letter</span></b></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><b>Date or Time Component </b></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><b>Presentation</b></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #ccccff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><b><span style="font-size: 12pt">Example</span></b></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">G </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">Era </span><span style="font-size: 12pt">designator 
+              </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Text</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">AD </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">y </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">year </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>Year</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">1996; 96 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">M </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Month in year </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Month</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">July; Jul; 07 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">w </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left">Week in year</div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">27 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">W </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Week in month </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">2 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">D </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left">Day in year </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">189 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">d </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Day in month </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">10 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">F </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left">Day of week in month </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">2 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">E </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Day in week </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Text</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">Tuesday; Tue </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">a </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left">Am/pm marker </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>Text</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">PM </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">H </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Hour in day (0-23) </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">0 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">k </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left">Hour in day (1-24) </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">24 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">K </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Hour in am/pm (0-11) </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">0 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">h </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left">Hour in am/pm (1-12)</div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">12 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">m </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Minute in hour </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">30 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">s </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left">Second in minute </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">55 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">S </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Millisecond </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>Number</u> </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">978 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">z </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">Time zone </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt"><u>General time zone</u> 
+              </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; background: #eeeeff; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8"> 
+            <div align="left"><span style="font-size: 12pt">Pacific Standard Time; 
+              PST; GMT-08:00 </span></div></td>
+        </tr>
+        <tr> 
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">Z </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left">Time zone </div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt"><u>RFC 822 time zone</u> 
+              </span></div></td>
+          <td style="border-right: #ece9d8; padding-right: 0cm; border-top: #ece9d8; padding-left: 0cm; padding-bottom: 0cm; border-left: #ece9d8; padding-top: 0cm; border-bottom: #ece9d8; background-color: transparent"> 
+            <div align="left"><span style="font-size: 12pt">-0800 </span></div></td>
+        </tr>
+      </tbody>
+    </table>
+    </p>
+  </div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h1><font color=red>Site Group</font></h1><br>
+    <h2><a id="#site_id"><$site_id$></a></h2>
+    <p>Website unique identification<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#site_name"><$site_name$></a></h2>
+    <p>Website name </p>
+</div>
+<div class="section">
+    <h2><a id="#site_domain"><$site_domain$></a></h2>
+    <p>Website domain<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#site_root"><$site_root$></a></h2>
+    <p>Document root<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#image_root"><$image_root$></a></h2>
+    <p>Image root<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#charset"><$charset$></a></h2>
+    <p>Charset<br>
+    </p>
+</div>
+
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h1><font color=red>Organization Group</font></h1><br>
+    <h2><a id="#org_id"><$org_id$></a></h2>
+    <p>Organization's unique identification<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_name"><$org_name$></a></h2>
+    <p>Organization's name<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_code"><$org_code$></a></h2>
+    <p>Organization's code<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_attachman"><$org_attachman$></a></h2>
+    <p>Organization's contact person<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_address"><$org_address$></a></h2>
+    <p>Organization's address<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_zipcode"><$org_zipcode$></a></h2>
+    <p>Organization's zipcode <br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_phonenum"><$org_phonenum$></a></h2>
+    <p>Organization's phone number<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_phone"><$org_phone$></a></h2>
+    <p>Organization's contact phone(same as org_phonenum)<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_email"><$org_email$></a></h2>
+    <p>Organization's email<br>
+    </p>
+</div>
+<div class="section">
+    <h2><a id="#org_mobile"><$org_mobile$></a></h2>
+    <p>Organization's mobile phone<br>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h1><font color=red>Topic Group</font></h1><br>
+    <h2><a id="#top_id"><$top_id$></a></h2>
+    <p>Calculate the unique identification of current topic according to context. 
+    </p>
+</div>
+
+<div class="section">
+    <h2><a id="#top_name"><$top_name$></a></h2>
+    <p>Calculate current topic’s name according to context.<br>
+    </p>
+</div>
+
+<div class="section">
+    <h2><a id="#top_alias"><$top_alias$></a></h2>
+    <p>Calculate current topic’s alias name according to context.<br>
+    </p>
+  </div>
+
+
+<div class="section">
+    <h2><a id="#top_code"><$top_code$></a></h2>
+    <p>Calculate current topic’s code according to context. Link alias names of 
+      all higher-level topics with “.”</p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_url"><$top_url$></a></h2>
+    <p>Calculate the current topic's URL path according to context. <br>
+       for example,there are topic named 'book' with code 'product.book',and the site root URL is 'http://www.jwebstar.com/',and then <br>
+        <$top_url$> = http://www.jwebstar.com/product/book/
+    </p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_path"><$top_path$></a></h2>
+    <p>Calculate the current topic's path according to context.<br>
+        for example,there are topic named 'book' with code 'product.book',and then <br>
+        <$top_path$> = /product/book/
+    </p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_navigator"><$top_navigator$></a></h2>
+    <p>Calculate the current topic's position according to context.
+	<br>
+	for example，there are two topics:a topic named 'news' with code 'news' and another named 'demostic' with code 'demostic.news'，then the topic named 'demostic' has top_navigator value as:<br>
+	  <font color=red>&lt;a href="/news">news&lt;/a> > &lt;a href="/news/demostic">demostic&lt;/a></font>
+    </p>
+    <p>
+    <p>
+       The Default split word between topics is " > ".That's say:<$top_navigator$> is same as <$top_navigator(" \\> ")$>
+       <br>
+       <font color=red><$top_navigator(splitword:STRING)$> to use the split word specified</font>,for example:<br>
+        <$top_navigator("\\>\\>")$> means:use ">>" for split word.Note:<font color=red>NPS will convert ">" to "&amp;gt;",and add \\ will turn off the conversation。</font>,<br>       
+    </p>
+
+    </p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_nav"><$top_nav$></a></h2>
+    <p>Same as top_navigator
+    </p>
+  </div>
+  
+<div class="section">
+    <h2><a id="#top_parentid"><$top_parentid$></a></h2>
+    <p>
+	Calculate the unique identification of current topic's parent according to context. 
+    </p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_parentcode"><$top_parentcode$></a></h2>
+    <p>Calculate the code of  current topic’s parent according to context.<br>
+    </p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_parentname"><$top_parentname$></a></h2>
+    <p>Calculate the name of  current topic’s parent according to context.
+    </p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_parentalias"><$top_parentalias$></a></h2>
+    <p>Calculate the alias of  current topic’s parent according to context.
+    </p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_parenturl"><$top_parenturl$></a></h2>
+    <p>Calculate the url of  current topic’s parent according to context.
+    </p>
+  </div>
+
+<div class="section">
+    <h2><a id="#top_parentpath"><$top_parentpath$></a></h2>
+    <p>Same as top_parenturl
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+DEPTMOVE_SUCCESS=Dept moved successfully

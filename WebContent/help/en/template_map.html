@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Guide for MAP statement</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble">
+    <h1><a id="#page-header">Guide for MAP statement</a></h1>
+    <div class="toplang"></div>
+    <p>MAP statement is used for reading list of topic.All statements can be nested in MAP statement except ATTACH statement.</p>
+	<h1><font color="red">MAP grammar</font></h1>
+	<p>
+	 &lt;map id=(id:STRING) site=(site:STRING) topic=(topic:STRING)>  <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;--Input your content here<br>
+	 &lt;/map>
+	</p>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+        <tr> 
+          <th>parameter</th>
+          <th>type</th>
+          <th>meaning</th>
+        </tr>
+        <tr class="module"> 
+          <td>id</td>
+          <td>STRING</td>
+          <td> Unique identification of the MAP. It must begin with letters or 
+            underline. </td>
+        </tr>
+        <tr class="module"> 
+          <td>site</td>
+          <td>STRING</td>
+          <td> Optional.The site id that need to be inquired.String or tag can 
+            be used.</td>
+        </tr>
+        <tr class="module"> 
+          <td>topic</td>
+          <td>STRING</td>
+          <td> Optional.The topic code that need to be inquired.String or tag 
+            can be used.</td>
+        </tr>
+      </tbody>
+    </table>
+	
+    <br>
+	<h1><font color="red">Guide for tags inner MAP statement</font></h1>
+	<p>
+	1.Tags begin with "<$" and end with "$>".The id of MAP statement must be prefixed to tag,i.e.:<$map1.top_name$>.<br>
+	2.Global tags specified below can be used.<br>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+      <tbody>
+        <tr> 
+          <th width="179">tag</th>
+          <th width="298">meaning</th>
+        </tr>
+        <tr class="module"> 
+          <td>top_id</td>
+          <td> the unique identification of topic  </td>
+        </tr>
+        <tr class="module"> 
+          <td>top_name</td>
+          <td>the topic's name</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_alias</td>
+          <td> the topic's alias</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_code</td>
+          <td> the topic's code</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_url</td>
+          <td>the topic's URL path </td>
+        </tr>
+        <tr class="module"> 
+          <td>top_path</td>
+          <td> same as top_url</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_navigator</td>
+          <td> the topic's position</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_nav</td>
+          <td> same as top_navigator</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_parentid</td>
+          <td> the unique identification of parent topic</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_parentcode</td>
+          <td> the parent topic's code</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_parentname</td>
+          <td> the parent topic's name</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_parentalias</td>
+          <td> the parent topic's alias</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_parenturl</td>
+          <td> the parent topic's URL path</td>
+        </tr>
+        <tr class="module"> 
+          <td>top_parentpath</td>
+          <td> same as top_parenturl</td>
+        </tr>        
+      </tbody>
+    </table>
+
+	<br><br>
+	<h1><font color="red">Sample Coding</font></h1>	
+	<br>
+	<b>Get the root node list of current site</b><br>
+	&lt;map id="map1"><br>
+	 &nbsp;&nbsp;&nbsp;&nbsp;
+	   <$map1.top_name$><br>
+	&lt;/map><br>
+	<br>
+
+	<b>Get the root node list of mysite</b><br>
+	&lt;map id="map1" site="mysite"><br>
+	 &nbsp;&nbsp;&nbsp;&nbsp;
+	   <$map1.top_name$><br>
+	&lt;/map><br>
+	<br>
+
+	<b>Get the child node list of top1</b><br>
+	&lt;map id="map1" topic="top1"><br>
+	 &nbsp;&nbsp;&nbsp;&nbsp;
+	   <$map1.top_name$><br>
+	&lt;/map><br>
+	<br>
+	
+	<b>Get the child node list of current topic</b><br>
+	&lt;map id="map1" topic=<$top_code$>><br>
+	 &nbsp;&nbsp;&nbsp;&nbsp;
+	   <$map1.top_name$><br>
+	&lt;/map><br>
+	<br>	
+	
+	<b>Get the child node list of topic1 in mysite</b><br>
+	&lt;map id="map1" site="mysite" topic="top1"><br>
+	 &nbsp;&nbsp;&nbsp;&nbsp;
+	   <$map1.top_name$><br>
+	&lt;/map><br>
+	<br>	
+
+	<b>Get the child node list of topic1 in mysite too</b><br>
+	&lt;map id="map1" topic="mysite.top1"><br>
+	 &nbsp;&nbsp;&nbsp;&nbsp;
+	   <$map1.top_name$><br>
+	&lt;/map><br>
+	<br>	
+
+	<b>Get the child node list of topic coded by 'mysite.topic1' in mysite</b><br>
+	&lt;map id="map1" site="mysite" topic="mysite.top1"><br>
+	 &nbsp;&nbsp;&nbsp;&nbsp;
+	   <$map1.top_name$><br>
+	&lt;/map><br>
+	</p>
+</div>
+
+
+</div>
+</body>
+</html>

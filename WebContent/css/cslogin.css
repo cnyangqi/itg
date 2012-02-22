@@ -1,0 +1,159 @@
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.zc A {
+	BACKGROUND-IMAGE: none! important
+}
+BODY {
+	OVERFLOW: hidden; WIDTH: 100%
+}
+.zc {
+	MARGIN: 15px auto 30px; WIDTH: 653px; TEXT-ALIGN: left
+}
+.zc_t {
+	WIDTH: 100%; HEIGHT: 70px
+}
+.zc_t2 {
+	BACKGROUND: url(/images/zc_5.gif) no-repeat left 50%; WIDTH: 100%; HEIGHT: 70px
+}
+.zc_1 {
+	BACKGROUND: url(/images/zc_1.gif) no-repeat; OVERFLOW: hidden; WIDTH: 100%; HEIGHT: 16px
+}
+.zc_2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 12px; BACKGROUND: url(/images/zc_3.gif) repeat-y; PADDING-BOTTOM: 10px; WIDTH: 100%; COLOR: #333; PADDING-TOP: 10px; FONT-FAMILY: "宋体"; HEIGHT: auto
+}
+.zc_4 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 12px; BACKGROUND: url(/images/zc_3.gif) repeat-y; PADDING-BOTTOM: 10px; WIDTH: 100%; COLOR: #333; PADDING-TOP: 10px; FONT-FAMILY: "宋体"; HEIGHT: auto
+}
+.zc_2 A {
+	COLOR: #456da8; TEXT-DECORATION: underline
+}
+.zc_2 A:hover {
+	BACKGROUND: #456da8; COLOR: #fff; TEXT-DECORATION: none
+}
+.zc_3 {
+	BACKGROUND: url(/images/zc_2.gif) no-repeat; WIDTH: 100%; HEIGHT: 16px
+}
+.zc_m1 {
+	PADDING-LEFT: 30px; MARGIN: auto; WIDTH: 55%
+}
+.zc_m1 UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+.zc_m2 UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+.zc_m1 UL LI {
+	OVERFLOW: hidden; LINE-HEIGHT: 24px; HEIGHT: 24px
+}
+.yfm INPUT {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; MARGIN: 0px 10px 0px 5px; BORDER-LEFT: #ccc 1px solid; WIDTH: 160px; LINE-HEIGHT: 18px; BORDER-BOTTOM: #ccc 1px solid; HEIGHT: 18px
+}
+.mm INPUT {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; MARGIN: 0px 10px 0px 5px; BORDER-LEFT: #ccc 1px solid; WIDTH: 160px; LINE-HEIGHT: 18px; BORDER-BOTTOM: #ccc 1px solid; HEIGHT: 18px
+}
+.yfm {
+	MARGIN: 10px 0px 5px
+}
+.mm {
+	MARGIN: 5px 0px
+}
+.jz {
+	MARGIN-LEFT: 50px
+}
+.qt {
+	MARGIN-LEFT: 70px; COLOR: #aaa
+}
+.dl {
+	MARGIN: 10px auto
+}
+.dl INPUT {
+	DISPLAY: block; MARGIN: 0px 0px 0px 100px
+}
+.zc_m2 {
+	PADDING-LEFT: 15px; MARGIN: auto; WIDTH: 70%; HEIGHT: auto
+}
+.zc_m2 UL LI {
+	
+}
+.yfm_1 {
+	MARGIN: 5px 0px 8px
+}
+.yfm_1 INPUT {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; MARGIN: 0px 10px 0px 5px; BORDER-LEFT: #ccc 1px solid; WIDTH: 160px; LINE-HEIGHT: 18px; BORDER-BOTTOM: #ccc 1px solid; HEIGHT: 18px
+}
+.email INPUT {
+	BORDER-RIGHT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; MARGIN: 0px 10px 0px 5px; BORDER-LEFT: #ccc 1px solid; WIDTH: 260px; LINE-HEIGHT: 18px; BORDER-BOTTOM: #ccc 1px solid; HEIGHT: 18px
+}
+.sm_1 {
+	MARGIN: 5px 0px 8px 82px; COLOR: #aaa
+}
+.sm_2 {
+	MARGIN: 5px 0px 8px 82px; COLOR: #aaa; LINE-HEIGHT: 20px
+}
+.sm_3 {
+	BACKGROUND: url(/images/xt.gif) no-repeat left 50%; MARGIN: 5px 0px 8px 82px; COLOR: #38920e; TEXT-INDENT: 24px; LINE-HEIGHT: 16px; HEIGHT: 16px
+}
+.sm_4 {
+	BACKGROUND: url(/images/xt_1.gif) no-repeat left 50%; MARGIN: 5px 0px 8px 82px; COLOR: #e00; TEXT-INDENT: 24px; LINE-HEIGHT: 16px; HEIGHT: 16px
+}
+.hz {
+	COLOR: #e00
+}
+.mz1 {
+	
+}
+.mz2 {
+	
+}
+.mz3 {
+	
+}
+.ty {
+	MARGIN-LEFT: 77px
+}
+.dl_1 {
+	MARGIN: 0px 0px 10px 150px
+}
+.zc_m4 {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; BACKGROUND: url(ok.gif) no-repeat left 50%; MARGIN: auto; WIDTH: 70%; COLOR: #38920e; LINE-HEIGHT: 34px; HEIGHT: 34px; TEXT-ALIGN: center
+}
+.zc_m5 {
+	MARGIN: 30px auto; WIDTH: 70%; HEIGHT: 27px
+}
+.zc_m5 UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+.zc_m5 UL LI {
+	BORDER-RIGHT: #bbedf8 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #bbedf8 1px solid; PADDING-LEFT: 15px; BACKGROUND: #e4f5ff; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px 30px; BORDER-LEFT: #bbedf8 1px solid; WIDTH: 110px; PADDING-TOP: 0px; BORDER-BOTTOM: #bbedf8 1px solid; HEIGHT: 25px
+}
+.zc_m5 UL LI A {
+	COLOR: #456da8; TEXT-DECORATION: none
+}
+.zc_m5 UL LI A:hover {
+	COLOR: #456da8; TEXT-DECORATION: underline
+}
+.xl TEXTAREA {
+	PADDING-RIGHT: 1%; PADDING-LEFT: 1%; PADDING-BOTTOM: 1%; MARGIN: 10px 0px; WIDTH: 99%; COLOR: #333; LINE-HEIGHT: 18px; PADDING-TOP: 1%; HEIGHT: 100px; TEXT-ALIGN: left
+}
+.b_t {
+	WIDTH: 100%; HEIGHT: 60px
+}
+.b_t1 {
+	WIDTH: 100%; HEIGHT: 100px
+}
+.sm_5 {
+	BACKGROUND: url(/images/xt_1.gif) no-repeat left 50%; MARGIN: 5px 0px 8px 70px; COLOR: #e00; TEXT-INDENT: 24px; LINE-HEIGHT: 16px; HEIGHT: 16px
+}
+.sm_6 {
+	BACKGROUND: url(/images/xt.gif) no-repeat left 50%; MARGIN: 5px 0px 8px 70px; COLOR: #38920e; TEXT-INDENT: 24px; LINE-HEIGHT: 16px; HEIGHT: 16px
+}
+.tj {
+	MARGIN: 10px 0px 10px 100px
+}
+.zc_t3 {
+	BACKGROUND: url(/images/zc_6.gif) no-repeat left 50%; WIDTH: 100%; HEIGHT: 70px
+}
+.dl_c {
+	HEIGHT: 55px
+}

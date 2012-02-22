@@ -1,0 +1,439 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>模板函数使用指南</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">模板函数使用说明</a></h1>
+    <div class="toplang"></div>
+    <p>模板函数是由所有模板的基类NpsObject类提供的一组JAVA函数，旨在为一些常用操作提供快速入口，自V1.9版开始支持。模板函数必须在JAVA语句中调用。
+        本文说明了模板函数的语法、用途和使用情境。
+    </p>
+</div>
+
+<div id="quickview">
+    <ul id="toc">
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#printa">print</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#printb">print</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#printarray">print_array</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#println">println</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#printin">printin</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#nvl">NVL</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#isnull">ISNULL</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#if">IF</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#equals">EQUALS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#autolink">AUTOLINK</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#htmlescape">HTMLESCAPE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#xmlescape">XMLESCAPE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#decode">DECODE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#split">SPLIT</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#instr">INSTR</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#substr">SUBSTR</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#replace">REPLACE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#contact">CONTACT</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#length">LENGTH</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#initcap">INITCAP</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#lower">LOWER</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#upper">UPPER</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#lpad">LPAD</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#rpad">RPAD</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#ltrim">LTRIM</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#rtrim">RTRIM</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#trim">TRIM</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#tonumber">TO_NUMBER</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#todate">TO_DATE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#tochar">TO_CHAR</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#sysdate">SYSDATE</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#addyears">ADD_YEARS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#addmonths">ADD_MONTHS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#adddays">ADD_DAYS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#nextday">NEXT_DAY</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#lastday">LAST_DAY</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#abs">ABS</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#round">ROUND</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#max">MAX</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#min">MIN</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#greatest">GREATEST</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#least">LEAST</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#uid">UID</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#user">USER</a></li>
+        <li><img alt="" src="/images/help/down.gif" /> <a href="#userenv">USERENV</a></li>                                                                 
+    </ul>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#printa">print(Object obj[,String format])</a></h2>
+    <p>按指定格式格式化字段后打印到文件</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#printb">print(Object obj[,int wordcount, String padding])</a></h2>
+    <p>截取指定长度字符串并打印到文件。对于超过指定长度的，最后追加打印padding字符串。padding默认值为""</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#printarray">print_array(String format, Object[] args)</a></h2>
+    <p>按照指定的格式字符串打印数组到文件。null值将被跳过。</p>
+
+    <p><b>参数</b></p>
+    <p>format语法参见Formatter类说明。%1表示args值。</p>
+
+    <p><b>参考代码</b></p>
+    <p>
+        以下代码拆分art_tag字段并根据拆分结果拼接链接。<br>
+        &lt;%  <br>
+          print_array("&lt;a href=\"/search/search.jsp?q=%1$s\" target=\"_blank\"&gt;%1$s&lt;/a&gt;&amp;nbsp;&amp;nbsp;",SPLIT(&lt;$art_tag$&gt;)); <br>
+        %&gt; <br>
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#println">println()</a></h2>
+    <p>输出换行符</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#printin">printin()</a></h2>
+    <p>缩进对齐</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#nvl">Object NVL(Object expr1, Object exp2)</a></h2>
+    <p>从两个表达式返回一个非 null 值。</p>
+
+    <p><b>参数</b></p>
+    
+    <p>
+    如果 expr1 的计算结果为 null 值，则 NVL( ) 返回 expr2。
+        如果 expr1 的计算结果不是 null 值，则返回 expr1。
+    expr1 和 expr2 可以是任意一种数据类型。
+        如果 expr1 与 expr2 的结果皆为 null 值，则 NVL( ) 返回NULL。
+    </p>
+
+    <p><b>返回值类型</b></p>
+    <p>字符型、日期时间型、数值型等JAVA对象 或 null 值</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#isnull">boolean ISNULL(Object obj)</a></h2>
+    <p>判断指定对象是否为null值</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#if">Object IF(boolean expression, Object true_value,Object false_value)</a></h2>
+    <p>当expression=true时，返回true_value,否则返回false_value</p>
+
+    <p><b>参数</b></p>
+    <p>true_value 和 false_value 可以是任意一种数据类型。</p>
+
+    <p><b>返回值类型</b></p>
+    <p>字符型、日期时间型、数值型等JAVA对象 或 null 值</p>
+</div>    
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#equals">boolean EQUALS(Object obj,Object test_obj)</a></h2>
+    <p>判断两个字段值是否相同</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#autolink">String AUTOLINK(Object obj)</a></h2>
+    <p>为字段添加热字链接</p>
+</div>    
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#htmlescape">String HTMLESCAPE(Object obj)</a></h2>
+    <p>HTML转义</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#xmlescape">String XMLESCAPE(Object obj)</a></h2>
+    <p>XML转义</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#decode">Object DECODE(Object control_value,Object value1,Object result1[,Object value2,Object result2...][,Object default_result])</a></h2>
+    <p>将输入数值与函数中的参数列表相比较，根据输入值返回一个对应值。函数的参数列表是由若干数值及其对应结果值组成的若干序偶形式。当然，如果未能与任何一个实参序偶匹配成功，则函数也有默认的返回值。
+       <br>
+       如果value1是数字类型，NPS将全部转换为BigDecimal进行比较；否则，将按字符串进行比较。
+    </p>
+    <p><b>参数返回值类型</b></p>
+    <p>
+    　　control _value:试图处理的数值。DECODE函数将该数值与后面的一系列的偶序相比较，以决定返回值。<br>
+    　　value1: 是一组成序偶的数值。如果输入数值与之匹配成功，则相应的结果将被返回。对应一个空的返回值，可以使用关键字null与之对应 <br>
+    　　result1: 是一组成序偶的结果值。<br>
+    　　default_result 未能与任何一个值匹配时，函数返回的默认值。如果没有设置default_result，则返回null。
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#split">String[] SPLIT(Object obj1 [,String regex,int limit])</a></h2>
+    <p>根据匹配给定的正则表达式来拆分此字符串。</p>
+
+    <p><b>参数</b></p>
+    <p>
+        regex:正则表达式。如果regex省略，则默认按空白字符拆分[ \t\n\x0B\f\r] <br>
+        limit:限制个数。如果limit省略，则limit默认值为0。
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#instr">int INSTR(Object str,Object str_search[,int fromIndex,int occurrence])</a></h2>
+    <p>在一个字段中搜索指定的字符,返回发现指定的字符的位置;</p>
+
+    <p><b>参数</b></p>
+    <p> str:被搜索的字符串；<br>
+        str_search:希望搜索的字符串；<br>
+        fromIndex:搜索的开始位置,从1开始计数。默认为1； <br>
+        occurrence:出现的位置,默认为1
+    </p>
+    <p><b>返回值</b></p>
+    <p>substr在str中出现的位置，从1开始计数，0表示没有找到。</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#substr">String SUBSTR(Object str,int start,int count)</a></h2>
+    <p>取子字符串,从start开始,取count个</p>
+
+    <p><b>参数</b></p>
+    <p>    str:希望被替换的字符或变量；<br>
+           start:从1开始计数，0将被转换为1。如果为负数，表示从末尾开始取。<br>
+           count:正整数。零或者负数将被转换为1。
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#replace">String REPLACE(Object str,String regex,String replacement)</a></h2>
+    <p>替换字符串</p>
+
+    <p><b>参数</b></p>
+    <p>    str:希望被替换的字符或变量；<br>
+           regex:被替换的字符串，可以使用JAVA正则表达式；<br>
+           replacement:要替换的字符串
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#contact">String CONTACT(Object obj1, Object obj2)</a></h2>
+    <p>连接两个字段</p>
+
+    <p><b>参数</b></p>
+    <p>obj1和obj2可以是任意一种数据类型。如果是CLOB类型字段，将自动提取所有文字并叠加</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#length">int LENGTH(Object obj)</a></h2>
+    <p>返回字符串的长度</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#initcap">String INITCAP(Object obj)</a></h2>
+    <p>将每个单词的首字母转换为大写。单词以空格、非ASCII字符拆分。</p>
+
+    <p><b>参数</b></p>
+    <p>obj可以是任意一种数据类型</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#lower">String LOWER(Object obj)</a></h2>
+    <p>返回字符串,并将所有的字符小写</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#upper">String UPPER(Object obj)</a></h2>
+    <p>返回字符串,并将所有的字符大写</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#lpad">String LPAD(Object obj,int length[,String padding])</a></h2>
+    <p>在字段的左边粘贴字符</p>
+    <p><b>参数</b></p>
+    <p>length是总长度。<br>
+        padding是要粘贴的字符，可以省略默认为空格。
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#rpad">String RPAD(Object obj,int length[,String padding])</a></h2>
+    <p>在字段的右边粘贴字符</p>
+    <p><b>参数</b></p>
+    <p>length是总长度。<br>
+        padding是要粘贴的字符，可以省略默认为空格。
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#ltrim">String LTRIM(Object str[,String trim_str])</a></h2>
+    <p>删除左边出现的字符串trim_str中的任一字符</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#rtrim">String RTRIM(Object str[,String trim_str])</a></h2>
+    <p>删除右边出现的字符串</p>
+
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#trim">String TRIM(Object obj)</a></h2>
+    <p>删除左边、右边出现的空格</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#tonumber">Number TO_NUMBER(Object str)</a></h2>
+    <p>将给出的字符转换为数字</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#todate">Date TO_DATE(Object str,String format)</a></h2>
+    <p>将字符串转化为日期</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#tochar">String TO_CHAR(Object obj[,String format])</a></h2>
+    <p>将指定对象格式化为字符串</p>
+    <p><b>参数</b></p>
+    <p>format可以省略。如果省略，CLOB字段将自动提取原文，其他将默认调用obj.toString()方法。</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#sysdate">Date SYSDATE()</a></h2>
+    <p>用来得到系统的当前日期</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#addyear">Date ADD_YEARS(Object obj,int years)</a></h2>
+    <p>增加或减去年份</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#addmonth">Date ADD_MONTHS(Object obj,int months)</a></h2>
+    <p>增加或减去月份</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#adddays">Date ADD_DAYS(Object obj,int days)</a></h2>
+    <p>增加或减去天数</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#nextday">Date NEXT_DAY(Object date,String weekday)</a></h2>
+    <p>给出日期date和星期weekday之后计算下一个星期的日期</p>
+    <p><b>参数说明</b></p>
+    <p>weekday is a day of the week。
+       如果nps.conf中配置的是英文，则应使用 SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
+       <br>
+       如果nps.conf中配置的LOCALE为中文，则应使用"星期一"、"星期二", ...
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#lastday">Object LAST_DAY(Object date)</a></h2>
+    <p>返回日期的最后一天</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#abs">Number ABS(Object obj)</a></h2>
+    <p>返回指定值的绝对值</p>
+</div>
+
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#round">Number ROUND(Object obj)</a></h2>
+    <p>按照指定的精度进行舍入</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#max">Number MAX(Object obj1,Object... objs)</a></h2>
+    <p>求最大值</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#min">Number MIN(Object obj1,Object... objs)</a></h2>
+    <p>求最小值</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#greatest">String GREATEST(Object str1,Object ...strs)</a></h2>
+    <p>比较字符的编码大小，返回最大值</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#least">String LEAST(Object str1,Object ...strs)</a></h2>
+    <p>比较字符的编码大小，返回最小值</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#uid">String UID()</a></h2>
+    <p>返回当前用户的唯一ID号</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#user">String USER()</a></h2>
+    <p>返回当前用户的名字</p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2><a id="#userenv">String USERENV(String var)</a></h2>
+    <p>返回当前nps.conf中配置信息</p>
+
+    <p><b>参数</b></p>
+    <p>
+        WEB_ROOT: 当前NPS安装路径；<br>
+        TEMP_ROOTPATH: 当前临时目录；<br>
+        LOCALE: 当前语言；<br>
+        以及其他nps.conf中的自定义参数。
+    </p>
+</div>
+
+    <br><br><br><br>
+  </div>
+</body>
+</html>

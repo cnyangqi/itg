@@ -1,0 +1,264 @@
+body {
+    background: #fff;
+    color: #333;
+    font: 62.5% Arial, Helvetica, sans-serif;
+    text-align: left
+}
+
+* {
+    margin: 0;
+    padding: 0
+}
+
+td, th {
+    padding: 4px
+}
+
+select {
+    font-size: 1em;
+}
+
+select > option {
+    padding: 0 5px 0 3px
+}
+
+input[type=submit] {
+    padding: 1px 6px
+}
+
+#container_wrap {
+    min-width: 800px;
+    width: 100%;
+    float: left;
+    background: #fff;
+    font-size: 100%;
+    z-index: 10;
+    padding: 0
+}
+
+#container {
+    width: 100%;
+    position: relative;
+    font-size: 1.4em;
+    line-height: 1.35em;
+    z-index: 6;
+    margin: 0 auto;
+    padding: 0 20px
+}
+
+#content {
+    float: left;
+    padding: 0 40px 0 0;
+}
+
+#modules {
+    padding: 0
+}
+
+a {
+    color: #297ccf;
+    text-decoration: none;
+    outline: none
+}
+
+a:visited {
+    color: #5d7d9d;
+    text-decoration: none
+}
+
+a img {
+    border:none;
+}
+
+blockquote {
+    color: #555;
+    margin: 0 20px 1.5em 0;
+    padding: 0 0 0 43px
+}
+
+abbr, acronym {
+    border-bottom: 1px dotted #aaa;
+    cursor: help
+}
+
+code {
+    color: #00c;
+    font: normal 1em "Courier New", Courier, monospace
+}
+
+p {
+    margin: 0 0 .75em
+}
+
+ul, ol {
+    margin: 0 0 .75em 2em
+}
+
+ul {
+    list-style-type: disc
+}
+
+ul li ul, ul li ol, ol li ul, ol li ol {
+    margin: .5em 0 .5em 30px
+}
+
+dl {
+    margin: 0 0 1.5em
+}
+
+dt {
+    font-weight: 700;
+    margin: 0 0 .7em
+}
+
+dd {
+    margin: 0 0 1.5em 25px
+}
+
+.no_margin {
+    margin: 0 !important
+}
+
+h1, h2, h3, h4 {
+    font-weight: 400;
+    font-family: Georgia, serif;
+    line-height: normal
+}
+
+h1.big_head {
+    font-size: 3em;
+    margin-bottom: .25em
+}
+
+h1.underline, h2.underline {
+    font-size: 1.4em;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1em;
+    padding-bottom: 4px
+}
+
+h2.overline {
+    font-size: 1.4em;
+    border-top: 1px solid #ccc;
+    margin-top: 1em;
+    padding-top: 4px
+}
+
+h1 {
+    font-size: 1.857em;
+    margin-bottom: .25em
+}
+
+.page h2 {
+    font: bold 1.2em Arial, Helvetica, sans-serif
+}
+
+h3 {
+    font-size: 1.6em;
+    margin: 0 0 .1em
+}
+
+pre {
+    color: #333;
+    font: normal .9em "Courier New", Courier, monospace;
+    line-height: 1em
+}
+
+ul#warnings, ul#alerts {
+    list-style-type: none;
+    list-style: none;
+    font-size: .857em;
+    clear: left
+}
+
+ul#warnings li, ul#alerts li {
+    margin: 0;
+    padding: 3px 0
+}
+
+#container blockquote.right {
+    width: 200px;
+    font-style: normal !important;
+    font-size: 1.3em !important;
+    border: 1px dashed #aaa;
+    background: none !important;
+    text-align: center;
+    float: right;
+    border-width: 1px 0;
+    margin: .5em 0 .5em 15px !important;
+    padding: .3em 0 !important
+}
+
+#container blockquote.left {
+    width: 200px;
+    font-style: normal !important;
+    font-size: 1.3em !important;
+    border: 1px dashed #aaa;
+    background: none !important;
+    text-align: center;
+    float: left;
+    border-width: 1px 0;
+    margin: .5em 15px .5em 0 !important;
+    padding: .3em 0 !important
+}
+
+#container blockquote.right p, #container blockquote.left p {
+    line-height: 1.5em !important;
+    margin: 0 !important
+}
+
+.clear {
+    width: 360px;
+    height: 1px;
+    float: left;
+    clear: both;
+    margin: 0 0 2em
+}
+
+div.full {
+}
+
+div.full .mod {
+}
+
+div.full .module {
+}
+
+div.left {
+    width: 30%;
+    float: left;
+    margin: 0 15px .5em 0
+}
+
+div.right {
+    width: 30%;
+    float: right;
+    margin: 0 0 .5em 15px
+}
+
+.txtd {
+    border: none;
+}
+
+
+a.external {
+    background-position: right -78px;
+    padding-right: 13px
+}
+
+div.right .module {
+    padding-top: 10px
+}
+
+.bottom_right {
+    text-align: right;
+    margin: 0
+}
+
+li, div.modfloat h2 {
+    margin: 0 0 .5em
+}
+
+div.floatclear, br.floatclear {
+    clear: both
+}

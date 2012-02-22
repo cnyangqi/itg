@@ -1,0 +1,1 @@
+TOPICMOVE_SUCCESS=Topic has been moved.

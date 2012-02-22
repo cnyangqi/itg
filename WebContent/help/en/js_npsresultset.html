@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsResultSet</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsResultSet class</a></h1>
+    <div class="toplang"></div>
+    <p> Indicates the data list of database result set. It is generated through inquiring database statement executed by NpsPreparedStatement.
+        <font color=red>Currently, large object (CLOB, BLOB, LONG) and array is not supported.</font>
+        <br><br>
+        Example code:<br>
+        var pstmt = session.PrepareStatement("select sysdate from dual");<br>
+        var rs = pstmt.ExecuteQuery();<br>
+        while(rs.Next()) <br>
+        {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        out.Info(rs.GetDate(1));<br>
+        }
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100">boolean</td>
+                <td>
+                    First() throws Exception<br>
+                    Move pointer to the first row of the ResultSet.<br>
+                    If pointer is in valid row, it will return to “true”. If there is no row in result set, it will return to “false”.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Last() throws Exception<br>
+                    Move pointer to the last row of the ResultSet.<br>
+                    If pointer is in valid row, it will return to “true”. If there is no row in result set, it will return to “false”.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Previous() throws Exception<br>
+                    Move pointer to the previous row of the ResultSet. <br>
+                    If pointer is in valid row, it will return to “true”. If there is no row in result set, it will return to “false”.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    Next() throws Exception<br>
+                    Moves the cursor down one row from its current position. A ResultSet cursor is initially positioned before the first row; the first call to the method next makes the first row the current row; the second call makes the second row the current row, and so on.
+                    <br>
+                    If an input stream is open for the current row, a call to the method next will implicitly close it. A ResultSet object's warning chain is cleared when a new row is read. 
+					<br>
+					returns true if the new current row is valid; false if there are no more rows 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Close()<br>
+                    Releases this ResultSet object's database and JDBC resources immediately instead of waiting for this to happen when it is automatically closed.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    DeleteRow() throws Exception<br>
+                    Deletes the current row from this ResultSet object and from the underlying database. This method cannot be called when the cursor is on the insert row.<br>
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    InsertRow() throws Exception<br>
+                    Inserts the contents of the insert row into this ResultSet object and into the database. The cursor must be on the insert row when this method is called. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    GetInt(int columnIndex) throws Exception<br>
+            Retrieves the value of the designated column in the current row of 
+            this ResultSet object as an int. <br>
+					columnIndex - the first column is 1, the second is 2, ... 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>int</td>
+                <td>
+                    GetIntByName(String columnName) throws Exception<br>
+            Retrieves the value of the designated column in the current row of 
+            this ResultSet object as an int.<br>
+			columnName - the SQL name of the column 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetString(int columnIndex) throws Exception<br>
+            Retrieves the value of the designated column in the current row of 
+            this ResultSet object as a String. <br>
+					columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetStringByName(String columnName) throws Exception<br>
+            Retrieves the value of the designated column in the current row of 
+            this ResultSet object as a String. <br>
+					columnName - the SQL name of the column
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    GetDouble(int columnIndex) throws Exception<br>
+            Retrieves the value of the designated column in the current row of 
+            this ResultSet object as a double.<br>
+			columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>double</td>
+                <td>
+                    GetDoubleByName(String columnName) throws Exception<br>
+                    Retrieves the value of the designated column in the current row of 
+            this ResultSet object as a double.<br>
+			        columnName - the SQL name of the column
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    GetDate(int columnIndex) throws Exception<br>
+                    Retrieves the value of the designated column in the current row of this ResultSet object as a Date object. <br>
+					columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>Date</td>
+                <td>
+                    GetDateByName(String columnName) throws Exception<br>
+                    Retrieves the value of the designated column in the current row of this ResultSet object as a Date object. <br>
+					columnName - the SQL name of the column
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetClob(int columnIndex) throws Exception<br>
+                    Retrieves the value of the designated column in the current row of this ResultSet object.<br>
+					columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetClobByName(String columnName) throws Exception<br>
+                    Retrieves the value of the designated column in the current row of this ResultSet object.<br>
+					columnName - the SQL name of the column
+                </td>
+            </tr>
+
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsFirst() throws Exception<br>
+                    Retrieves whether the cursor is on the first row of this ResultSet object.<br>
+                    Returns true if the cursor is on the first row; false otherwise                    
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsLast() throws Exception<br>
+                    Retrieves whether the cursor is on the last row of this ResultSet object. Note: Calling the method isLast may be expensive because the JDBC driver might need to fetch ahead one row in order to determine whether the current row is the last row in the result set. <br>
+                    Returns true if the cursor is on the last row; false otherwise 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsAfterLast() throws Exception<br>
+                    Retrieves whether the cursor is after the last row in this ResultSet object.<br>
+                    Returns true if the cursor is after the last row; false if the cursor is at any other position or the result set contains no rows 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    IsBeforeFirst() throws Exception <br>
+                    Retrieves whether the cursor is before the first row in this ResultSet object.  <br>
+                    Returns true if the cursor is before the first row; false if the cursor is at any other position or the result set contains no rows 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateDate(int columnIndex, Object d) throws Exception<br>
+                    Updates the designated column with a Date value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database. <br>
+                    columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateDateByName(String columnName, Object d) throws Exception<br>
+                    Updates the designated column with a Date value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database. <br>
+                    columnName - the SQL name of the column
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateDouble(int columnIndex, double x) throws Exception<br>
+                    Updates the designated column with a double value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database. <br>
+                    columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateDoubleByName(String columnName, double x) throws Exception<br>
+                    Updates the designated column with a double value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database. <br>
+                    columnName - the SQL name of the column
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateInt(int columnIndex, int x) throws Exception<br>
+                    Updates the designated column with an int value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database. <br>
+                    columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateIntByName(String columnName, int x) throws Exception<br>
+                    Updates the designated column with an int value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database. <br>
+                    columnName - the SQL name of the column
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateString(int columnIndex, String x) throws Exception<br>
+                    Updates the designated column with a String value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database. <br>
+                    columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateStringByName(String columnName, String x) throws Exception<br>
+                    Updates the designated column with a String value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database. <br>
+                    columnName - the SQL name of the column
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateNull(int columnIndex) throws Exception<br>
+                    Gives a nullable column a null value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database.<br>
+                    columnIndex - the first column is 1, the second is 2, ...
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateNullByName(String columnName) throws Exception<br>
+                    Gives a nullable column a null value. The updater methods are used to update column values in the current row or the insert row. The updater methods do not update the underlying database; instead the updateRow or insertRow methods are called to update the database.<br>
+                    columnName - the SQL name of the column
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    UpdateRow() throws Exception<br>
+                    Updates the underlying database with the new contents of the current row of this ResultSet object. This method cannot be called when the cursor is on the insert row. 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    RowDeleted() throws Exception<br>
+                    Retrieves whether a row has been deleted. A deleted row may leave a visible "hole" in a result set. This method can be used to detect holes in a result set. The value returned depends on whether or not this ResultSet object can detect deletions.<br>
+                    Returns true if a row was deleted and deletions are detected; false otherwise                
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    RowInserted() throws Exception<br>
+                    Retrieves whether the current row has had an insertion. The value returned depends on whether or not this ResultSet object can detect visible inserts. <br>
+                    Returns true if a row has had an insertion and insertions are detected; false otherwise 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>boolean</td>
+                <td>
+                    RowUpdated() throws Exception<br>
+                    Retrieves whether the current row has been updated. The value returned depends on whether or not the result set can detect updates.<br>
+                    Returns true if both (1) the row has been visibly updated by the owner or another and (2) updates are detected 
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetFetchDirection(int direction) throws Exception<br>
+                    Gives a hint as to the direction in which the rows in this ResultSet object will be processed. The initial value is determined by the Statement object that produced this ResultSet object. The fetch direction may be changed at any time. <br>
+                    1000 indicating that the rows in a result set will be processed in a forward direction; first-to-last.<br>
+					1001indicating that the rows in a result set will be processed in a reverse direction; last-to-first.
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    RefreshRow() throws Exception<br>
+                   Refreshes the current row with its most recent value in the database. This method cannot be called when the cursor is on the insert row. 
+</td>
+            </tr>
+           
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>

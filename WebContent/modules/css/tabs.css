@@ -1,0 +1,32 @@
+.tabs {
+  padding: 0;
+}
+
+.tabs_titlebar {
+  line-height: 27px;
+  height: 26px;
+  overflow: hidden;
+  padding: 0;
+  text-align: center;
+}
+
+.tabs_titlebar .con {
+  float: left;
+  cursor: pointer;
+  text-align: center;
+}
+
+.tabs_titlebar .current {
+}
+
+.tabs_tab {      
+  padding: 1em;
+}
+
+.tabs .current {
+  display: block;
+}
+
+.tabs .normal {
+  display: none; 
+}

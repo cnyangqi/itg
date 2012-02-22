@@ -1,0 +1,5 @@
+TAG_HTMLTITLE=添加标签
+TAG_HINT_ADD=多个标签请使用减号（-）或者下划线（_）或者回车进行间隔
+TAG_BUTTON_OK=确定
+TAG_BUTTON_CANCEL=取消
+TAG_ALERT_NO_TAGS=请输入标签

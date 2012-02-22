@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>NpsMeter</title>
+<link href="/css/manual.css" rel="stylesheet" media="all" type="text/css">
+</head>
+<body id="manual-page">
+<br>
+<div id="page-content">
+<div id="preamble"><h1><a id="#page-header">NpsMeter class</a></h1>
+    <div class="toplang"></div>
+    <p>
+        NpsMeter用于特定格式的计量单位表达式的计算。计量单位表达式的格式主要有：<br>
+        1.数字+单位/单位，例如5包/盒<br>
+        2.数字+单位+间隔符+per+间隔符+单位，例如5pcs per carton<br>
+        3.数字+单位+间隔符+a+间隔符+单位，例如 5kg a barrel <br>
+        <br>
+        其中第一个单位也可以放在最前面，例如 RMB 5 per pcs <br>
+       间隔符可以是：空格、tab键、全角空格、回车换行 <br>
+
+       <br>
+       多个计量单位表达式间可以使用空格、tab键、全角空格、逗号、分号、全角逗号、全角分号、回车换行<br>
+       如5包/盒,10盒/箱,50箱/大包 <br>
+
+      <br>
+     <font color=red><b>注意事项</b></font>：<br>
+        1.所有单位都不要用复数，前后一致<br>
+        2.单个单位中间不能用空格间隔，单位最好使用简写<br>
+        3.单位比对是区分大小写的<br>
+        4.如果出现重复计数的，按左到后的优先次序引用<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如，输入 "5包/盒,10盒/箱,100盒/箱,50箱/大包"，系统将忽略100盒/箱<br>
+        5.只出现数字+单位组合的，不能出现其他规格组合<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如，"5箱"是合法的，但是"5箱 5元/箱"是不合法的
+      <br>
+      <br>
+      <font color=red><b>样例代码如下：</b></font>：<br>
+      <table border="1">
+         <tr><td>
+             var meter_package = new NpsMeter("5包/盒,10盒/箱,50箱/件");  <br>
+             meter_package.Evaluate();<br>
+             var pcs_per_package = meter_package.GetNum("包","件");<br>
+         </td></tr>
+      </table>
+      <br>
+      则pcs_per_package=2500
+    </p>
+</div>
+
+<div class="top"><a href="#page-header"><img alt="top" src="/images/help/up.gif"></a></div>
+<div class="section">
+    <h2>Method Summary</h2>
+    <table class="related" cellspacing="0" cellpadding="0" border="1">
+        <tbody>
+            <tr class="module">
+                <td width="100"></td>
+                <td>
+                    NpsMeter(String expression)<br>
+                    构造函数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    SetExpression(String expression)<br>
+                    设置计量单位表达式。
+                </td>
+            </tr>
+            <tr class="module">
+                <td>void</td>
+                <td>
+                    Evaluate() throws Exception<br>
+                    对计量单位表达式进行分析
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    Validate()<br>
+                    判断Evaluate()运算结果是否正常，如果有错误则报告警告信息
+                </td>
+            </tr>
+            <tr class="module">
+                <td>NpsMeter</td>
+                <td>
+                    Sort()<br>
+                    对Evaluate()运算结果进行按单位从小到大排序
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String</td>
+                <td>
+                    GetNum(String left,String right)<br>
+                    left=盒,right=件表示计算每件包含的盒数
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String[]</td>
+                <td>
+                    GetNth(int index)<br>
+                    返回第N个计量表达式。<br>
+                    返回值String[0]表示左侧单位，String[1]表示数值,String[2]表示右侧单位
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String[]</td>
+                <td>
+                    GetMetersByLeft(String left)<br>
+                    返回左单位运算符为left的第1个计量表达式。<br>
+                    返回值String[0]表示左单位，String[1]表示数值,String[2]表示右单位
+                </td>
+            </tr>
+            <tr class="module">
+                <td>String[]</td>
+                <td>
+                    GetMetersByRight(String right)<br>
+                    返回右单位运算符为right的第1个计量表达式。<br>
+                    返回值String[0]表示左单位，String[1]表示数值,String[2]表示右单位
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <br><br><br><br>
+</div>
+</body>
+</html>
