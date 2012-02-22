@@ -1,6 +1,7 @@
 package com.nfwl.itg.user;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,13 +18,13 @@ import com.nfwl.itg.common.Arith;
 
 /**
  * 
- * @Project：ithinkgo   
- * @Type：   UserManager 
- * @Author:  yjw 
- * @Email:   y.jinwei@gmail.com
- * @Mobile:  13738192139
+ * @Project：ithinkgo
+ * @Type： UserManager
+ * @Author: yjw
+ * @Email: y.jinwei@gmail.com
+ * @Mobile: 13738192139
  * @WebSite: http://51maibb.taobao.com
- * @Date:    2011-7-24 下午10:23:56
+ * @Date: 2011-7-24 下午10:23:56
  * 
  * @Comment
  * 
@@ -67,16 +68,19 @@ public class UserManager {
 		u.setId(id);
 		this.bean = u;
 		this.initBeanInfo();
-		//this.bean.addTerm(new TermBean("id",id,FieldTypeEnum.STRING,TermEnum.EQUAL));
+		// this.bean.addTerm(new
+		// TermBean("id",id,FieldTypeEnum.STRING,TermEnum.EQUAL));
 		return this.od.get(con);
 
 	}
 
 	/** 通过定点单位主键查询用户 */
-	public List<Bean> getUserByFixedpoint(Connection con, String id, Integer start, int size) throws JadoException {
+	public List<Bean> getUserByFixedpoint(Connection con, String id, Integer start, int size)
+			throws JadoException {
 		this.bean = null;
 		this.initBeanInfo();
 		this.bean.addTerm(new TermBean("itg_fixedpoint", id, FieldTypeEnum.STRING, TermEnum.EQUAL));
+		this.bean.addTerm(new TermBean("utype", -1, FieldTypeEnum.INTEGER, TermEnum.NOT_IN));
 		return this.od.search(con, start, size);
 
 	}
@@ -90,18 +94,19 @@ public class UserManager {
 		return this.od.getCount(con);
 	}
 
-	/** 通过用户主键删除定点单位用户  */
-	public void deleteFixedpointUser(Connection con, String id) throws JadoException {
+	/** 通过用户主键删除定点单位用户 */
+	public Integer deleteFixedpointUser(Connection con, String id) throws JadoException,
+			SQLException {
 		this.bean = null;
 		this.initBeanInfo();
 		this.bean.setId(id);
-		this.bean.setUtype("-1");
-		od.update(con);
+		this.bean.setUtype(-1);
+		return od.update(con);
 	}
-	
+
 	/** 通过用户主键查询用户 */
-	public User getUserById(Connection con, String id) throws Exception{
-		this.bean=null;
+	public User getUserById(Connection con, String id) throws Exception {
+		this.bean = null;
 		this.initBeanInfo();
 		this.bean.setId(id);
 		return (User) od.search(con).get(0);
@@ -126,13 +131,14 @@ public class UserManager {
 		try {
 			String sql = "update USERS set point=point+? where id=? ";
 			DbUtils_DAO dd = new DbUtils_DAO();
-			Integer i = dd.Execute_Sql(con, sql, new Object[] { point, id });
+			Integer i = dd.Execute_Sql(con, sql, new Object[]{point, id});
 			if (i == 1) {
 				return true;
 			} else {
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return false;
 		}
 	}
@@ -141,7 +147,7 @@ public class UserManager {
 
 		String sql = "update USERS set money=money+? where id=? ";
 		DbUtils_DAO dd = new DbUtils_DAO();
-		Integer i = dd.Execute_Sql(con, sql, new Object[] { money, id });
+		Integer i = dd.Execute_Sql(con, sql, new Object[]{money, id});
 		if (i == 1) {
 			return true;
 		} else {
@@ -154,13 +160,14 @@ public class UserManager {
 		try {
 			String sql = "update USERS set money=money-? where (money-?)>=0 and id=? ";
 			DbUtils_DAO dd = new DbUtils_DAO();
-			Integer i = dd.Execute_Sql(con, sql, new Object[] { money, money, id });
+			Integer i = dd.Execute_Sql(con, sql, new Object[]{money, money, id});
 			if (i == 1) {
 				return true;
 			} else {
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return false;
 		}
 	}

@@ -15,7 +15,8 @@
 	</ul>
 	<ul class="content">
 		<form action="/nfwl/session/login.jsp">
-			<input type="hidden" name="to_url" value="/user/loaduser.do?cmd=acctountInfo" />
+			<!-- <input type="hidden" name="to_url" value="/user/loaduser.do?cmd=acctountInfo" /> -->
+			<input type="hidden" name="to_url" value="/" />
 			<ul>
 				<li>用户名：<input name="user" type="text" class="input" size="15" /></li>
 				<li>密&nbsp;&nbsp;&nbsp;&nbsp;码：<input name="password" type="password" class="input" size="15" /></li>
@@ -45,9 +46,11 @@
 	</ul>
 	<ul class="content">
 		<form action="/nfwl/session/login.jsp">
-			<input type="hidden" name="to_url" value="/user/loaduser.do?cmd=acctountInfo" />
+			<!-- <input type="hidden" name="to_url" value="/user/loaduser.do?cmd=acctountInfo" /> -->
 			<ul>
 				<li>欢迎你：<%=user.GetName()%></li>
+				<li>账户余额：<%=user.getMoney()%> 元</li>
+				<li>当前积分：<%=user.getPoint()%> 分</li>
 				<li><a href="/user/loaduser.do?cmd=acctountInfo">我的账户</a></li>
 				<li><a href="/user/logout.jsp">退出</a></li>
 			</ul>

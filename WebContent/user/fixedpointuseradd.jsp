@@ -17,8 +17,7 @@
 		<script type="text/javascript" src="/user/fixedpointuser.js"></script>
 		<script type="text/javascript">
 			function checkPwd() {
-				if ($('input[name="password2"]').val() != $('input[name="password"]')
-						.val()) {
+				if ($('input[name="password2"]').val() != $('input[name="password"]').val()) {
 					alert('密码两次输入不一致，请重新输入密码');
 					$('input[name="password"]').val('');
 					$('input[name="password"]').focus();
@@ -62,20 +61,15 @@
 					<input type="hidden" name="id" value="${userForm.id }" />
 					<div class="zlxg">
 						<ul>
-							<li class="ti">
-								账户：
-							</li>
+							<li class="ti">账户：</li>
 							<li class="con">
-								<input name="account" type="text" class="input itop"
-									value="${userForm.account }" size="20" />
+								<input name="account" type="text" class="input itop" value="${userForm.account }" size="20" />
 								<font color="red"><html:errors property="account" />
 								</font>
 							</li>
 						</ul>
 						<ul>
-							<li class="ti">
-								密码：
-							</li>
+							<li class="ti">密码：</li>
 							<li class="con">
 								<input name="password" type="password" class="input itop"
 									value="${userForm.password }" size="20" />
@@ -84,9 +78,7 @@
 							</li>
 						</ul>
 						<ul>
-							<li class="ti">
-								确认密码：
-							</li>
+							<li class="ti">确认密码：</li>
 							<li class="con">
 								<input name="password2" type="password" class="input itop" size="20" onblur="checkPwd()"/>
 								<font color="red"><html:errors property="password2" />

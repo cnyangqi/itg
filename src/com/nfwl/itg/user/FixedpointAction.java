@@ -82,6 +82,7 @@ public class FixedpointAction extends nfwlAction {
 
 			nps.core.User temp = (nps.core.User) request.getSession().getAttribute("user");
 			user.setItg_fixedpoint(temp.getItg_fixedpoint());
+			user.setUtype(2);
 
 			Connection conn = Database.GetDatabase("nps").GetConnection();
 			um.insert(conn, user);
@@ -114,7 +115,6 @@ public class FixedpointAction extends nfwlAction {
 								HttpServletRequest request,
 								HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
-		System.out.println("++++++++++++++++++" + id);
 
 		Connection con = null;
 		try {
@@ -181,7 +181,7 @@ public class FixedpointAction extends nfwlAction {
 	/** 验证操作用户是否为定点单位管理员 */
 	private boolean isFixedpointManage(HttpServletRequest request) {
 		nps.core.User temp = (nps.core.User) request.getSession().getAttribute("user");
-		return (temp.getType() == 5);
+		return (temp.getType() == 6);
 	}
 
 }
