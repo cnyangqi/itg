@@ -55,9 +55,7 @@ public class User implements TreeNode, Serializable, Constants {
 	private Hashtable sites = null; // 存放实力化过的SITE信息
 	private String default_site = null;// 缺省site id
 
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
+	public User() {}
 
 	public User(String id, String name, String account, int type) {
 		this.id = id;
@@ -827,6 +825,7 @@ public class User implements TreeNode, Serializable, Constants {
 	 * 
 	 * return null; }
 	 */
+
 	// 新建用户
 	public User NewUser(Connection conn,
 						String name,

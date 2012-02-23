@@ -8,7 +8,7 @@
 
 <%
     request.setCharacterEncoding("UTF-8");
-    String fp_id=request.getParameter("fp_id");//如果为null，将再保存时使用序列生成ID号
+    String fp_id=request.getParameter("fp_id");//如果为null，将在保存时使用序列生成ID号
     if(fp_id!=null) fp_id=fp_id.trim();   
 
     //if(!(user.IsSysAdmin() || user.IsLocalAdmin()))
@@ -47,16 +47,16 @@
 
 <html>
 <head>
-    <title><%=(bNew?"新建":"编辑")+"定点单位"%></title>
+	<title><%=(bNew?"新建":"编辑")+"定点单位"%></title>
     <script type="text/javascript" src="/jscript/global.js"></script>
     <script type="text/javascript" src="/nfwl/js/inputcheck.js"></script>
     
-  <script type="text/javascript" src="/jquery/jquery-1.6.js"></script>
-  <script type="text/javascript" src="/jquery/jquery.validate.js"></script>
-  <script type="text/javascript" src="/jquery/jquery.validate.messages_cn.js"></script>
-  <script type="text/javascript" src="/jquery/jquery-easyui-1.2.3/jquery.easyui.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="/jquery/jquery-easyui-1.2.3/themes/default/easyui.css">
-  <link type="text/css" rel="stylesheet" href="/jquery/jquery-easyui-1.2.3/thmes/icon.css">
+	<script type="text/javascript" src="/jquery/jquery-1.6.js"></script>
+	<script type="text/javascript" src="/jquery/jquery.validate.js"></script>
+	<script type="text/javascript" src="/jquery/jquery.validate.messages_cn.js"></script>
+	<link type="text/css" rel="stylesheet" href="/jquery/jquery-easyui-1.2.3/themes/default/easyui.css">
+	<link type="text/css" rel="stylesheet" href="/jquery/jquery-easyui-1.2.3/thmes/icon.css">
+	<script type="text/javascript" src="/jquery/jquery-easyui-1.2.3/jquery.easyui.min.js"></script>
     <LINK href="/css/style.css" rel = stylesheet />
 
   <script type="text/javascript" >
@@ -127,38 +127,42 @@
         <td align=center><font color=red>单位名称</font></td>
         <td>
           <input type="text" id="fp_name" name="fp_name"  maxlength="10" value= "<%= fixedPoint==null?"":fixedPoint.getName() %>">
-          <font color="red">*</font> <span style="color:red"></span>
+          <font color="red">*</font>
         </td>
     </tr>
      <tr height=30>
     <td align=center>单位代码</td>
     <td >
       <input type="text" id="fp_code" name="fp_code"   maxlength="10"  width=10 value="<%= (fixedPoint==null || fixedPoint.getCode()==null)?"":Utils.TransferToHtmlEntity(fixedPoint.getCode() )%>">
-      <span></span></td>
+      <font color="red">*</font>
+     </td>
     </tr>
     <tr height=30>
         <td align=center>地址</td>
         <td>
-          <input type="text" name="fp_address" maxlength=50  style="width:100%" value= "<%= (fixedPoint==null || fixedPoint.getAddress()==null)?"":Utils.TransferToHtmlEntity(fixedPoint.getAddress()) %>">
+        	<input type="text" name="fp_address" maxlength=50  style="width:100%" value= "<%= (fixedPoint==null || fixedPoint.getAddress()==null)?"":Utils.TransferToHtmlEntity(fixedPoint.getAddress()) %>">
+        	<font color="red">*</font>
         </td>
     </tr>
     <tr height=30>
 		<td align=center>联系人</td>
 		<td >
 			<input type="text" name="fp_linker"  maxlength=50 style="width:200"  value="<%= (fixedPoint==null || fixedPoint.getLinker()==null)?"":Utils.TransferToHtmlEntity(fixedPoint.getLinker()) %>">
+	    	<font color="red">*</font>
 	    </td>
     </tr>
     <tr height=30>
 		<td align=center>联系电话</td>
 		<td >
 			<input type="text" name="fp_phone"  maxlength="100" style="width:200" value="<%= (fixedPoint==null || fixedPoint.getPhone()==null)?"":Utils.TransferToHtmlEntity(fixedPoint.getPhone()) %>">
+	    	<font color="red">*</font>
 	    </td>
     </tr>
     <tr height=30>
 		<td align=center>EMAIL地址</td>
 		<td >
 			<input type="text" id="fp_email" name="fp_email"   maxlength="100" style="width:200" value="<%= (fixedPoint==null || fixedPoint.getEmail()==null)?"":Utils.TransferToHtmlEntity(fixedPoint.getEmail()) %>">
-	   <font color="red">*</font> <span style="color:red"></span></td>
+	   </td>
     </tr>
     <tr height=30>
 		<td align=center>邮编</td>

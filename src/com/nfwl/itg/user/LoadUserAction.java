@@ -30,21 +30,22 @@ import com.nfwl.itg.common.dbUtil;
 
 public class LoadUserAction extends nfwlAction {
 
-	public ActionForward modfiy(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward modfiy(ActionMapping mapping,
+								ActionForm form,
+								HttpServletRequest request,
+								HttpServletResponse response) throws Exception {
 		Connection con = null;
 		try {
 			con = dbUtil.getNfwlCon();
-			nps.core.User user = (nps.core.User) request.getSession()
-					.getAttribute("user");
+			nps.core.User user = (nps.core.User) request.getSession().getAttribute("user");
 			String userid = user.GetId();
 			UserManager um = new UserManager();
 			User u = (User) um.get(con, userid);
 			TokenManager.saveToken(request);
 			UserForm uf = um.beanTOform(u);
 			request.setAttribute("userForm", uf);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			JLog.getLogger().error("显示用户信息出错", e);
 			Message ms = new Message();
 			ms.setFlag(false);
@@ -52,7 +53,8 @@ public class LoadUserAction extends nfwlAction {
 			request.setAttribute("message", ms);
 			return mapping.findForward("userError");
 
-		} finally {
+		}
+		finally {
 			if (con != null)
 				con.close();
 		}
@@ -62,26 +64,28 @@ public class LoadUserAction extends nfwlAction {
 
 	/** 账户信息 */
 	@SuppressWarnings("rawtypes")
-	public ActionForward acctountInfo(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward acctountInfo(	ActionMapping mapping,
+										ActionForm form,
+										HttpServletRequest request,
+										HttpServletResponse response) throws Exception {
 		Connection con = null;
 		try {
 			con = dbUtil.getNfwlCon();
-			nps.core.User user = (nps.core.User) request.getSession()
-					.getAttribute("user");
+			nps.core.User user = (nps.core.User) request.getSession().getAttribute("user");
 			String userid = user.GetId();
 			UserManager um = new UserManager();
 			Map map = um.getAccountInfo(con, userid);
 			request.setAttribute("accountInfo", map);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			JLog.getLogger().error("载入账号信息出错", e);
 			Message ms = new Message();
 			ms.setFlag(false);
 			ms.setError("载入账号信息出错!");
 			request.setAttribute("message", ms);
 			return mapping.findForward("userError");
-		} finally {
+		}
+		finally {
 			if (con != null)
 				con.close();
 		}

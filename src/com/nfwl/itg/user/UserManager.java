@@ -112,10 +112,13 @@ public class UserManager {
 		return (User) od.search(con).get(0);
 	}
 
-	public boolean updateAddress(Connection con, String id, String adrid) throws JadoException {
+	/** 修改用户默认收货地址 此处操作注意用户类型 */
+	public boolean updateAddress(Connection con, String id, String adrid, int utype)
+			throws JadoException {
 		User u = new User();
 		u.setId(id);
 		u.setAdrid(adrid);
+		u.setUtype(utype);// 用户类型
 		this.bean = u;
 		this.bean.addTerm(new TermBean("id", id, FieldTypeEnum.STRING, TermEnum.EQUAL));
 		this.initBeanInfo();

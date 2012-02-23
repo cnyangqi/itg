@@ -1,5 +1,4 @@
-<%@ page language="java" errorPage="/error.jsp"
-	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" errorPage="/error.jsp" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib prefix="my" uri="http://www.ithinkgo.com/functions"%>
@@ -47,8 +46,7 @@
 						</li>
 					</ul>
 				</div>
-				<form name="userForm" id="userForm" action="/user/user.do"
-					method="post">
+				<form name="userForm" id="userForm" action="/user/user.do" method="post">
 					<input type="hidden" name="token" value="${token }" />
 					<input type="hidden" name="cmd" value="modfiy" />
 					<input type="hidden" name="id" value="${userForm.id }" />
@@ -69,8 +67,7 @@
 								呢称：
 							</li>
 							<li class="con">
-								<input name="nickname" type="text" class="input itop"
-									value="${userForm.nickname }" size="20" />
+								<input name="nickname" type="text" class="input itop" value="${userForm.nickname }" size="20" />
 								<font color="red"><html:errors property="nickname"/></font>
 							</li>
 						</ul>

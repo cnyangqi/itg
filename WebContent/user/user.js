@@ -2,7 +2,6 @@ $().ready( function() {
 		$("#userForm").validate( {
 			rules : {
 				nickname : {
-					required : true,
 					CNminlength : 2,
 					CNmaxlength : 20
 				},
@@ -12,19 +11,17 @@ $().ready( function() {
 				},
 				detailadr : {
 					required : true,
-					CNmaxlength : 50
+					CNmaxlength : 200
 				},
 				mobile : {
 					required : true,
 					isMobile : true
 				},
 				areacode : {
-					required : true,
 					number : true,
 					CNmaxlength : 4
 				},
 				telephone : {
-					required : true,
 					number : true,
 					CNmaxlength : 8
 				},
@@ -33,12 +30,10 @@ $().ready( function() {
 					CNmaxlength : 3
 				},
 				faxareacode : {
-					required : true,
 					number : true,
 					CNmaxlength : 4
 				},
 				fax : {
-					required : true,
 					number : true,
 					CNmaxlength : 8
 				}
@@ -55,7 +50,7 @@ $().ready( function() {
 				},
 				detailadr : {
 					required : "请填写详细地址",
-					CNmaxlength : "不能大于50个汉字"
+					CNmaxlength : "不能大于200个汉字"
 				},
 				mobile : {
 					required : "请填写手机",

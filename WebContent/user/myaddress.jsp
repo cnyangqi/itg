@@ -1,5 +1,4 @@
-<%@ page language="java" errorPage="/error.jsp"
-	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" errorPage="/error.jsp" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib prefix="my" uri="http://www.ithinkgo.com/functions"%>
@@ -51,8 +50,7 @@
 						</li>
 					</ul>
 				</div>
-				<form name="addressForm" id="addressForm" action="/user/address.do"
-					method="post">
+				<form name="addressForm" id="addressForm" action="/user/address.do" method="post">
 					<input type="hidden" name="token" value="${token }" />
 					<c:choose>
 						<c:when test="${empty addressForm}">
@@ -101,9 +99,9 @@
 										<c:forEach items="${list}" var="bean">
 											<tr>
 												<td>
-													
-													${bean.adr_name }<c:if test="${user.adrid==bean.adr_id }">
-					 											<font color="red">(默认)</font>
+													${bean.adr_name }
+													<c:if test="${user.adrid==bean.adr_id }">
+					 									<font color="red">(默认)</font>
 					 								</c:if>
 												</td>
 												<td>
@@ -123,7 +121,9 @@
 												<td>
 													<a href="javascript:view('${bean.adr_id }')">[修改]</a>&nbsp;&nbsp;
 													<a href="javascript:del('${bean.adr_id }')">[删除]</a>&nbsp;&nbsp;
-													<a href="javascript:setdefault('${bean.adr_id }')">[设为默认]</a>
+													<c:if test="${user.adrid!=bean.adr_id }">
+														<a href="javascript:setdefault('${bean.adr_id }')">[设为默认]</a>
+													</c:if>
 												</td>
 											</tr>
 										</c:forEach>
@@ -152,6 +152,7 @@
 									value="${addressForm.adr_name }" />
 								<font color="red"><html:errors property="adr_name"/></font>
 							</li>
+							<font color="red">*</font>
 						</ul>
 						<ul>
 							<li class="ti">
@@ -169,6 +170,7 @@
 									</c:forEach>
 								</select>
 							</li>
+							<font color="red">*</font>
 						</ul>
 						<ul>
 							<li class="ti">
@@ -178,6 +180,7 @@
 								<input name="adr_detail" type="text" class="input itop"
 									size="50" value="${addressForm.adr_detail }" />
 							</li>
+							<font color="red">*</font>
 						</ul>
 						<ul>
 							<li class="ti">
@@ -196,6 +199,7 @@
 								<input name="adr_mobile" type="text" class="input itop"
 									value="${addressForm.adr_mobile }" />
 							</li>
+							<font color="red">*</font>
 						</ul>
 						<ul>
 							<li class="ti">

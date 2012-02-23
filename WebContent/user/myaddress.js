@@ -11,7 +11,6 @@
                     CNmaxlength: 50  
                 },
                 adr_postcode:{  
-                    required: true,  
                     CNminlength:6,
                     CNmaxlength:6  
                 },  
@@ -20,12 +19,10 @@
                     isMobile: true  
                 },  
                 adr_areacode: {  
-                    required: true,
                     number:true,  
 					CNmaxlength:4   
                 },  
                 adr_telephone:{  
-                	required: true,
                     number:true,  
 					CNmaxlength:10  
                 },
@@ -34,7 +31,6 @@
                 	CNmaxlength:3   
                 },
                 adr_email: {  
-                    required: true,
                     email:4   
                 } 
             },  

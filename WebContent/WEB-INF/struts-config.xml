@@ -14,9 +14,8 @@
 		<form-bean name="userForm" type="com.nfwl.itg.user.UserForm"/>
 		<form-bean name="addressForm" type="com.nfwl.itg.user.ITG_ADDRESSForm"/>
 		<!-- <form-bean name="rechargerecForm" type="com.nfwl.itg.user.ITG_RECHARGEREC"/> -->
-		
-		
 	</form-beans>
+	
 	<global-forwards>
 		<forward name="nologing" path="/index_zh_CN.jsp"></forward>
 		<forward name="orderlogin" path="/order/login.jsp"></forward>
@@ -26,8 +25,8 @@
 		<forward name="orderFailed" path="/itgerror.jsp"></forward>
 		<forward name="myorder" path="/user/order.do?cmd=search"></forward>
 	</global-forwards>
-	<action-mappings>	
 	
+	<action-mappings>	
 	
 		<action 
 			path="/user/load"
@@ -41,9 +40,6 @@
 			<forward name="changepasswordSuccess" path="/user/changepassword.jsp"/>
 			
 		</action>
-		
-
-		
 			
 		<!-- address -->
 		<action 
@@ -96,7 +92,6 @@
 			<forward name="cartLogin_success" path="/order/login.jsp"/>
 		</action>
 		
-		
 		<action 
 			path="/order/cart"
 			type="com.nfwl.itg.order.CartAction"
@@ -110,7 +105,6 @@
 			
 		</action>
 		
-		
 		<action 
 			path="/order/carrymode"
 			type="com.nfwl.itg.order.CarrymodeAction"
@@ -119,7 +113,6 @@
 			
 			>	
 			<forward name="initSuccess" path="/order/carryMode.jsp"/>
-			
 			
 		</action>
 		
@@ -335,9 +328,10 @@
 		 
 		<!--usermanager action-->
 	</action-mappings>
+	
 	<message-resources parameter="MessageResources" />
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validator-user.xml,/WEB-INF/validator-order.xml"/> 
+		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validator-order.xml"/> 
 	</plug-in>
 	
 </struts-config>
