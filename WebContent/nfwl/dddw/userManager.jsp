@@ -2,9 +2,8 @@
 <%@page import="controllers.UserController"%>
 <%@page import="models.UserModels"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ include file = "/include/header.jsp" %>
-
-<% UserModels usermodel = UserController.getUserById(user.getId());  %>
+<%@include file = "/include/header.jsp" %>
+<%UserModels usermodel = UserController.getUserById(user.getId()); %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
@@ -59,20 +58,19 @@
           </tr>
           <tr>
             <td>定点单位：</td>
-            <td><input class="easyui-combobox" 
-          id="itg_fixedpoint"
-          name="itg_fixedpoint"
-          <%if(user.IsSysAdmin()){ %>
-          url="/fixedpointcontroller/getAll/" 
-          <%}else { %>
-          url="/fixedpointcontroller/getAll/<%=usermodel.getItg_fixedpoint() %>"
-          <%} %>
-          valueField="fp_id" 
-          selected ="selected"
-          textField="fp_name" 
-          panelHeight="auto" /></td>
+            <td>
+            <input class="easyui-combobox" id="itg_fixedpoint" name="itg_fixedpoint"
+          		<%if(user.IsSysAdmin()){ %>
+          			url="/fixedpointcontroller/getAll/" 
+         		<%}else { %>
+          			url="/fixedpointcontroller/getAll/<%=usermodel.getItg_fixedpoint() %>"
+         		 <%} %>
+          		valueField="fp_id" 
+          		selected ="selected"
+         		textField="fp_name" 
+          		panelHeight="auto" />
+          	</td>
           </tr>
-          
           
           <tr>
             <td>电子邮件：</td>
@@ -82,12 +80,11 @@
             <td>用户类型：</td>
             <td>
             <select name="utype">
-            <option value="">普通用户</option>
-            
-            <%if(user.IsSysAdmin()){ %>
-             <option value="5">定点单位管理员</option>
-            <%}%>
-            
+            <option value="1">想购网会员</option>
+           	<%if(user.IsSysAdmin()){ %>
+	            <option value="2">定点单位用户</option>
+          		<option value="6">定点单位管理员</option>
+          	<%}%>
             </select>
             </td>
           </tr>

@@ -4,38 +4,30 @@ import java.sql.Date;
 
 import com.jado.bean.Bean;
 
-
-
 /**
+ * 充值卡实体
  * 
- * @Project：ithinkgo   
- * @Type：   ITG_SAVECARD 
- * @Author:  yjw 
- * @Email:   y.jinwei@gmail.com
- * @Mobile:  13738192139
- * @WebSite: http://51maibb.taobao.com
- * @Date:    2011-7-30 下午09:26:09
- * @Comment
- * 
+ * @author yangq(qi.yang.cn@gmail.com) 2012-2-23
  */
-
 public class ITG_SAVECARD extends Bean {
 
-	private String sc_cardno;//卡号
-	
-	private String sc_cardpwd;//密码
-	
-	private Double sc_money;//卡金额
-	
-	private Double sc_balance;//余额
-	
-	private Date sc_time;//创建日期
-	
-	private Date sc_publishtime;//发行日期
-	
-	private Date sc_usetime;//使用日期
-	
-	private String sc_creatorid;//创建人ID号
+	private String sc_cardno;// 卡号
+
+	private String sc_cardpwd;// 密码
+
+	private Double sc_money;// 卡金额
+
+	private Double sc_balance;// 余额
+
+	private Date sc_time;// 创建日期
+
+	private Date sc_publishtime;// 发行日期
+
+	private Date sc_usetime;// 使用日期
+
+	private String sc_creatorid;// 创建人ID号
+
+	private Integer sc_status;// 0：新建（不可使用），1 已销售（可正常使用），-1 已注销 （不可使用）
 
 	public String getSc_cardno() {
 		return sc_cardno;
@@ -100,7 +92,13 @@ public class ITG_SAVECARD extends Bean {
 	public void setSc_creatorid(String sc_creatorid) {
 		this.sc_creatorid = sc_creatorid;
 	}
-	
-	
-}
 
+	public Integer getSc_status() {
+		return sc_status;
+	}
+
+	public void setSc_status(Integer sc_status) {
+		this.sc_status = sc_status;
+	}
+
+}

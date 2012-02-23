@@ -29,11 +29,14 @@ public class SaveCardController extends ApplicationController {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "update  itg_savecard set sc_status = "
+		String sql = "update itg_savecard set sc_status = "
 						+ todo
-						+ " where sc_cardno in ("
+						+ " ,sc_publishtime=sysdate where sc_cardno in ("
 						+ ids
 						+ ")";
+
+		System.out.println("~~~~~~~~~~~~~~~~~~~" + sql);
+
 		try {
 			con = nps.core.Database.GetDatabase("nps").GetConnection();
 

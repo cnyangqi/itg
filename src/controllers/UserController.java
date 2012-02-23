@@ -14,15 +14,14 @@ import tools.Pub;
 import com.et.mvc.JsonView;
 import com.et.mvc.View;
 
+/**
+ * 用户管理
+ * 
+ * @author yangq(qi.yang.cn@gmail.com) 2012-2-23
+ */
 public class UserController extends ApplicationController {
 
-	// 检测用户名是否可用
-	/**
-	 * 
-	 * @param account
-	 * @return
-	 * @throws NpsException
-	 */
+	/** 用户账户检测 */
 	public View checkAccount(String account, Integer random) throws NpsException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -69,12 +68,7 @@ public class UserController extends ApplicationController {
 		return new JsonView(result);
 	}
 
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
+	/** 通过主键查询用户 */
 	public static UserModels getUserById(String id) throws Exception {
 		Connection con = null;
 		UserModels user = null;
@@ -138,19 +132,7 @@ public class UserController extends ApplicationController {
 		return user;
 	}
 
-	/**
-	 * 
-	 * @param id
-	 * @param fpid
-	 * @param name
-	 * @param utype
-	 * @param fixedpoint
-	 * @param mobile
-	 * @param pageSize
-	 * @param pageNumber
-	 * @return
-	 * @throws Exception
-	 */
+	/** 分页查询用户 */
 	public View getUser(String id,
 						String fpid,
 						String name,
@@ -340,7 +322,7 @@ public class UserController extends ApplicationController {
 				sql = "insert into users(id,name,account,worknum,password,telephone,itg_fixedpoint,fax,email,mobile,face,cx,dept,utype,nickname) "
 						+ " values(?,?,UPPER(?),?,?,?,?,?,?,?,?,?,2,?,?)";
 			} else {
-				sql = " update users set id = ?,name = ?,worknum = ?,password = ?,telephone = ?,itg_fixedpoint = ?,fax = ?,email = ?,mobile = ?,face = ?,cx = ?,utype = ? ,nickname = ? where id = ?";
+				sql = " update users set id = ?,name = ?,worknum = ?,telephone = ?,itg_fixedpoint = ?,fax = ?,email = ?,mobile = ?,face = ?,cx = ?,utype = ? ,nickname = ? where id = ?";
 			}
 
 			pstmt = con.prepareStatement(sql);
@@ -353,7 +335,10 @@ public class UserController extends ApplicationController {
 				pstmt.setString(colIndex++, user.getAccount());
 			}
 			pstmt.setString(colIndex++, user.getWorknum());
-			pstmt.setString(colIndex++, "1");
+			if (isNew) {
+				// 新建用户才初始化密码为123456
+				pstmt.setString(colIndex++, "123456");
+			}
 			pstmt.setString(colIndex++, user.getTelephone());
 			pstmt.setString(colIndex++, user.getItg_fixedpoint());
 			pstmt.setString(colIndex++, user.getFax());

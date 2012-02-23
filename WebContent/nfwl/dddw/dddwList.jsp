@@ -1,4 +1,4 @@
-<%@ page language = "java" contentType = "text/html;charset=UTF-8" errorPage="/error.jsp"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8" errorPage="/error.jsp"%>
 <%@ page import="nps.util.Utils" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="nps.core.*" %>
@@ -7,9 +7,7 @@
 <%@ page import="java.util.ResourceBundle" %>
 <%@ page import="java.util.Hashtable" %>
 <%@ page import="java.util.Enumeration" %>
-
 <%@ include file="/include/header.jsp" %>
-
 
 <%
     request.setCharacterEncoding("UTF-8");
@@ -35,7 +33,6 @@
       sqlWhere += " and fp_valid = ? ";
       
     }
-    
     
     String fp_name = request.getParameter("fp_name");
     if(fp_name!=null && fp_name.length()>0)
@@ -90,7 +87,7 @@
     try{
       con = Database.GetDatabase("nps").GetConnection();
      
-      //删除
+      // 批量删除定点单位
       if("delete".equalsIgnoreCase(job)){
           String[] fp_ids = request.getParameterValues("fp_ids");
           try{
@@ -242,11 +239,9 @@
         <td align="right" width="10%">&nbsp;</td>
         <td align="left" width="15%">&nbsp;</td>
         <td align="center" width="10%">
-            
             <input type="button" class="button" name="searchBtn" value="查询" onclick="f_search()">&nbsp;&nbsp;
             <input type="button" class="button" name="newBtn" value="新建" onclick="f_new()">&nbsp;&nbsp;
-            <!-- <input type="button" class="button" name="deleteBtn" value="删除" onclick="f_submit('delete')"> -->
-        
+            <input type="button" class="button" name="deleteBtn" value="删除" onclick="f_submit('delete')">&nbsp;&nbsp;
         </td>
         <td align="center" width="15%">&nbsp;</td>
         
@@ -292,19 +287,21 @@
             
             if(fp_address!=null && fp_address.length()>0){
               pstmt.setString(pos++,"%"+fp_address+"%");
-            }//fp_linker
+            }
+            
+            //fp_linker
             if(fp_linker!=null && fp_linker.length()>0){
               pstmt.setString(pos++,"%"+fp_linker.trim()+"%");
             }
+            
             if(from_date!=null && from_date.length()>0)
             {
               pstmt.setString(pos++,from_date);
-
             }
+            
             if(to_date!=null && to_date.length()>0)
             {
               pstmt.setString(pos++,to_date);
-
             }
             
             rs = pstmt.executeQuery();
@@ -340,13 +337,16 @@
               }
             }  //end of if (totalrows >0)
  %>
-  </form>
- </table>
+ 
+</form>
+</table>
+
 <form name=frmOpen action="articleinfo.jsp" target="_blank">
   <input type = "hidden" name = "id">
   <input type = "hidden" name = "site_id">
-  <input type="hidden" name="top_id">
+  <input type = "hidden" name = "top_id">
 </form>
+
 <script language="JavaScript" type="text/JavaScript">
   function openArt(siteid,topid,idvalue){
     document.frmOpen.id.value = idvalue;
@@ -354,14 +354,15 @@
     document.frmOpen.top_id.value = topid;      
     document.frmOpen.action="articleinfo.jsp";
     document.frmOpen.submit();
-}
+  };
+  
   function openCustomArt(siteid,topid,idvalue){
       document.frmOpen.id.value = idvalue;
       document.frmOpen.site_id.value = siteid;
       document.frmOpen.top_id.value = topid;
       document.frmOpen.action = "customartinfo.jsp";
       document.frmOpen.submit();
-  }
+  };
 </script>
 <%@ include file="/include/scrollpage.jsp" %>
 </BODY>

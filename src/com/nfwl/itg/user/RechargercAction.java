@@ -75,6 +75,7 @@ public class RechargercAction extends nfwlAction {
 
 	}
 
+	/** 充值卡充值 */
 	public ActionForward czkRecharge(	ActionMapping mapping,
 										ActionForm form,
 										HttpServletRequest request,
@@ -84,7 +85,6 @@ public class RechargercAction extends nfwlAction {
 		try {
 			if (TokenManager.isTokenValid(request, true)) {
 				nps.core.User user = (nps.core.User) request.getSession().getAttribute("user");
-
 				ITG_SAVECARDManager ism = new ITG_SAVECARDManager();
 				con = dbUtil.getNfwlCon();
 				String cardno = JUtil.convertNull(request.getParameter("cardno"));
