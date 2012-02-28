@@ -16,6 +16,19 @@
 	rs = ps.executeQuery();
 
 	if (rs.next()) {
+		// <a href=""></a>
+		
+		String tmp=rs.getString("abstract");
+		if(tmp.length()>50){
+			tmp=tmp.substring(0, 50);
+		}
+
+		StringBuilder sb=new StringBuilder("<a href=\"");
+		sb.append(rs.getString("url_gen"));
+		sb.append("\"");
+		
+		sb.append("</a>");
+		
 		out.print(rs.getString("abstract").substring(0, 50));
 		out.flush();
 		//out.close();
