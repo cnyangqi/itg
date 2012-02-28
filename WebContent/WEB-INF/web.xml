@@ -187,7 +187,7 @@
 		<filter-class>org.nutz.mvc.NutFilter</filter-class>
 		<init-param>
 			<param-name>modules</param-name>
-			<param-value>org.nutz.eshop.MainModule</param-value>
+			<param-value>org.nutz.platform.MainModule</param-value>
 		</init-param>
 	</filter>
 

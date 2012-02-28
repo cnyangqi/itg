@@ -1,4 +1,4 @@
-package org.nutz.eshop;
+package org.nutz.platform;
 
 import org.nutz.mvc.annotation.Encoding;
 import org.nutz.mvc.annotation.Fail;
