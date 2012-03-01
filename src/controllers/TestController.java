@@ -174,4 +174,49 @@ public class TestController extends ApplicationController {
 
 		return null;
 	}
+
+	/** 良渚组团二级栏目模板 */
+	public JsonView secondaryTopicModel() throws Exception {
+		Connection con;
+		PreparedStatement ps;
+		ResultSet rs;
+
+		String sql = " select code from topic where name = '" + "投资指南" + "'";
+
+		con = Database.GetDatabase("nps").GetConnection();
+		ps = con.prepareStatement(sql);
+		rs = ps.executeQuery();
+
+		rs.next();
+		String tmp = rs.getString("code");
+
+		sql = "select count(*) from topic t where t.code like '"
+				+ tmp
+				+ ".%' and t.siteid='lzarea' order by idx ";
+		ps = con.prepareStatement(sql);
+		rs = ps.executeQuery();
+
+		rs.next();
+		String sum = rs.getString(1);
+
+		sql = "select * from topic t where t.code like '"
+				+ tmp
+				+ ".%' and t.siteid='lzarea' order by idx ";
+		ps = con.prepareStatement(sql);
+		rs = ps.executeQuery();
+
+		LinkedList<String> list = new LinkedList<String>();
+
+		for (String string : list) {
+
+		}
+
+		while (rs.next()) {}
+
+		rs.close();
+		ps.close();
+		con.close();
+
+		return null;
+	}
 }
