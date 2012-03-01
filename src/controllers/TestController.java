@@ -3,6 +3,7 @@ package controllers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,11 +66,17 @@ public class TestController extends ApplicationController {
 		Connection con;
 		PreparedStatement ps;
 		ResultSet rs;
-		String sql = "select * from(select t.*, rownum rn from (select * from article) t where rownum <= 3 and t.siteid='lzarea' and t.topic=321 order by t.publishdate desc) where rn >= 1 ";
+		String sql = "select * from(select t.*, rownum rn from (select * from article) t where rownum <= 5 and t.siteid='lzarea' and t.topic=321 order by t.publishdate desc) where rn >= 1 ";
 
 		con = Database.GetDatabase("nps").GetConnection();
 		ps = con.prepareStatement(sql);
 		rs = ps.executeQuery();
+
+		StringBuilder sb = new StringBuilder(" <div id=\"slider\" class=\"slider\"> ");
+		LinkedList<String> list = new LinkedList<String>();
+
+		int j = 0;
+		String index0Str = null;// 记录第一条图片新闻的标题
 
 		while (rs.next()) {
 
@@ -78,8 +85,6 @@ public class TestController extends ApplicationController {
 			String regex = "<img.*?>";
 			Pattern p = Pattern.compile(regex);
 			Matcher m = p.matcher(tmp);
-
-			StringBuilder sb = new StringBuilder(" <a href=\"");
 
 			if (m.find()) {
 				tmp = m.group(0);
@@ -91,8 +96,30 @@ public class TestController extends ApplicationController {
 					// <a href="/xwzx/tpxw/2012/02/25/1063.shtml"
 					// target="blank"><img src="images/new_1.png" /></a>
 
-					sb.append(rs.getString("url_gen"));
-					sb.append("\" target=\"_blank\"><img ");
+					sb.append(" <a href=\" ");
+					sb.append(rs.getString("url_gen")).append("\" ");
+					sb.append(" target=\"_blank\" ");
+					sb.append(" title=\"");
+					sb.append(rs.getString("title"));
+
+					if (rs.getString("title").length() > 26) {
+						list.add("\"" + rs.getString("title").substring(0, 18) + "...\"");
+
+						if (j == 0) {
+							index0Str = rs.getString("title").substring(0, 18) + "...";
+							j++;
+						}
+					} else {
+						list.add("\"" + rs.getString("title") + "\"");
+
+						if (j == 0) {
+							index0Str = rs.getString("title");
+							j++;
+						}
+					}
+
+					sb.append("\" >");
+					sb.append(" <img ");
 					// sb.append(m.group(0));
 
 					tmp = m.group(0);
@@ -107,12 +134,39 @@ public class TestController extends ApplicationController {
 				}
 			}
 
-			System.out.println(sb.toString());
-
 			// out.print(rs.getString("abstract").substring(0, 50));
 			// out.flush();
 			// out.close();
 		}
+		sb.append(" </div>");
+
+		sb.append("<div id=\"title_view\" style=\"text-align: center;margin-left: 30px;\" >"
+					+ index0Str
+					+ "</div>");
+
+		sb.append("<script type=\"text/javascript\">");
+
+		sb.append("var ary=[");
+		for (int i = 0; i < list.size(); i++) {
+			if (i != 0) {
+				sb.append(",");
+			}
+			sb.append(list.get(i));
+		}
+		sb.append("];");
+
+		sb.append("$(function(){");
+		sb.append("$('#slider').omSlider({");
+		sb.append("animSpeed : 100,");
+		sb.append("effect : 'slide-v',");
+		sb.append("onBeforeSlide : function(index) {");
+		sb.append("$(\"#title_view\").html(ary[index])");
+		sb.append("}");
+		sb.append("});");
+		sb.append("});");
+		sb.append("</script>");
+
+		System.out.println(sb.toString());
 
 		rs.close();
 		ps.close();
