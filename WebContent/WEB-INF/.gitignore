@@ -3,3 +3,4 @@
 /src/
 /*.log
 /db.xml
+/quartz.properties
