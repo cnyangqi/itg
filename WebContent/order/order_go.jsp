@@ -102,8 +102,8 @@
 		</c:forEach>
       </select>
       
-    &nbsp;&nbsp;&nbsp;&nbsp;详细地址：<input  type="text" class="input itop" size="50" name="adr_detail" id="adr_detail" value="${addressForm.adr_detail }"/><font color="red"><html:errors property="adr_detail"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
-    邮政编码：<input type="text" class="input itop" size="8" name="adr_postcode" id="adr_postcode" value="${addressForm.adr_postcode }"/><font color="red"><html:errors property="adr_postcode"/></font><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;详细地址：<input  type="text" class="input itop" size="49" name="adr_detail" id="adr_detail" value="${addressForm.adr_detail }"/><font color="red"><html:errors property="adr_detail"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
+    邮政编码：<input type="text" class="input itop" size="5" name="adr_postcode" id="adr_postcode" value="${addressForm.adr_postcode }"/><font color="red"><html:errors property="adr_postcode"/></font><br />
     收货人：<input type="text" class="input" size="10" name="adr_name" id="adr_name" value="${addressForm.adr_name }"/><font color="red"><html:errors property="adr_name"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
     手机号码：<input type="text" class="input itop" name="adr_mobile" id="adr_mobile" value="${addressForm.adr_mobile }"/><font color="red"><html:errors property="adr_mobile"/></font>&nbsp;&nbsp;&nbsp;&nbsp;
     电子邮箱：<input type="text" class="input itop" name="adr_email" id="adr_email" value="${addressForm.adr_email }"/><font color="red"><html:errors property="adr_mobile"/></font>&nbsp;&nbsp;&nbsp;&nbsp;<br />

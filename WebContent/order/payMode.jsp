@@ -58,40 +58,7 @@
 			                   <td><input type="radio" name="pay_bank" value="directPay" <c:if test="${pay.pay_type=='directPay' }">checked="checked"</c:if> ><img src="/order/images/alipay_1.gif" border="0"/></td>
 			                 </tr>
 			                 <tr>
-			                   <td><input type="radio" name="pay_bank" value="ICBCB2C" <c:if test="${pay.defaultbank=='ICBCB2C' }">checked="checked"</c:if> /><img src="/order/images/ICBCB2C_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="CMB" <c:if test="${pay.defaultbank=='CMB' }">checked="checked"</c:if> /><img src="/order/images/CMB_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="CCB" <c:if test="${pay.defaultbank=='CCB' }">checked="checked"</c:if> /><img src="/order/images/CCB_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="BOCB2C" <c:if test="${pay.defaultbank=='BOCB2C' }">checked="checked"</c:if> /><img src="/order/images/BOCB2C_OUT.gif" border="0"/></td>
-			                 </tr>
-			                 <tr>
 			                   <td><input type="radio" name="pay_bank" value="ABC" <c:if test="${pay.defaultbank=='ABC' }">checked="checked"</c:if>/><img src="/order/images/ABC_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="COMM" <c:if test="${pay.defaultbank=='COMM' }">checked="checked"</c:if> /><img src="/order/images/COMM_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="SPDB" <c:if test="${pay.defaultbank=='SPDB' }">checked="checked"</c:if> /><img src="/order/images/SPDB_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="GDB" <c:if test="${pay.defaultbank=='GDB' }">checked="checked"</c:if> /><img src="/order/images/GDB_OUT.gif" border="0"/></td>
-			                 </tr>
-			                 <tr>
-			                   <td><input type="radio" name="pay_bank" value="CITIC" <c:if test="${pay.defaultbank=='CITIC' }">checked="checked"</c:if> /><img src="/order/images/CITIC_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="CEBBANK" <c:if test="${pay.defaultbank=='CEBBANK' }">checked="checked"</c:if> /><img src="/order/images/CEBBANK_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="CIB" <c:if test="${pay.defaultbank=='CIB' }">checked="checked"</c:if> /><img src="/order/images/CIB_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="SDB" <c:if test="${pay.defaultbank=='SDB' }">checked="checked"</c:if> /><img src="/order/images/SDB_OUT.gif" border="0"/></td>
-			                 </tr>
-			                 <tr>
-			                   <td><input type="radio" name="pay_bank" value="CMBC" <c:if test="${pay.defaultbank=='CMBC' }">checked="checked"</c:if> /><img src="/order/images/CMBC_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="HZCBB2C" <c:if test="${pay.defaultbank=='HZCBB2C' }">checked="checked"</c:if> /><img src="/order/images/HZCBB2C_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="SHBANK" <c:if test="${pay.defaultbank=='SHBANK' }">checked="checked"</c:if> /><img src="/order/images/SHBANK_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="NBBANK" <c:if test="${pay.defaultbank=='NBBANK' }">checked="checked"</c:if> /><img src="/order/images/NBBANK_OUT.gif" border="0"/></td>
-			                 </tr>
-			                 <tr>
-			                   <td><input type="radio" name="pay_bank" value="SPABANK" <c:if test="${pay.defaultbank=='SPABANK' }">checked="checked"</c:if>/><img src="/order/images/SPABANK_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="BJRCB" <c:if test="${pay.defaultbank=='BJRCB' }">checked="checked"</c:if>/><img src="/order/images/BJRCB_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="ICBCBTB" <c:if test="${pay.defaultbank=='ICBCBTB' }">checked="checked"</c:if>/><img src="/order/images/ICBCBTB_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="CCBBTB" <c:if test="${pay.defaultbank=='CCBBTB' }">checked="checked"</c:if>/><img src="/order/images/CCBBTB_OUT.gif" border="0"/></td>
-			                 </tr>
-			                 <tr>
-			                   <td><input type="radio" name="pay_bank" value="SPDBB2B" <c:if test="${pay.defaultbank=='SPDBB2B' }">checked="checked"</c:if> /><img src="/order/images/SPDBB2B_OUT.gif" border="0"/></td>
-			                   <td><input type="radio" name="pay_bank" value="ABCBTB" <c:if test="${pay.defaultbank=='ABCBTB' }">checked="checked"</c:if>/><img src="/order/images/ABCBTB_OUT.gif" border="0"/></td>
-							   <td><input type="radio" name="pay_bank" value="fdb101" <c:if test="${pay.defaultbank=='fdb101' }">checked="checked"</c:if>/><img src="/order/images/fdb101_OUT.gif" border="0" /></td>
-							   <td><input type="radio" name="pay_bank" value="PSBC-DEBIT" <c:if test="${pay.defaultbank=='PSBC-DEBIT' }">checked="checked"</c:if>/><img src="/order/images/PSBC-DEBIT_OUT.gif" border="0" /></td>
 			                 </tr>
 			               </table>
 						
