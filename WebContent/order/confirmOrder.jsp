@@ -50,14 +50,13 @@
 				</ul>
 			</div>
 
-			<form action="/order/confirmorder.do" name="confirmorder" method="post"
-				id="confirmorder">
+			<form action="/order/confirmorder.do" name="confirmorder" method="post" id="confirmorder">
 				<input type="hidden" name="cmd" id="cmd" value="confirm" />
 				<input type="hidden" name="token" value="${token }" />
 				<div class="ckgwc2">
 					<ul class="font_bold">
 						商品信息&nbsp;&nbsp;
-						<a href="/order/cart.do?cmd=view">[修改]</a>
+						<!-- <a href="/order/cart.do?cmd=view">[修改]</a> -->
 					</ul>
 					<ul>
 						<table width="100%" border="0" cellpadding="0" cellspacing="0"
@@ -125,7 +124,7 @@
 					</ul>
 					<ul class="font_bold">
 						收货地址&nbsp;&nbsp;
-						<a href="/user/loadaddress.do?cmd=orderAddress">[修改]</a>
+						<!-- <a href="/user/loadaddress.do?cmd=orderAddress">[修改]</a> -->
 					</ul>
 					<ul>
 					<c:choose>
@@ -142,14 +141,14 @@
 					</ul>
 					<ul class="font_bold">
 						送货方式&nbsp;&nbsp;
-						<a href="/order/carrymode.do?cmd=init">[修改]</a>
+						<!-- <a href="/order/carrymode.do?cmd=init">[修改]</a> -->
 					</ul>
 					<ul>
 						送货上门
 					</ul>
 					<ul class="font_bold">
 						支付方式&nbsp;&nbsp;
-						<a href="/order/paymode.do?cmd=init">[修改]</a>
+						<!-- <a href="/order/paymode.do?cmd=init">[修改]</a> -->
 					</ul>
 					<ul>
 						<c:choose>
@@ -193,6 +192,7 @@
 					<div class="firefox"></div>
 				</div>
 				<div class="text_center" style="padding-top: 10px;">
+					<a href="/order/paymode.do?cmd=init">上一步</a>&nbsp;&nbsp;
 					<a href="javascript:confirmordersubmit()"><img src="/images/submit_05.png" />
 					</a>
 				</div>
