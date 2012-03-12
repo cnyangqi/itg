@@ -158,21 +158,24 @@
 					</ul>
 					<ul class="font_bold">
 						送货方式&nbsp;&nbsp;
+						<!--
 						<c:if test="${orderrec.or_status==0}">
 							<!-- <a href="">[修改]</a> -->
 						</c:if>
-						
+						-->
 					</ul>
 					<ul>
 						送货上门
 					</ul>
 					<ul class="font_bold">
 						支付方式&nbsp;&nbsp;
+						<!-- 
 						<c:if test="${orderrec.or_userid==user.id}">
 						<c:if test="${orderrec.or_status==0||orderrec.or_status==1}">
 							<a  href="/user/changeorderpay.jsp?or_id=${orderrec.or_id }&TB_iframe=true&height=300&amp;width=500&amp;modal=true" class="thickbox">[修改]</a>
 						</c:if>
 						</c:if>
+						 -->
 					</ul>
 					<ul>
 						<span id="paySpan">
