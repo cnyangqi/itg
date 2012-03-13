@@ -20,16 +20,13 @@
                     isMobile: true  
                 },
                 adr_email: {  
-                    required: true,
                     email:true   
                 },
                 adr_areacode: {  
-                    required: true,
                     number:true,  
 					CNmaxlength:4   
                 },  
                 adr_telephone:{  
-                	required: true,
                     number:true,  
 					CNmaxlength:10  
                 },

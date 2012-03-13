@@ -4,36 +4,27 @@ import java.sql.Date;
 
 import com.jado.bean.Bean;
 
-
-
 /**
+ * 支付实体
  * 
- * @Project：ithinkgo   
- * @Type：   ITG_PAY 
- * @Author:  yjw 
- * @Email:   y.jinwei@gmail.com
- * @Mobile:  13738192139
- * @WebSite: http://51maibb.taobao.com
- * @Date:    2011-8-8 下午11:11:13
- * @Comment
- * 
+ * @author yangq(qi.yang.cn@gmail.com) 2012-3-13
  */
 
 public class ITG_PAY extends Bean {
-	private String pay_id;//ID号
-	
-	private String pay_orderid;//订单号
-	
-	private Double pay_money;//支付多
-	
-	private String pay_type;//支付方式
-	
-	private Date pay_time;//支付时间
-	
+	private String pay_id;// ID号
+
+	private String pay_orderid;// 订单号
+
+	private Double pay_money;// 支付多
+
+	private String pay_type;// 支付方式
+
+	private Date pay_time;// 支付时间
+
 	private Integer pay_status;
-	
-	private Date pay_createtime;//创建时间
-	
+
+	private Date pay_createtime;// 创建时间
+
 	private String defaultbank;//
 
 	public String getPay_id() {
@@ -95,13 +86,9 @@ public class ITG_PAY extends Bean {
 	public Date getPay_createtime() {
 		return pay_createtime;
 	}
-	
+
 	public void setPay_createtime(Date pay_createtime) {
 		this.pay_createtime = pay_createtime;
 	}
 
-	
-	
-	
 }
-
